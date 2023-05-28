@@ -1,15 +1,21 @@
-import Head from "next/head";
 import Script from "next/script";
 import { Inter } from "next/font/google";
 import { Sidebar } from "@/components/layout/Sidebar";
+import type { Metadata } from "next";
 
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "Booqself",
     description: "Booqself is an application to make appointments.",
+    manifest: "/manifest.json",
+    icons: {
+        icon: "/vercel.svg",
+        apple: "/vercel.svg",
+    },
+    themeColor: "#000",
 };
 
 export default function RootLayout({
@@ -19,12 +25,6 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <Head>
-                <link rel="manifest" href="/manifest.json" />
-                <link rel="apple-touch-icon" href="/icon.png"></link>
-                <meta name="theme-color" content="#fff" />
-            </Head>
-
             <body className={inter.className}>
                 <Sidebar />
                 <main className="flex items-start">{children}</main>
