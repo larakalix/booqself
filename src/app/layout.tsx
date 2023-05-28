@@ -1,3 +1,5 @@
+import Head from "next/head";
+import Script from "next/script";
 import { Inter } from "next/font/google";
 import { Sidebar } from "@/components/layout/Sidebar";
 
@@ -17,10 +19,18 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
+            <Head>
+                <link rel="manifest" href="/manifest.json" />
+                <link rel="apple-touch-icon" href="/icon.png"></link>
+                <meta name="theme-color" content="#fff" />
+            </Head>
+
             <body className={inter.className}>
                 <Sidebar />
                 <main className="flex items-start">{children}</main>
             </body>
+
+            <Script id="service-worker" src="register" />
         </html>
     );
 }

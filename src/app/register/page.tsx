@@ -1,4 +1,4 @@
-import { RegisterForm } from "@/components/register/RegisterForm";
+import { Steps } from "@/components/home/Steps";
 import { PageWrapper } from "@/components/wrapper/PageWrapper";
 import type { IFormField } from "@/types/form";
 
@@ -12,13 +12,20 @@ async function getData() {
 export default async function Register() {
     const { formFields } = await getData();
 
+    if (!formFields) {
+        return (
+            <PageWrapper>
+                <h1>Register</h1>
+                <p>There are no form fields available.</p>
+            </PageWrapper>
+        );
+    }
+
     return (
         <PageWrapper>
             <h1>Register</h1>
 
-            {formFields && (
-                <RegisterForm formFields={formFields as IFormField[]} />
-            )}
+            <Steps formFields={formFields as IFormField[]} />
         </PageWrapper>
     );
 }
