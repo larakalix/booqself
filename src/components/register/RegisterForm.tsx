@@ -29,7 +29,7 @@ export const RegisterForm = ({ formFields, close }: Props) => {
                 }}
             >
                 {({ errors, isSubmitting }) => (
-                    <Form className="grid grid-cols-2 gap-4">
+                    <Form className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                         {Children.toArray(
                             formFields.map((field) => (
                                 <FormField formField={field} />
@@ -38,7 +38,7 @@ export const RegisterForm = ({ formFields, close }: Props) => {
 
                         <button
                             disabled={isSubmitting}
-                            className="col-span-2 bg-blue-400 text-white rounded-md py-[0.813rem] px-[1.969rem]"
+                            className="col-span-1 md:col-span-2 bg-blue-400 text-white rounded-md py-4 px-8"
                             type="submit"
                         >
                             Submit

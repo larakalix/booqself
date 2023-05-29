@@ -36,7 +36,7 @@ export const DocumentSign = ({
             contract,
         });
 
-        console.log({ status, body });
+        console.log("status-body", { status, body });
 
         if (status === 200) remove(2);
 
@@ -51,7 +51,7 @@ export const DocumentSign = ({
                     className="flex flex-col gap-4 max-w-2xl w-full"
                     ref={signatureRef}
                 >
-                    <div className="flex flex-col gap-4 px-20">
+                    <div className="flex flex-col gap-4 px-0 md:px-20">
                         <h1>FAKE CONTRACT</h1>
 
                         <p>
@@ -144,7 +144,7 @@ export const DocumentSign = ({
                                 canvasProps={{
                                     width: 400,
                                     height: 150,
-                                    className: "border border-black",
+                                    className: "border border-gray-600",
                                 }}
                                 ref={sigCanvas}
                             />

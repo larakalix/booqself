@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Disclosure } from "@headlessui/react";
 import { BiChevronDown } from "react-icons/bi";
 import { RegisterForm } from "../register/RegisterForm";
@@ -9,7 +9,13 @@ import { registerStore } from "@/stores/registerStore";
 import type { IFormField } from "@/types/form";
 
 export const Steps = ({ formFields }: { formFields: IFormField[] }) => {
-    const { step } = registerStore((state) => state);
+    const router = useRouter();
+    const { step, remove } = registerStore((state) => state);
+
+    const handleClick = () => {
+        remove();
+        router.push("/");
+    };
 
     return (
         <div className="flex flex-col gap-4">
@@ -77,12 +83,12 @@ export const Steps = ({ formFields }: { formFields: IFormField[] }) => {
                                             be happy to assist you.
                                         </p>
 
-                                        <Link
-                                            href="/"
+                                        <button
                                             className="col-span-2 bg-green-500 text-white rounded-md py-4 px-8 mt-8"
+                                            onClick={handleClick}
                                         >
                                             Go to home
-                                        </Link>
+                                        </button>
                                     </div>
                                 </div>
                             </Disclosure.Panel>

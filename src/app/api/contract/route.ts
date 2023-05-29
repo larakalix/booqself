@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ApiClient, EnvelopesApi } from "docusign-esign";
 import { transporter } from "@/utils/nodemailer";
 import path from "path";
 import fs from "fs";
@@ -38,32 +37,6 @@ async function convertBase64ToPDF(base64String: string, fileName: string) {
         path: filePath,
         contentType: "application/pdf",
     };
-}
-
-export async function GET(request: Request) {
-    // const jsonDirectory = path.join(process.cwd(), "public");
-    // const rsaKey = await fs.readFileSync(
-    //     jsonDirectory + "/private.key",
-    //     "utf8"
-    // );
-    // const dsPath = process.env.NEXT_DOCUSIGN_API!;
-
-    // const apiClient = new ApiClient({
-    //     basePath: dsPath,
-    //     oAuthBasePath: "https://account-d.docusign.com",
-    // });
-
-    // const results = await apiClient.requestJWTUserToken(
-    //     process.env.INTEGRATION_KEY!,
-    //     process.env.USER_ID!,
-    //     ["signature"],
-    //     Buffer.from(rsaKey),
-    //     3600
-    // );
-
-    return new Response("Ok", {
-        status: 400,
-    });
 }
 
 export async function POST(request: NextRequest) {
@@ -114,11 +87,11 @@ export async function POST(request: NextRequest) {
                 message: `Contract sent to ${assignee.name} ${assignee.lastName}`,
             },
         });
-    } catch (error) {
+    } catch (error: any | Error) {
         console.log("error", error);
         return NextResponse.json({
             status: 400,
-            body: { message: "Bad Request" },
+            body: { message: "Bad Request", error },
         });
     }
 }
