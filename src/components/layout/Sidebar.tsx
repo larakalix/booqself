@@ -57,7 +57,7 @@ export const Sidebar = () => {
                             <Link
                                 href={route}
                                 passHref
-                                className="bg-transparent text-link-gray text-[0.875rem] font-medium leading-[1.25rem] hover:bg-label-gray-active block w-full p-2 rounded-md"
+                                className="bg-transparent text-link-gray text-[0.875rem] font-medium leading-[1.25rem] hover:bg-white hover:text-gray-800 block w-full p-2 rounded-md"
                             >
                                 {label}
                             </Link>
