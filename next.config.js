@@ -13,6 +13,8 @@ const nextConfig = {
         NEXT_STRAPI_URL: process.env.NEXT_STRAPI_URL,
         NEXT_INTEGRATION_KEY: process.env.NEXT_INTEGRATION_KEY,
         NEXT_DOCUSIGN_API: process.env.NEXT_DOCUSIGN_API,
+        NEXT_EMAIL: process.env.NEXT_EMAIL,
+        NEXT_EMAIL_PWD: process.env.NEXT_EMAIL_PWD,
         NEXT_NODE_ENV: process.env.NEXT_NODE_ENV,
     },
 };

@@ -22,8 +22,8 @@ export const RegisterForm = ({ formFields, close }: Props) => {
                 initialValues={initialValues}
                 onSubmit={(values, actions) => {
                     console.log("values", values);
-                    const { name, lastName } = values;
-                    assign(name, lastName);
+                    const { name, lastName, email } = values;
+                    assign({ name, lastName, email });
                     close();
                     actions.setSubmitting(false);
                 }}
