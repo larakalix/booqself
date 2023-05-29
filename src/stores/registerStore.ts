@@ -5,19 +5,15 @@ type Props = {
     assignee: IAssignee | null;
     step: number;
     assign: ({ name, lastName, email }: IAssignee) => void;
-    remove: () => void;
+    remove: (step?: number) => void;
     changeStep: (step: number) => void;
 };
 
 export const registerStore = create<Props>((set, get) => ({
-    step: 1,
-    assignee: {
-        name: "Ivan",
-        lastName: "Lara",
-        email: "uki@live.co.uk",
-    },
+    step: 0,
+    assignee: null,
     assign: ({ name, lastName, email }) =>
         set({ assignee: { name, lastName, email }, step: 1 }),
-    remove: () => set({ assignee: null, step: 0 }),
+    remove: (step?: number) => set({ assignee: null, step: step ?? 0 }),
     changeStep: (step) => set({ step }),
 }));

@@ -13,7 +13,7 @@ export const DocumentSign = ({
 }: {
     downloadDocument?: boolean;
 }) => {
-    const { assignee, changeStep } = registerStore((state) => state);
+    const { assignee, remove } = registerStore((state) => state);
     const signatureRef = createRef<HTMLDivElement>();
     const actionsRef = createRef<HTMLLIElement>();
     const submitRef = createRef<HTMLDivElement>();
@@ -31,12 +31,14 @@ export const DocumentSign = ({
             downloadImage(contract, documentName);
         }
 
-        const { status } = await ContractService().sendContract({
+        const { status, body } = await ContractService().sendContract({
             assignee: assignee!,
             contract,
         });
 
-        if (status === 200) changeStep(2);
+        console.log({ status, body });
+
+        if (status === 200) remove(2);
 
         actionsRef.current?.classList.remove("hidden");
         submitRef.current?.classList.remove("hidden");
