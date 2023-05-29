@@ -5,10 +5,14 @@ import * as yup from "yup";
 import { Formik, Form } from "formik";
 import { useRegisterForm } from "./hooks/useRegisterForm";
 import { FormField } from "@/kit/form/FormField";
+import { registerStore } from "@/stores/registerStore";
 import type { IFormField } from "@/types/form";
 
-export const RegisterForm = ({ formFields }: { formFields: IFormField[] }) => {
+type Props = { formFields: IFormField[]; close: () => void };
+
+export const RegisterForm = ({ formFields, close }: Props) => {
     const { initialValues, validationSchema } = useRegisterForm({ formFields });
+    const { assign } = registerStore((state) => state);
 
     return (
         <div className="flex flex-col ">
@@ -18,6 +22,9 @@ export const RegisterForm = ({ formFields }: { formFields: IFormField[] }) => {
                 initialValues={initialValues}
                 onSubmit={(values, actions) => {
                     console.log("values", values);
+                    const { name, lastName } = values;
+                    assign(name, lastName);
+                    close();
                     actions.setSubmitting(false);
                 }}
             >

@@ -17,11 +17,11 @@ module.exports = {
             colors: {
                 // --- SIDEBAR ---
                 "main-blue": "#1A99D9",
-                "link-gray": "#4B5563",
+                "link-gray": "#fff",
                 "label-gray": "#374151",
                 "sub-label-gray": "#6B7280",
                 "label-gray-active": "#EBEDF1",
-                sidebar: "#F3F4F6",
+                sidebar: "#181818",
                 "main-gray-border": "#E5E7EB",
                 "input-border": "#D1D5DB",
                 // --- UI ---

@@ -24,15 +24,15 @@ export async function GET(request: Request) {
             required: true,
             options: [
                 {
-                    label: "Basic",
+                    label: "Facial",
                     value: "service1",
                 },
                 {
-                    label: "Premium",
+                    label: "Botox",
                     value: "service2",
                 },
                 {
-                    label: "Deluxe",
+                    label: "Eyebrows",
                     value: "service3",
                 },
             ],

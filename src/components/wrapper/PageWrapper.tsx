@@ -3,7 +3,7 @@ type Props = {
     children: React.ReactNode;
 };
 
-export const PageWrapper = ({ className, children }: Props) => {
+export const PageWrapper = ({ className = "", children }: Props) => {
     return (
         <section className={`min-h-screen w-full ml-0 md:ml-60 p-5 ${className}`}>
             {children}

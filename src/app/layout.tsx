@@ -43,8 +43,6 @@ export default function RootLayout({
                 <Sidebar />
                 <main className="flex items-start">{children}</main>
             </body>
-
-            <Script id="service-worker" src="register" />
         </html>
     );
 }
