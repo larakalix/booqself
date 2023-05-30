@@ -1,5 +1,4 @@
 import { Inter } from "next/font/google";
-import { Sidebar } from "@/components/layout/Sidebar";
 import type { Metadata } from "next";
 
 import "./globals.css";
