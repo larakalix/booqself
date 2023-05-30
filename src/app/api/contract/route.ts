@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { transporter } from "@/utils/nodemailer";
 import path from "path";
-import fs from "fs";
+import { writeFileSync, readFileSync } from "fs";
 import { PDFDocument } from "pdf-lib";
 
 async function convertBase64ToPDF(base64String: string, fileName: string) {
@@ -29,7 +29,7 @@ async function convertBase64ToPDF(base64String: string, fileName: string) {
     const filePath = path.join(__dirname, fileName);
 
     // Write the PDF buffer to a file
-    fs.writeFileSync(filePath, pdfBytes);
+    writeFileSync(filePath, pdfBytes);
 
     // Return an object that can be used as an attachment with Nodemailer
     return {
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
         const attachment = await convertBase64ToPDF(contract, filename);
 
         const jsonDirectory = path.join(process.cwd(), "public");
-        const htmlPath = await fs.readFileSync(
+        const htmlPath = await readFileSync(
             jsonDirectory + "/contract.html",
             "utf8"
         );

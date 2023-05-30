@@ -1,4 +1,5 @@
 interface ILabelable {
+    id?: string;
     label: string;
 }
 
