@@ -17,7 +17,6 @@ export async function GET(request: Request) {
 
         return NextResponse.json({ clients, meta });
     } catch (err: any) {
-        console.log("Error: ", err);
         return new Response("Bad Request: data not found.", {
             status: 500,
         });

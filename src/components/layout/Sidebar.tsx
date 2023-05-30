@@ -5,13 +5,14 @@ import Link from "next/link";
 import clsx from "clsx";
 import { useOnClickOutside } from "usehooks-ts";
 import { CgMenuLeft, CgClose } from "react-icons/cg";
+import { ROUTES } from "@/ constants/routes";
 import { Logo } from "./Logo";
 
 import type { NavItems } from "@/types/layout";
 
 const links: NavItems[] = [
-    { label: "Home", route: "/" },
-    { label: "Register", route: "/register" },
+    { label: "Home", route: ROUTES.DASHBOARD },
+    { label: "Register", route: ROUTES.REGISTER },
 ];
 
 export const Sidebar = () => {

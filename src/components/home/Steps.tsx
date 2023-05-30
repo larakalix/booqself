@@ -5,12 +5,13 @@ import { Disclosure } from "@headlessui/react";
 import { BiChevronDown } from "react-icons/bi";
 import { RegisterForm } from "../register/RegisterForm";
 import { DocumentSign } from "../register/DocumentSign";
-import { registerStore } from "@/stores/registerStore";
+import { useRegisterStore } from "@/stores/registerStore";
 import type { IFormField } from "@/types/form";
+import { Card } from "@tremor/react";
 
 export const Steps = ({ formFields }: { formFields: IFormField[] }) => {
     const router = useRouter();
-    const { step, remove } = registerStore((state) => state);
+    const { step, remove } = useRegisterStore((state) => state);
 
     const handleClick = () => {
         remove();
@@ -24,18 +25,20 @@ export const Steps = ({ formFields }: { formFields: IFormField[] }) => {
                     {({ open, close }) => (
                         <>
                             <Disclosure.Button className="flex w-full justify-between rounded-md bg-blue-400 py-3 px-5 text-left text-sm font-medium text-white focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                                <span>Form</span>
+                                <span>Register form</span>
                                 <BiChevronDown
                                     className={`${
                                         open ? "rotate-180 transform" : ""
                                     } h-5 w-5 text-white`}
                                 />
                             </Disclosure.Button>
-                            <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                                <RegisterForm
-                                    formFields={formFields as IFormField[]}
-                                    close={close}
-                                />
+                            <Disclosure.Panel className="mt-4 text-sm text-gray-500">
+                                <Card className="relative w-full text-left ring-1 bg-white shadow border-blue-500 ring-gray-200 p-6 rounded-md">
+                                    <RegisterForm
+                                        formFields={formFields as IFormField[]}
+                                        close={close}
+                                    />
+                                </Card>
                             </Disclosure.Panel>
                         </>
                     )}
@@ -53,8 +56,10 @@ export const Steps = ({ formFields }: { formFields: IFormField[] }) => {
                                     } h-5 w-5 text-white`}
                                 />
                             </Disclosure.Button>
-                            <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                                <DocumentSign />
+                            <Disclosure.Panel className="mt-4 text-sm text-gray-500">
+                                <Card className="relative w-full text-left ring-1 bg-white shadow border-blue-500 ring-gray-200 p-6 rounded-md">
+                                    <DocumentSign />
+                                </Card>
                             </Disclosure.Panel>
                         </>
                     )}

@@ -1,10 +1,11 @@
 "use client";
 
-import { createRef, useRef, useState } from "react";
+import { createRef, useRef } from "react";
 import SignatureCanvas from "react-signature-canvas";
+import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { BiEraser } from "react-icons/bi";
-import { registerStore } from "@/stores/registerStore";
+import { useRegisterStore } from "@/stores/registerStore";
 import { downloadImage } from "@/utils/utils";
 import { ContractService } from "@/services/ContractServices";
 
@@ -13,30 +14,33 @@ export const DocumentSign = ({
 }: {
     downloadDocument?: boolean;
 }) => {
-    const { assignee, remove } = registerStore((state) => state);
+    const { assignee, remove } = useRegisterStore((state) => state);
     const signatureRef = createRef<HTMLDivElement>();
     const actionsRef = createRef<HTMLLIElement>();
     const submitRef = createRef<HTMLDivElement>();
     const sigCanvas = useRef({} as SignatureCanvas);
 
     const handleSubmit = async () => {
+        const pdf = new jsPDF();
+
         actionsRef.current?.classList.add("hidden");
         submitRef.current?.classList.add("hidden");
 
         const canvas = await html2canvas(signatureRef.current!);
         const contract = canvas.toDataURL("image/png");
+        pdf.addImage(contract, "JPEG", 10, 10, 200, 250);
+        // pdf.save("Contract.pdf");
+        const base64String = pdf.output("datauristring");
 
         if (downloadDocument) {
-            const documentName = `${assignee?.name} ${assignee?.lastName} - Contract.png`;
+            const documentName = `${assignee?.name} ${assignee?.lastName} - Contract.pdf`;
             downloadImage(contract, documentName);
         }
 
         const { status, body } = await ContractService().sendContract({
             assignee: assignee!,
-            contract,
+            contract: base64String,
         });
-
-        console.log("status-body", { status, body });
 
         if (status === 200) remove(2);
 

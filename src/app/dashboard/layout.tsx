@@ -1,13 +1,8 @@
-import { Inter } from "next/font/google";
 import { Sidebar } from "@/components/layout/Sidebar";
 import type { Metadata } from "next";
 
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-    title: "Booqself",
+    title: "Dashboard - Booqself",
     description: "Booqself is an application to make appointments.",
     manifest: "/manifest.json",
     viewport: "width=device-width, initial-scale=1",
@@ -30,16 +25,16 @@ export const metadata: Metadata = {
     },
     themeColor: "#000",
 };
-export default async function RootLayout({
+
+export default async function Layout({
     children,
 }: {
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en">
-            <body className={inter.className}>
-                <main className="flex items-start">{children}</main>
-            </body>
-        </html>
+        <>
+            <Sidebar />
+            <main className="flex items-start w-full">{children}</main>
+        </>
     );
 }

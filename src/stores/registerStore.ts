@@ -1,19 +1,18 @@
 import { create } from "zustand";
-import type { IAssignee } from "@/types/asignee";
+import type { ClientAttributes } from "@/types/strapi/clients";
 
 type Props = {
-    assignee: IAssignee | null;
+    assignee: ClientAttributes | null;
     step: number;
-    assign: ({ name, lastName, email }: IAssignee) => void;
+    assign: (assignee: ClientAttributes) => void;
     remove: (step?: number) => void;
     changeStep: (step: number) => void;
 };
 
-export const registerStore = create<Props>((set, get) => ({
+export const useRegisterStore = create<Props>((set, get) => ({
     step: 0,
     assignee: null,
-    assign: ({ name, lastName, email }) =>
-        set({ assignee: { name, lastName, email }, step: 1 }),
+    assign: (assignee) => set({ assignee, step: 1 }),
     remove: (step?: number) => set({ assignee: null, step: step ?? 0 }),
     changeStep: (step) => set({ step }),
 }));

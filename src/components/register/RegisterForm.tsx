@@ -5,14 +5,16 @@ import * as yup from "yup";
 import { Formik, Form } from "formik";
 import { useRegisterForm } from "./hooks/useRegisterForm";
 import { FormField } from "@/kit/form/FormField";
-import { registerStore } from "@/stores/registerStore";
+import { useRegisterStore } from "@/stores/registerStore";
 import type { IFormField } from "@/types/form";
+import { IClient } from "@/types/models/clients";
+import { ClientAttributes } from "@/types/strapi/clients";
 
 type Props = { formFields: IFormField[]; close: () => void };
 
 export const RegisterForm = ({ formFields, close }: Props) => {
     const { initialValues, validationSchema } = useRegisterForm({ formFields });
-    const { assign } = registerStore((state) => state);
+    const { assign } = useRegisterStore((state) => state);
 
     return (
         <div className="flex flex-col ">
@@ -21,9 +23,15 @@ export const RegisterForm = ({ formFields, close }: Props) => {
                 validationSchema={yup.object(validationSchema)}
                 initialValues={initialValues}
                 onSubmit={(values, actions) => {
-                    console.log("values", values);
-                    const { name, lastName, email } = values;
-                    assign({ name, lastName, email });
+                    const { name, email, phone, lastName } = values;
+                    const client: ClientAttributes = {
+                        name,
+                        email,
+                        phone,
+                        lastName,
+                    };
+
+                    assign(client);
                     close();
                     actions.setSubmitting(false);
                 }}

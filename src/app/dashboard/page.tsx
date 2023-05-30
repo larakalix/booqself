@@ -1,6 +1,6 @@
+import { PageWrapper } from "@/components/wrapper/PageWrapper";
 import { Header } from "@/components/home/Header";
 import { Results } from "@/components/home/Results";
-import { PageWrapper } from "@/components/wrapper/PageWrapper";
 import type { IMeta } from "@/types/strapi/generic";
 import type { IClient } from "@/types/models/clients";
 
@@ -11,12 +11,14 @@ async function getData(): Promise<{ clients: IClient[]; meta: IMeta }> {
     return res.json();
 }
 
-export default async function Home() {
+export default async function Dashboard() {
     const { clients, meta } = await getData();
 
     return (
         <PageWrapper className="flex flex-col gap-8">
-            <h1>Hello from Home</h1>
+            <Header />
+
+            <Results clients={clients} meta={meta} />
         </PageWrapper>
     );
 }
