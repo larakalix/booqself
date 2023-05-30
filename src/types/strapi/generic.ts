@@ -17,3 +17,7 @@ export interface IPagination {
     pageCount: number;
     total: number;
 }
+
+export interface ICreatedAt {
+    createdAt: string;
+}

@@ -1,5 +1,5 @@
 import { Header } from "@/components/home/Header";
-import { Results } from "@/components/home/Results";
+import { Results } from "@/components/home/Clients";
 import { PageWrapper } from "@/components/wrapper/PageWrapper";
 import type { IMeta } from "@/types/strapi/generic";
 import type { IClient } from "@/types/models/clients";

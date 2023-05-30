@@ -1,24 +1,22 @@
+import { Appointments, Clients, Header } from "@/components/home";
 import { PageWrapper } from "@/components/wrapper/PageWrapper";
-import { Header } from "@/components/home/Header";
-import { Results } from "@/components/home/Results";
-import type { IMeta } from "@/types/strapi/generic";
-import type { IClient } from "@/types/models/clients";
-
-async function getData(): Promise<{ clients: IClient[]; meta: IMeta }> {
-    const res = await fetch(`${process.env.NEXT_API_URL}/client`);
-    if (!res.ok) throw new Error("Failed to fetch data");
-
-    return res.json();
-}
+import { ClientService } from "@/services/client/ClientService";
+import { AppointmentService } from "@/services/appointment/AppointmentServices";
 
 export default async function Dashboard() {
-    const { clients, meta } = await getData();
+    const fetchClients = await ClientService().getClients();
+    const fetchAppointments = await AppointmentService().getAppointments({});
 
     return (
         <PageWrapper className="flex flex-col gap-8">
             <Header />
 
-            <Results clients={clients} meta={meta} />
+            <Clients clients={fetchClients.clients} meta={fetchClients.meta} />
+
+            <Appointments
+                appointments={fetchAppointments.appointments}
+                meta={fetchAppointments.meta}
+            />
         </PageWrapper>
     );
 }

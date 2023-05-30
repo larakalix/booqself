@@ -21,7 +21,7 @@ export const Day = ({ day, index }: Props) => {
 
     const styles = clsx({
         "bg-blue-500 text-white": isToday(day),
-        "bg-green-500 text-white": selectedDay!.getDate() === day.getDate(),
+        "bg-green-500 text-white": isEqual(day, selectedDay) && !isToday(day),
     });
 
     return (

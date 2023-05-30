@@ -7,7 +7,7 @@ export const Apointments = ({ appointments }: { appointments: any[] }) => {
     const { selectedDay, selectDay } = useBookingStore((state) => state);
 
     return (
-        <div>
+        <div className="flex items-center justify-center flex-col p-5 border-t border-l-0 md:border-t-0 md:border-l border-gray-300">
             <h2 className="font-semibold text-gray-900">
                 Schedule for{" "}
                 <time dateTime={format(selectedDay, "yyyy-MM-dd")}>

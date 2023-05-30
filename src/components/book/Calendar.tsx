@@ -8,8 +8,8 @@ import {
     format,
     parse,
     add,
-    startOfMonth,
     startOfToday,
+    isPast,
 } from "date-fns";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Day } from "@/components/book/Day";
@@ -29,6 +29,7 @@ export const Calendar = ({ appointments }: { appointments: any[] }) => {
 
     const prevMonth = () => {
         let firstDayNextMonth = add(firstDayOfCurrentMonth, { months: -1 });
+        if (isPast(firstDayOfCurrentMonth)) return;
         setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
     };
 
@@ -38,7 +39,7 @@ export const Calendar = ({ appointments }: { appointments: any[] }) => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center p-5">
             <div className="grid grid-cols-7 gap-4">
                 <header className="col-span-7">
                     <ul className="flex items-center justify-between w-full text-gray-500 text-sm">

@@ -1,81 +1,77 @@
 import { Children } from "react";
+import Link from "next/link";
 import {
     Card,
     Table,
-    TableHead,
     TableRow,
-    TableHeaderCell,
     TableBody,
     TableCell,
     Text,
     Title,
 } from "@tremor/react";
-import {
-    AiOutlineCheckCircle,
-    AiOutlineExclamationCircle,
-} from "react-icons/ai";
+import { AiOutlineCheckCircle, AiOutlineFieldTime } from "react-icons/ai";
+import { format, isPast } from "date-fns";
+import { GenericTableHead } from "../generic/GenericTableHead";
+import type { IAppointment } from "@/types/models/appointment";
 import type { IMeta } from "@/types/strapi/generic";
-import type { IClient } from "@/types/models/clients";
-import Link from "next/link";
 
-export const Results = ({ clients }: { clients: IClient[]; meta: IMeta }) => {
-    if (!clients || clients.length === 0) return null;
-
+export const Appointments = ({
+    appointments,
+}: {
+    appointments: IAppointment[];
+    meta: IMeta;
+}) => {
     return (
         <Card className="relative w-full text-left ring-1 bg-white shadow border-blue-500 ring-gray-200 p-6 rounded-md">
             <Title className="text-gray-700 text-lg font-medium">
-                List of patients registered in the system
+                Appointments
             </Title>
             <Table className="mt-5">
-                <TableHead className="text-left text-gray-500 font-semibold">
-                    <TableRow>
-                        {Children.toArray(
-                            [
-                                "Name",
-                                "Last Name",
-                                "Email",
-                                "Phone",
-                                "Contract",
-                                "Actions",
-                            ].map((label) => (
-                                <TableHeaderCell className="sticky whitespace-nowrap text-left text-gray-500 top-0 px-4 py-3.5 font-semibold">
-                                    {label}
-                                </TableHeaderCell>
-                            ))
-                        )}
-                    </TableRow>
-                </TableHead>
+                <GenericTableHead
+                    headers={["Name", "Email", "Comments", "Status", "Actions"]}
+                />
                 <TableBody className="align-top overflow-x-auto divide-y divide-gray-200">
                     {Children.toArray(
-                        clients.map((client) => (
+                        appointments.map((appointment) => (
                             <TableRow>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    {client.name}
+                                    <Text>{appointment.name}</Text>
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Text>{client.lastName}</Text>
+                                    <Text>{appointment.email}</Text>
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Text>{client.email}</Text>
+                                    <Text className="text-ellipsis overflow-hidden max-w-[15rem]">
+                                        {appointment.comment
+                                            ? appointment.comment
+                                            : "No comments"}
+                                    </Text>
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Text>{client.phone}</Text>
-                                </TableCell>
-                                <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    {client.id === 1 ? (
+                                    {isPast(
+                                        new Date(appointment.appointmentDay)
+                                    ) ? (
                                         <span className="flex items-center gap-2 text-sm whitespace-nowrap">
                                             <AiOutlineCheckCircle className="text-green-500" />{" "}
-                                            Contract uploaded
+                                            Done
                                         </span>
                                     ) : (
                                         <span className="flex items-center gap-2 text-sm whitespace-nowrap">
-                                            <AiOutlineExclamationCircle className="text-yellow-500" />{" "}
-                                            No contract yet
+                                            <AiOutlineFieldTime className="text-blue-500" />{" "}
+                                            Upcoming at{" "}
+                                            {format(
+                                                new Date(
+                                                    appointment.appointmentDay
+                                                ),
+                                                "dd/MM/yyyy"
+                                            )}
                                         </span>
                                     )}
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Link href={`/client/${client.id}`}>
+                                    <Link
+                                        href={`/appointment/${appointment.id}`}
+                                    >
                                         <Text color="blue">View details</Text>
                                     </Link>
                                 </TableCell>
