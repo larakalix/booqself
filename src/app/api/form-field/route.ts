@@ -59,29 +59,7 @@ export async function GET(request: Request) {
     // ];
 
     try {
-        const id = 1;
-        const client = new GraphQLClient(
-            `${process.env.NEXT_STRAPI_URL}/graphql`
-        );
-        const form: Form = await client.request(getFormById, { id });
-        // const response = await fetch(`${process.env.NEXT_STRAPI_URL}/graphql`);
-        // const form: Form = await response.json();
-
-        console.log("Form: ", form);
-
-        const formFields: IFormField[] = [];
-        // form.data.attributes.form_fields.data.map(({ id, attributes }) => {
-        //     const { label, name, isRequired } = attributes;
-        //     return {
-        //         id,
-        //         type: "text",
-        //         label,
-        //         name,
-        //         required: isRequired,
-        //     };
-        // });
-
-        return NextResponse.json({ formFields });
+        return NextResponse.json({ formFields: [] });
     } catch (err: any) {
         console.log("Error: ", err);
         return new Response("Bad Request: data not found.", {
