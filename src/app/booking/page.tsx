@@ -6,7 +6,7 @@ export default async function Booking() {
         <section className="min-h-screen w-full p-5">
             <Card className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Calendar appointments={[]} />
-                <Apointments />
+                <Apointments appointments={[]} />
             </Card>
         </section>
     );

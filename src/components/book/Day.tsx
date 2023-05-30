@@ -1,6 +1,6 @@
 "use client";
 
-import { format, getDay, isToday } from "date-fns";
+import { format, isToday, getDay, isEqual } from "date-fns";
 import clsx from "clsx";
 import { useBookingStore } from "@/stores/bookingStore";
 

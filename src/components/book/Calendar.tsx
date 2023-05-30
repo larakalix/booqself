@@ -1,12 +1,13 @@
 "use client";
 
-import { Children, useState } from "react";
+import { Children } from "react";
 import {
     eachDayOfInterval,
     endOfMonth,
     endOfWeek,
     format,
     parse,
+    add,
     startOfMonth,
     startOfToday,
 } from "date-fns";
@@ -15,29 +16,42 @@ import { Day } from "@/components/book/Day";
 import { useBookingStore } from "@/stores/bookingStore";
 
 export const Calendar = ({ appointments }: { appointments: any[] }) => {
-    const { selectedDay } = useBookingStore((state) => state);
-    let today = startOfToday();
-    let firstDayCurrentMonth = parse(
-        format(today, "MMM-yyyy"),
-        "MMM-yyyy",
-        new Date()
+    const { selectedDay, currentMonth, setCurrentMonth } = useBookingStore(
+        (state) => state
     );
+    let today = startOfToday();
+    const firstDayOfCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
     let days = eachDayOfInterval({
-        start: firstDayCurrentMonth,
-        end: endOfMonth(firstDayCurrentMonth),
+        start: firstDayOfCurrentMonth,
+        end: endOfMonth(firstDayOfCurrentMonth),
     });
+
+    const prevMonth = () => {
+        let firstDayNextMonth = add(firstDayOfCurrentMonth, { months: -1 });
+        setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+    };
+
+    const nextMonth = () => {
+        let firstDayNextMonth = add(firstDayOfCurrentMonth, { months: 1 });
+        setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+    };
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <h1 className="text-2xl font-bold">Booking</h1>
-            <div className="grid grid-cols-7 gap-4 mt-4">
+            <div className="grid grid-cols-7 gap-4">
                 <header className="col-span-7">
                     <ul className="flex items-center justify-between w-full text-gray-500 text-sm">
-                        <li>{format(today, "MMMM yyyy")}</li>
+                        <li className="font-semibold text-base text-gray-900">
+                            {format(firstDayOfCurrentMonth, "MMMM yyyy")}
+                        </li>
                         <li className="flex items-center gap-4">
-                            <FiChevronLeft />
-                            <FiChevronRight />
+                            <button type="button" onClick={prevMonth}>
+                                <FiChevronLeft />
+                            </button>
+                            <button type="button" onClick={nextMonth}>
+                                <FiChevronRight />
+                            </button>
                         </li>
                     </ul>
                 </header>
