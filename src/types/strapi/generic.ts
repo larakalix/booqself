@@ -1,5 +1,8 @@
-export interface IEntity<T> {
+export interface IIdentifier {
     id: number;
+}
+
+export interface IEntity<T> extends IIdentifier {
     attributes: T;
 }
 

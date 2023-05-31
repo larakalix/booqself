@@ -7,20 +7,24 @@ import { useRegisterForm } from "../register/hooks/useRegisterForm";
 import { FormField } from "@/kit/form/FormField";
 import type { IFormField, IFormSelections } from "@/types/forms/form";
 import type { AppointmentAttributes } from "@/types/strapi/appointments";
-import { format, isToday, parseISO } from "date-fns";
 import { formatToISO, mergeTimeWithDate } from "@/utils/time";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
 import { useSuccesBookingStore } from "@/stores/bookingStore";
+import type { TenantAttributes } from "@/types/strapi/tenant";
 
-export const AppointmentForm = ({
-    selectedDay,
-    timeOptions,
-    formFields,
-}: {
+type Props = {
     selectedDay: Date | null;
     timeOptions: IFormSelections[];
     formFields: IFormField[];
-}) => {
+    tenant: TenantAttributes;
+};
+
+export const AppointmentForm = ({
+    tenant,
+    selectedDay,
+    timeOptions,
+    formFields,
+}: Props) => {
     const { initialValues, validationSchema } = useRegisterForm({ formFields });
     const { setAppointment } = useSuccesBookingStore((state) => state);
 
@@ -50,7 +54,8 @@ export const AppointmentForm = ({
                     };
 
                     const response = await AppointmentService().create(
-                        appointment
+                        appointment,
+                        tenant.id
                     );
 
                     if (response?.id) {

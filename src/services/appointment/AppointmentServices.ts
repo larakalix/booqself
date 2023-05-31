@@ -31,7 +31,8 @@ export const AppointmentService = () => {
     };
 
     const create = async (
-        appointment: Omit<AppointmentAttributes, "createdAt">
+        appointment: Omit<AppointmentAttributes, "createdAt">,
+        tenant: number
     ) => {
         try {
             const res = await fetch(
@@ -44,7 +45,7 @@ export const AppointmentService = () => {
                     body: JSON.stringify({
                         data: {
                             ...appointment,
-                            tenant: 1,
+                            tenant,
                         },
                     }),
                 }

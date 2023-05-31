@@ -6,9 +6,12 @@ import { useBookingStore, useSuccesBookingStore } from "@/stores/bookingStore";
 import { AppointmentForm } from "./AppointmentForm";
 import { generateTimeArray } from "@/utils/time";
 import type { IFormSelections } from "@/types/forms/form";
+import type { TenantAttributes } from "@/types/strapi/tenant";
 
-export const Apointments = ({ appointments }: { appointments: any[] }) => {
-    const { selectedDay, selectDay } = useBookingStore((state) => state);
+type Props = { tenant: TenantAttributes; appointments: any[] };
+
+export const Apointments = ({ tenant, appointments }: Props) => {
+    const { selectedDay } = useBookingStore((state) => state);
     const { appointment } = useSuccesBookingStore((state) => state);
 
     const timeOptions = generateTimeArray<IFormSelections>(
@@ -66,6 +69,7 @@ export const Apointments = ({ appointments }: { appointments: any[] }) => {
             </h2>
 
             <AppointmentForm
+                tenant={tenant}
                 selectedDay={selectedDay!}
                 timeOptions={timeOptions}
                 formFields={[

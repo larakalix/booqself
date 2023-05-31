@@ -4,22 +4,20 @@ import { Children } from "react";
 import {
     eachDayOfInterval,
     endOfMonth,
-    endOfWeek,
     format,
     parse,
     add,
-    startOfToday,
     isPast,
 } from "date-fns";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Day } from "@/components/book/Day";
 import { useBookingStore } from "@/stores/bookingStore";
+import type { TenantAttributes } from "@/types/strapi/tenant";
 
-export const Calendar = ({ appointments }: { appointments: any[] }) => {
-    const { selectedDay, currentMonth, setCurrentMonth } = useBookingStore(
-        (state) => state
-    );
-    let today = startOfToday();
+type Props = { tenant: TenantAttributes; appointments: any[] };
+
+export const Calendar = ({ tenant, appointments }: Props) => {
+    const { currentMonth, setCurrentMonth } = useBookingStore((state) => state);
     const firstDayOfCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
     let days = eachDayOfInterval({
@@ -39,7 +37,12 @@ export const Calendar = ({ appointments }: { appointments: any[] }) => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center p-5">
+        <div className="flex flex-col items-center justify-between p-5">
+            <header>
+                <h1 className="text-2xl font-semibold text-black mb-6">
+                    {tenant.name}
+                </h1>
+            </header>
             <div className="grid grid-cols-7 gap-4">
                 <header className="col-span-7">
                     <ul className="flex items-center justify-between w-full text-gray-500 text-sm">
@@ -71,6 +74,17 @@ export const Calendar = ({ appointments }: { appointments: any[] }) => {
                     })
                 )}
             </div>
+            <footer>
+                <p className="text-gray-400 text-sm mt-6">
+                    For some support, contact us at{" "}
+                    <a
+                        href={`mailto:${tenant.email}`}
+                        className="text-blue-500"
+                    >
+                        {tenant.email}
+                    </a>
+                </p>
+            </footer>
         </div>
     );
 };
