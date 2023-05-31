@@ -29,7 +29,7 @@ export const AppointmentForm = ({
     const { setAppointment } = useSuccesBookingStore((state) => state);
 
     return (
-        <div className="flex flex-col ">
+        <div className="flex flex-col w-full px-4 md:px-14 xl:max-w-4xl">
             <Formik
                 enableReinitialize
                 validationSchema={yup.object(validationSchema)}

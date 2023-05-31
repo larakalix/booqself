@@ -1,10 +1,10 @@
 "use client";
 
-import { format, parseISO } from "date-fns";
-import { BsCalendar3 } from "react-icons/bs";
+import { format } from "date-fns";
 import { useBookingStore, useSuccesBookingStore } from "@/stores/bookingStore";
-import { AppointmentForm } from "./AppointmentForm";
+import { AppointmentForm } from "../AppointmentForm";
 import { generateTimeArray } from "@/utils/time";
+import { NoSelectedDay, Success } from "./childs";
 import type { IFormSelections } from "@/types/forms/form";
 import type { TenantAttributes } from "@/types/strapi/tenant";
 
@@ -20,44 +20,10 @@ export const Apointments = ({ tenant, appointments }: Props) => {
         60
     );
 
-    if (appointment && selectedDay) {
-        return (
-            <div className="flex items-center justify-center flex-col gap-8 p-5 border-t border-l-0 md:border-t-0 md:border-l border-gray-300">
-                <header className="w-full max-w-[70%] text-center border-b border-gray-100 pb-4 px-8">
-                    <h1 className="font-bold text-black">Confirmed</h1>
-                    <h2 className="font-normal text-gray-900">
-                        Your appointment has been booked.
-                    </h2>
-                </header>
+    if (appointment && selectedDay)
+        return <Success appointment={appointment} />;
 
-                <ul className="text-base text-gray-600">
-                    <li className="flex items-center gap-2">
-                        <BsCalendar3 />
-                        <time dateTime={appointment.attributes.appointmentDay}>
-                            {format(
-                                parseISO(appointment.attributes.appointmentDay),
-                                "h:mma, EEEE, MMMM d, yyyy"
-                            )}
-                        </time>
-                    </li>
-                </ul>
-
-                <p className="text-gray-800 font-bold">
-                    We will send you an email confirmation shortly.
-                </p>
-            </div>
-        );
-    }
-
-    if (!selectedDay) {
-        return (
-            <div className="flex items-center justify-center flex-col gap-8 p-5 border-t border-l-0 md:border-t-0 md:border-l border-gray-300">
-                <h2 className="font-semibold text-gray-900">
-                    Select a day to book an appointment.
-                </h2>
-            </div>
-        );
-    }
+    if (!selectedDay) return <NoSelectedDay />;
 
     return (
         <div className="flex items-center justify-center flex-col gap-8 p-5 border-t border-l-0 md:border-t-0 md:border-l border-gray-300">

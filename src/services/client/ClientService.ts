@@ -22,7 +22,20 @@ export const ClientService = () => {
         return { clients, meta };
     };
 
+    const getClientById = async (id: number): Promise<IClient> => {
+        const res = await fetch(`${process.env.NEXT_STRAPI_URL}/clients/${id}`);
+        if (!res.ok) throw new Error("Failed to fetch data");
+
+        const { data } = await res.json();
+
+        return {
+            id: data.id,
+            ...data.attributes,
+        };
+    };
+
     return {
+        getClientById,
         getClients,
     };
 };

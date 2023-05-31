@@ -28,7 +28,7 @@ export const Appointments = ({
             </Title>
             <Table className="mt-5">
                 <GenericTableHead
-                    headers={["Name", "Email", "Comments", "Status", "Actions"]}
+                    headers={["Name", "Email", "Comments", "Status"]}
                 />
                 <TableBody className="align-top overflow-x-auto divide-y divide-gray-200">
                     {Children.toArray(
@@ -68,18 +68,23 @@ export const Appointments = ({
                                         </span>
                                     )}
                                 </TableCell>
-                                <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
+                                {/* <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
                                     <Link
                                         href={`/appointment/${appointment.id}`}
                                     >
                                         <Text color="blue">View details</Text>
                                     </Link>
-                                </TableCell>
+                                </TableCell> */}
                             </TableRow>
                         ))
                     )}
                 </TableBody>
             </Table>
+            <footer className="w-full py-4 text-center">
+                <Link href="/dashboard/appointments">
+                    <Text color="blue">View more</Text>
+                </Link>
+            </footer>
         </Card>
     );
 };

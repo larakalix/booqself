@@ -30,6 +30,17 @@ export const AppointmentService = () => {
         };
     };
 
+    const getClientAppointments = async (tenantId: string, email: string) => {
+        const res = await fetch(
+            `${process.env.NEXT_STRAPI_URL}/client-custom/appointment/${tenantId}/${email}`
+        );
+        if (!res.ok) throw new Error("Failed to fetch data");
+
+        const { data } = await res.json();
+
+        return data as IAppointment[];
+    };
+
     const create = async (
         appointment: Omit<AppointmentAttributes, "createdAt">,
         tenant: number
@@ -60,8 +71,25 @@ export const AppointmentService = () => {
         }
     };
 
+    const getByFilter = async ({ email }: { email: string }) => {
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_STRAPI_URL}/appointments?email=${email}`
+            );
+            if (!res.ok) throw new Error("Failed to create appointment");
+
+            const { data } = await res.json();
+
+            return data;
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
     return {
         create,
+        getByFilter,
         getAppointments,
+        getClientAppointments,
     };
 };

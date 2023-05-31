@@ -1,14 +1,14 @@
 import { Sidebar } from "@/components/layout/Sidebar";
 
-export default async function Layout({
-    children,
-}: {
+export default async function Layout(props: {
     children: React.ReactNode;
+    modal: React.ReactNode;
 }) {
     return (
         <>
             <Sidebar />
-            <main className="flex items-start w-full">{children}</main>
+            {props.modal}
+            <main className="flex items-start w-full">{props.children}</main>
         </>
     );
 }

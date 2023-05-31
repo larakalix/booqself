@@ -66,7 +66,9 @@ export const Clients = ({ clients }: { clients: IClient[]; meta: IMeta }) => {
                                     )}
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Link href={`/client/${client.id}`}>
+                                    <Link
+                                        href={`/dashboard/summary/${client.id}`}
+                                    >
                                         <Text color="blue">View details</Text>
                                     </Link>
                                 </TableCell>
