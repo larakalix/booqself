@@ -10,28 +10,24 @@ export const AppointmentService = () => {
         page: number;
         pageSize: number;
     }>) => {
-        try {
-            const res = await fetch(
-                `${process.env.NEXT_STRAPI_URL}/appointments?pagination[page]=${page}&pagination[pageSize]=${pageSize}`
-            );
-            if (!res.ok) throw new Error("Failed to fetch data");
+        const res = await fetch(
+            `${process.env.NEXT_STRAPI_URL}/appointments?pagination[page]=${page}&pagination[pageSize]=${pageSize}`
+        );
+        if (!res.ok) throw new Error("Failed to fetch data");
 
-            const { data, meta } = await res.json();
+        const { data, meta } = await res.json();
 
-            const appointments: IAppointment[] = data.map(
-                ({ id, attributes }: IEntity<AppointmentAttributes>) => ({
-                    id,
-                    ...attributes,
-                })
-            );
+        const appointments: IAppointment[] = data.map(
+            ({ id, attributes }: IEntity<AppointmentAttributes>) => ({
+                id,
+                ...attributes,
+            })
+        );
 
-            return { appointments, meta } as {
-                appointments: IAppointment[];
-                meta: IMeta;
-            };
-        } catch (error) {
-            console.log("error", error);
-        }
+        return { appointments, meta } as {
+            appointments: IAppointment[];
+            meta: IMeta;
+        };
     };
 
     const create = async (
