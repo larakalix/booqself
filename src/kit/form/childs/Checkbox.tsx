@@ -1,6 +1,6 @@
 import { Children } from "react";
 import { Field, type FieldInputProps, type FieldMetaProps } from "formik";
-import type { IFormCheckboxGroup, IFormSelections } from "@/types/form";
+import type { IFormCheckboxGroup, IFormSelections } from "@/types/forms/form";
 
 export const Checkbox = ({
     field,

@@ -1,7 +1,7 @@
 import { ErrorMessage, Field } from "formik";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { Checkbox, Dropdown, Input, Switch, Radio } from "./childs";
-import type { IFormField } from "@/types/form";
+import type { IFormField } from "@/types/forms/form";
 
 const componentMap: { [key: string]: React.ComponentType<any> } = {
     text: Input,
@@ -19,9 +19,9 @@ export const FormField = ({
     hideLabel?: boolean;
 }) => {
     return (
-        <div className="flex flex-col">
+        <div className={`flex flex-col ${formField.fullWidth ? "col-span-2" : ""}`}>
             {!hideLabel && (
-                <label htmlFor={formField.name} className="mb-2">
+                <label htmlFor={formField.name} className="mb-2 text-gray-500 text-sm">
                     {formField.label}
                 </label>
             )}

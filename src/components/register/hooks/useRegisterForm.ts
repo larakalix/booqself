@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import type { IFormField } from "@/types/form";
+import type { IFormField } from "@/types/forms/form";
 
 export type FormProps = {
     name: string;

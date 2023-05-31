@@ -6,8 +6,7 @@ import { Formik, Form } from "formik";
 import { useRegisterForm } from "./hooks/useRegisterForm";
 import { FormField } from "@/kit/form/FormField";
 import { useRegisterStore } from "@/stores/registerStore";
-import type { IFormField } from "@/types/form";
-import { IClient } from "@/types/models/clients";
+import type { IFormField } from "@/types/forms/form";
 import { ClientAttributes } from "@/types/strapi/clients";
 
 type Props = { formFields: IFormField[]; close: () => void };

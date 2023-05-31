@@ -1,6 +1,6 @@
 import { Steps } from "@/components/home/Steps";
 import { PageWrapper } from "@/components/wrapper/PageWrapper";
-import type { IFormField } from "@/types/form";
+import type { IFormField } from "@/types/forms/form";
 
 async function getData() {
     const res = await fetch(`${process.env.NEXT_API_URL}/form-field`);

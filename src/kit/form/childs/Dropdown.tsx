@@ -2,7 +2,7 @@ import { Children, Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { useField, type FieldInputProps, type FieldMetaProps } from "formik";
 import { BiCheck, BiChevronDown } from "react-icons/bi";
-import type { IFormDropdown } from "@/types/form";
+import type { IFormDropdown } from "@/types/forms/form";
 
 export const Dropdown = ({
     formField,

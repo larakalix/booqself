@@ -6,7 +6,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { RegisterForm } from "../register/RegisterForm";
 import { DocumentSign } from "../register/DocumentSign";
 import { useRegisterStore } from "@/stores/registerStore";
-import type { IFormField } from "@/types/form";
+import type { IFormField } from "@/types/forms/form";
 import { Card } from "@tremor/react";
 
 export const Steps = ({ formFields }: { formFields: IFormField[] }) => {

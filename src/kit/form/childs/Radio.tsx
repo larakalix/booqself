@@ -2,7 +2,7 @@ import { Children } from "react";
 import { RadioGroup } from "@headlessui/react";
 import { useField, type FieldInputProps, type FieldMetaProps } from "formik";
 import { BiCheck } from "react-icons/bi";
-import type { IFormDropdown } from "@/types/form";
+import type { IFormDropdown } from "@/types/forms/form";
 
 export const Radio = ({
     formField,

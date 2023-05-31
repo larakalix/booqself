@@ -1,6 +1,6 @@
 import { Switch as HSwitch } from "@headlessui/react";
 import { useField, type FieldInputProps, type FieldMetaProps } from "formik";
-import type { IFormSwitchInput } from "@/types/form";
+import type { IFormSwitchInput } from "@/types/forms/form";
 
 export const Switch = ({
     formField,

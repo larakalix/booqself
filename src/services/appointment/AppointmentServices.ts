@@ -9,28 +9,62 @@ export const AppointmentService = () => {
     }: Partial<{
         page: number;
         pageSize: number;
-    }>): Promise<{
-        appointments: IAppointment[];
-        meta: IMeta;
-    }> => {
-        const res = await fetch(
-            `${process.env.NEXT_STRAPI_URL}/appointments?pagination[page]=${page}&pagination[pageSize]=${pageSize}`
-        );
-        if (!res.ok) throw new Error("Failed to fetch data");
+    }>) => {
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_STRAPI_URL}/appointments?pagination[page]=${page}&pagination[pageSize]=${pageSize}`
+            );
+            if (!res.ok) throw new Error("Failed to fetch data");
 
-        const { data, meta } = await res.json();
+            const { data, meta } = await res.json();
 
-        const appointments: IAppointment[] = data.map(
-            ({ id, attributes }: IEntity<AppointmentAttributes>) => ({
-                id,
-                ...attributes,
-            })
-        );
+            const appointments: IAppointment[] = data.map(
+                ({ id, attributes }: IEntity<AppointmentAttributes>) => ({
+                    id,
+                    ...attributes,
+                })
+            );
 
-        return { appointments, meta };
+            return { appointments, meta } as {
+                appointments: IAppointment[];
+                meta: IMeta;
+            };
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
+    const create = async (
+        appointment: Omit<AppointmentAttributes, "createdAt">
+    ) => {
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_STRAPI_URL}/appointments`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        data: {
+                            ...appointment,
+                            tenant: 1,
+                        },
+                    }),
+                }
+            );
+            if (!res.ok) throw new Error("Failed to create appointment");
+
+            const { data } = await res.json();
+
+            return data as IEntity<AppointmentAttributes>;
+        } catch (error) {
+            console.log("error", error);
+        }
     };
 
     return {
+        create,
         getAppointments,
     };
 };

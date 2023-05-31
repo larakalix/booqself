@@ -1,5 +1,5 @@
 import type { FieldInputProps, FieldMetaProps } from "formik";
-import type { IFormField } from "@/types/form";
+import type { IFormField } from "@/types/forms/form";
 
 export const Input = ({
     field,
@@ -13,7 +13,8 @@ export const Input = ({
     return (
         <input
             type="text"
-            className="border border-input-border rounded-md w-full bg-white py-3 px-5 disabled:bg-gray-200 disabled:text-gray-600"
+            placeholder={formField.placeholder ? formField.placeholder : ""}
+            className={`border border-input-border rounded-md w-full bg-white py-3 px-5 disabled:bg-gray-200 disabled:text-gray-600`}
             {...field}
         />
     );

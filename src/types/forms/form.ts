@@ -6,6 +6,8 @@ interface ILabelable {
 interface ICommon extends ILabelable {
     name: string;
     required?: boolean;
+    fullWidth?: boolean;
+    placeholder?: string;
 }
 
 export type IFormField =

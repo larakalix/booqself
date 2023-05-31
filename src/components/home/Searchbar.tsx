@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FormField } from "@/kit/form/FormField";
 
-import type { IFormField } from "@/types/form";
+import type { IFormField } from "@/types/forms/form";
 
 type FormProps = {
     search: string;

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { GraphQLClient } from "graphql-request";
 import type { Form } from "@/types/strapi/forms";
-import type { IFormField } from "@/types/form";
+import type { IFormField } from "@/types/forms/form";
 import { getFormById } from "@/queries/getFormById";
 
 export async function GET(request: Request) {

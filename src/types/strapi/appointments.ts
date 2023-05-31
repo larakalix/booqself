@@ -10,4 +10,5 @@ export type AppointmentAttributes = ICreatedAt & {
     email: string;
     comment: string;
     appointmentDay: string;
+    phone: string;
 };
