@@ -2,9 +2,13 @@ import { Card } from "@tremor/react";
 import { Apointments, Calendar } from "@/components/book";
 import { TenantService } from "@/services/tenant/TenantService";
 
-export default async function Booking() {
+type Props = {
+    params: { id: string };
+};
+
+export default async function BookingById({ params: { id } }: Props) {
     const { tenant } = await TenantService().getTenantById({
-        id: process.env.NEXT_APP_CLIENT_ID!,
+        id,
     });
 
     if (!tenant) {
