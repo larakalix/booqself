@@ -24,3 +24,8 @@ export interface IPagination {
 export interface ICreatedAt {
     createdAt: string;
 }
+
+export interface IPaginable {
+    offset: number;
+    limit: number;
+}

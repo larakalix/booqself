@@ -1,26 +1,19 @@
-import { Appointments, Clients, Header } from "@/components/home";
+import { Header } from "@/components/home";
 import { PageWrapper } from "@/components/wrapper/PageWrapper";
 import { TenantService } from "@/services/tenant/TenantService";
-import { ClientService } from "@/services/client/ClientService";
-import { AppointmentService } from "@/services/appointment/AppointmentServices";
+import { Board } from "@/components/home/Board";
 
 export default async function Dashboard() {
-    const { tenant } = await TenantService().getTenantById({
-        id: process.env.NEXT_APP_CLIENT_ID!,
-    });
-    const fetchClients = await ClientService().getClients();
-    const fetchAppointments = await AppointmentService().getAppointments({});
+    const { clients, appointments, ...props } =
+        await TenantService().getTenantBoilerplate(
+            process.env.NEXT_APP_CLIENT_ID!
+        );
 
     return (
         <PageWrapper className="flex flex-col gap-8">
             <Header />
 
-            <Clients clients={fetchClients.clients} meta={fetchClients.meta} />
-
-            <Appointments
-                appointments={fetchAppointments.appointments}
-                meta={fetchAppointments.meta}
-            />
+            <Board clients={clients} appointments={appointments} />
         </PageWrapper>
     );
 }

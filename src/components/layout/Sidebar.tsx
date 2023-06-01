@@ -12,7 +12,9 @@ import type { NavItems } from "@/types/layout";
 
 const links: NavItems[] = [
     { label: "Home", route: ROUTES.DASHBOARD },
-    { label: "Register", route: ROUTES.REGISTER },
+    { label: "Register client", route: ROUTES.REGISTER },
+    { label: "Clients", route: ROUTES.CLIENTS },
+    { label: "Appointments", route: ROUTES.APPOINTMENTS },
 ];
 
 export const Sidebar = () => {

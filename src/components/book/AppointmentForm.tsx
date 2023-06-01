@@ -5,18 +5,18 @@ import * as yup from "yup";
 import { Formik, Form } from "formik";
 import { useRegisterForm } from "../register/hooks/useRegisterForm";
 import { FormField } from "@/kit/form/FormField";
-import type { IFormField, IFormSelections } from "@/types/forms/form";
-import type { AppointmentAttributes } from "@/types/strapi/appointments";
 import { formatToISO, mergeTimeWithDate } from "@/utils/time";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
 import { useSuccesBookingStore } from "@/stores/bookingStore";
-import type { TenantAttributes } from "@/types/strapi/tenant";
+import type { IFormField, IFormSelections } from "@/types/forms/form";
+import type { ITenantAttributes } from "@/types/models/tenant";
+import type { IAppointmentAttributes } from "@/types/models/appointment";
 
 type Props = {
     selectedDay: Date | null;
     timeOptions: IFormSelections[];
     formFields: IFormField[];
-    tenant: TenantAttributes;
+    tenant: ITenantAttributes;
 };
 
 export const AppointmentForm = ({
@@ -41,7 +41,7 @@ export const AppointmentForm = ({
                     const hour = timeOptions.find((t) => t.value === time)
                         ?.label!;
                     const appointment: Omit<
-                        AppointmentAttributes,
+                        IAppointmentAttributes,
                         "createdAt"
                     > = {
                         name,

@@ -1,7 +1,10 @@
 import { GET_CONFIG } from "../configurations/generic";
-import type { IAppointment } from "@/types/models/appointment";
-import type { IEntity, IMeta } from "@/types/strapi/generic";
-import type { AppointmentAttributes } from "@/types/strapi/appointments";
+import type {
+    IAppointmentAttributes,
+    IAppointment,
+    IAppointmentFiltered,
+} from "@/types/models/appointment";
+import type { IEntity, IMeta, IPaginable } from "@/types/models/generic";
 
 export const AppointmentService = () => {
     const getAppointments = async ({
@@ -20,7 +23,7 @@ export const AppointmentService = () => {
         const { data, meta } = await res.json();
 
         const appointments: IAppointment[] = data.map(
-            ({ id, attributes }: IEntity<AppointmentAttributes>) => ({
+            ({ id, attributes }: IEntity<IAppointmentAttributes>) => ({
                 id,
                 ...attributes,
             })
@@ -32,20 +35,8 @@ export const AppointmentService = () => {
         };
     };
 
-    const getClientAppointments = async (tenantId: string, email: string) => {
-        const res = await fetch(
-            `${process.env.NEXT_STRAPI_URL}/client-custom/appointment/${tenantId}/${email}`,
-            GET_CONFIG
-        );
-        if (!res.ok) throw new Error("Failed to fetch data");
-
-        const { data } = await res.json();
-
-        return data as IAppointment[];
-    };
-
     const create = async (
-        appointment: Omit<AppointmentAttributes, "createdAt">,
+        appointment: Omit<IAppointmentAttributes, "createdAt">,
         tenant: number
     ) => {
         try {
@@ -68,23 +59,38 @@ export const AppointmentService = () => {
 
             const { data } = await res.json();
 
-            return data as IEntity<AppointmentAttributes>;
+            return data as IEntity<IAppointmentAttributes>;
         } catch (error) {
             console.log("error", error);
         }
     };
 
-    const getByFilter = async ({ email }: { email: string }) => {
+    const getClientAppointments = async (tenantId: string, email: string) => {
+        const res = await fetch(
+            `${process.env.NEXT_STRAPI_URL}/client-custom/appointment/${tenantId}/${email}/0/30`,
+            GET_CONFIG
+        );
+        if (!res.ok) throw new Error("Failed to fetch data");
+
+        const { data } = await res.json();
+
+        return data as IAppointment[];
+    };
+
+    const getByFilter = async (
+        tenantId: string,
+        { offset = 0, limit = 20 }: Partial<IPaginable>
+    ) => {
         try {
             const res = await fetch(
-                `${process.env.NEXT_STRAPI_URL}/appointments?email=${email}`,
+                `${process.env.NEXT_STRAPI_URL}/appointment-custom/filter/${tenantId}/${offset}/${limit}`,
                 GET_CONFIG
             );
             if (!res.ok) throw new Error("Failed to create appointment");
 
-            const { data } = await res.json();
+            const { data, meta } = await res.json();
 
-            return data;
+            return { data, meta } as IAppointmentFiltered;
         } catch (error) {
             console.log("error", error);
         }

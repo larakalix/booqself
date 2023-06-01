@@ -1,14 +1,6 @@
-import { IEntity, IData, IMeta, ICreatedAt } from "./generic";
+import type { IEntity, IData, IMeta, ICreatedAt } from "../models/generic";
 
-export type Appointment = {
-    data: IData<IEntity<AppointmentAttributes>[]>;
-    meta: IMeta;
-};
-
-export type AppointmentAttributes = ICreatedAt & {
-    name: string;
-    email: string;
-    comment: string;
-    appointmentDay: string;
-    phone: string;
-};
+// export type Appointment = {
+//     data: IData<IEntity<AppointmentAttributes>[]>;
+//     meta: IMeta;
+// };

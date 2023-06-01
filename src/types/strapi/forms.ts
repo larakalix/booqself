@@ -1,4 +1,4 @@
-import { IEntity, IData } from "./generic";
+import type { IEntity, IData } from "../models/generic";
 
 export type Form = {
     data: IData<FormEntity>;

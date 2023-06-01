@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import type { ClientAttributes } from "@/types/strapi/clients";
+import type { IClientAttributes } from "@/types/models/clients";
 
 type Props = {
-    assignee: ClientAttributes | null;
+    assignee: IClientAttributes | null;
     step: number;
-    assign: (assignee: ClientAttributes) => void;
+    assign: (assignee: IClientAttributes) => void;
     remove: (step?: number) => void;
     changeStep: (step: number) => void;
 };

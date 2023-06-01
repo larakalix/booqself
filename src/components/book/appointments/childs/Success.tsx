@@ -1,10 +1,10 @@
 import { BsCalendar3 } from "react-icons/bs";
-import type { IEntity } from "@/types/strapi/generic";
-import type { AppointmentAttributes } from "@/types/strapi/appointments";
 import { format, parseISO } from "date-fns";
+import type { IEntity } from "@/types/models/generic";
+import type { IAppointmentAttributes } from "@/types/models/appointment";
 
 type Props = {
-    appointment: IEntity<AppointmentAttributes>;
+    appointment: IEntity<IAppointmentAttributes>;
 };
 
 export const Success = ({ appointment }: Props) => {

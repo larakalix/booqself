@@ -1,19 +1,19 @@
 "use client";
 
 import { Card, Text } from "@tremor/react";
-import { FiltersForm } from "./FiltersForm";
-import { Appointments } from "../home";
+import { FiltersForm } from "../appointments";
+import { Clients } from "../home";
 import type { IMeta } from "@/types/models/generic";
-import type { IAppointment } from "@/types/models/appointment";
+import type { IClient } from "@/types/models/clients";
 
-export const AppointmentsWithFilter = ({
-    appointments,
+export const ClientsWithFilter = ({
+    clients,
     meta,
 }: {
-    appointments: IAppointment[];
+    clients: IClient[];
     meta: IMeta;
 }) => {
-    if (!appointments) {
+    if (!clients) {
         return (
             <Card>
                 <div className="flex items-center justify-center">
@@ -26,7 +26,7 @@ export const AppointmentsWithFilter = ({
     return (
         <div>
             <FiltersForm />
-            <Appointments data={appointments} meta={meta} />
+            <Clients data={clients} meta={meta} />
         </div>
     );
 };

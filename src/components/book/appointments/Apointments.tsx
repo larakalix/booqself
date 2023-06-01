@@ -6,9 +6,9 @@ import { AppointmentForm } from "../AppointmentForm";
 import { generateTimeArray } from "@/utils/time";
 import { NoSelectedDay, Success } from "./childs";
 import type { IFormSelections } from "@/types/forms/form";
-import type { TenantAttributes } from "@/types/strapi/tenant";
+import type { ITenantAttributes } from "@/types/models/tenant";
 
-type Props = { tenant: TenantAttributes; appointments: any[] };
+type Props = { tenant: ITenantAttributes; appointments: any[] };
 
 export const Apointments = ({ tenant, appointments }: Props) => {
     const { selectedDay } = useBookingStore((state) => state);

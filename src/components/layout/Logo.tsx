@@ -4,7 +4,7 @@ export const Logo = () => {
     return (
         <small>
             <Link
-                href={`/home`}
+                href={`/dashboard`}
                 passHref
                 className="text-main-blue text-[1.5rem] font-semibold"
             >

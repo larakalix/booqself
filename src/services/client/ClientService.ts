@@ -1,7 +1,10 @@
 import { GET_CONFIG } from "../configurations/generic";
-import type { ClientAttributes } from "@/types/strapi/clients";
-import type { IClient } from "@/types/models/clients";
-import type { IEntity, IMeta } from "@/types/strapi/generic";
+import type { IEntity, IMeta, IPaginable } from "@/types/models/generic";
+import type {
+    IClient,
+    IClientAttributes,
+    IClientFiltered,
+} from "@/types/models/clients";
 
 export const ClientService = () => {
     const getClients = async (): Promise<{
@@ -17,7 +20,7 @@ export const ClientService = () => {
         const { data, meta } = await res.json();
 
         const clients: IClient[] = data.map(
-            ({ id, attributes }: IEntity<ClientAttributes>) => ({
+            ({ id, attributes }: IEntity<IClientAttributes>) => ({
                 id,
                 ...attributes,
             })
@@ -41,8 +44,28 @@ export const ClientService = () => {
         };
     };
 
+    const getByFilter = async (
+        tenantId: string,
+        { offset = 0, limit = 20 }: Partial<IPaginable>
+    ) => {
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_STRAPI_URL}/client-custom/filter/${tenantId}/${offset}/${limit}`,
+                GET_CONFIG
+            );
+            if (!res.ok) throw new Error("Failed to create appointment");
+
+            const { data, meta } = await res.json();
+
+            return { data, meta } as IClientFiltered;
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
     return {
         getClientById,
         getClients,
+        getByFilter,
     };
 };

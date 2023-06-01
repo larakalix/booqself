@@ -4,6 +4,8 @@ export const ROUTES = {
     // ---- Dashboard ----
     DASHBOARD: "/dashboard",
     REGISTER: "/dashboard/register",
+    CLIENTS: "/dashboard/clients",
+    APPOINTMENTS: "/dashboard/appointments",
     // ----
     PROFILE: "/profile",
     NOT_FOUND: "/not-found",

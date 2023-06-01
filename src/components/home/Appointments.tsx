@@ -12,15 +12,17 @@ import {
 import { AiOutlineCheckCircle, AiOutlineFieldTime } from "react-icons/ai";
 import { format, isPast } from "date-fns";
 import { GenericTableHead } from "../generic/GenericTableHead";
-import type { IAppointment } from "@/types/models/appointment";
-import type { IMeta } from "@/types/strapi/generic";
+import type { ITenantAppointmentBoilerplate } from "@/types/models/tenant";
+
+type Props = ITenantAppointmentBoilerplate & {
+    showFooter?: boolean;
+};
 
 export const Appointments = ({
-    appointments,
-}: {
-    appointments: IAppointment[];
-    meta: IMeta;
-}) => {
+    data: appointments,
+    meta,
+    showFooter = false,
+}: Props) => {
     return (
         <Card className="relative w-full text-left ring-1 bg-white shadow border-blue-500 ring-gray-200 p-6 rounded-md">
             <Title className="text-gray-700 text-lg font-medium">
@@ -80,11 +82,13 @@ export const Appointments = ({
                     )}
                 </TableBody>
             </Table>
-            <footer className="w-full py-4 text-center">
-                <Link href="/dashboard/appointments">
-                    <Text color="blue">View more</Text>
-                </Link>
-            </footer>
+            {showFooter && (
+                <footer className="w-full py-4 text-center">
+                    <Link href="/dashboard/appointments">
+                        <Text color="blue">View more</Text>
+                    </Link>
+                </footer>
+            )}
         </Card>
     );
 };
