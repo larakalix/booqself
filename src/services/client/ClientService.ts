@@ -1,3 +1,4 @@
+import { GET_CONFIG } from "../configurations/generic";
 import type { ClientAttributes } from "@/types/strapi/clients";
 import type { IClient } from "@/types/models/clients";
 import type { IEntity, IMeta } from "@/types/strapi/generic";
@@ -7,7 +8,10 @@ export const ClientService = () => {
         clients: IClient[];
         meta: IMeta;
     }> => {
-        const res = await fetch(`${process.env.NEXT_STRAPI_URL}/clients`);
+        const res = await fetch(
+            `${process.env.NEXT_STRAPI_URL}/clients`,
+            GET_CONFIG
+        );
         if (!res.ok) throw new Error("Failed to fetch data");
 
         const { data, meta } = await res.json();
@@ -23,7 +27,10 @@ export const ClientService = () => {
     };
 
     const getClientById = async (id: number): Promise<IClient> => {
-        const res = await fetch(`${process.env.NEXT_STRAPI_URL}/clients/${id}`);
+        const res = await fetch(
+            `${process.env.NEXT_STRAPI_URL}/clients/${id}`,
+            GET_CONFIG
+        );
         if (!res.ok) throw new Error("Failed to fetch data");
 
         const { data } = await res.json();

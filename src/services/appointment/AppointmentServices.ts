@@ -1,13 +1,7 @@
+import { GET_CONFIG } from "../configurations/generic";
 import type { IAppointment } from "@/types/models/appointment";
 import type { IEntity, IMeta } from "@/types/strapi/generic";
 import type { AppointmentAttributes } from "@/types/strapi/appointments";
-
-const GET_CONFIG = {
-    method: "GET",
-    headers: {
-        "Content-Type": "application/json",
-    },
-};
 
 export const AppointmentService = () => {
     const getAppointments = async ({
