@@ -5,6 +5,7 @@ import type {
     IAppointmentFiltered,
 } from "@/types/models/appointment";
 import type { IEntity, IMeta, IPaginable } from "@/types/models/generic";
+import { appendQueryParams } from "@/utils/utils";
 
 export const AppointmentService = () => {
     const getAppointments = async ({
@@ -79,13 +80,23 @@ export const AppointmentService = () => {
 
     const getByFilter = async (
         tenantId: string,
-        { offset = 0, limit = 20 }: Partial<IPaginable>
+        {
+            name,
+            email,
+            offset = 0,
+            limit = 20,
+        }: Partial<IPaginable> &
+            Partial<{
+                name: string;
+                email: string;
+            }>
     ) => {
         try {
-            const res = await fetch(
+            const URI = appendQueryParams(
                 `${process.env.NEXT_STRAPI_URL}/appointment-custom/filter/${tenantId}/${offset}/${limit}`,
-                GET_CONFIG
+                { name, email }
             );
+            const res = await fetch(URI, GET_CONFIG);
             if (!res.ok) throw new Error("Failed to create appointment");
 
             const { data, meta } = await res.json();

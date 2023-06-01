@@ -19,9 +19,16 @@ export const FormField = ({
     hideLabel?: boolean;
 }) => {
     return (
-        <div className={`flex flex-col ${formField.fullWidth ? "col-span-1 md:col-span-2" : ""}`}>
+        <div
+            className={`flex flex-col space-between ${
+                formField.fullWidth ? "col-span-1 md:col-span-2" : "form-box"
+            }`}
+        >
             {!hideLabel && (
-                <label htmlFor={formField.name} className="mb-2 text-gray-500 text-sm">
+                <label
+                    htmlFor={formField.name}
+                    className="mb-2 text-gray-500 text-sm"
+                >
                     {formField.label}
                 </label>
             )}

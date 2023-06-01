@@ -5,6 +5,7 @@ import type {
     IClientAttributes,
     IClientFiltered,
 } from "@/types/models/clients";
+import { appendQueryParams } from "@/utils/utils";
 
 export const ClientService = () => {
     const getClients = async (): Promise<{
@@ -46,13 +47,27 @@ export const ClientService = () => {
 
     const getByFilter = async (
         tenantId: string,
-        { offset = 0, limit = 20 }: Partial<IPaginable>
+        {
+            name,
+            lastName,
+            email,
+            phone,
+            offset = 0,
+            limit = 20,
+        }: Partial<IPaginable> &
+            Partial<{
+                name: string;
+                lastName: string;
+                email: string;
+                phone: string;
+            }>
     ) => {
         try {
-            const res = await fetch(
+            const URI = appendQueryParams(
                 `${process.env.NEXT_STRAPI_URL}/client-custom/filter/${tenantId}/${offset}/${limit}`,
-                GET_CONFIG
+                { name, lastName, email, phone }
             );
+            const res = await fetch(URI, GET_CONFIG);
             if (!res.ok) throw new Error("Failed to create appointment");
 
             const { data, meta } = await res.json();

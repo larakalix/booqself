@@ -39,10 +39,10 @@ export const Sidebar = () => {
     return (
         <div
             ref={ref}
-            className={`bg-sidebar min-h-[100vh] w-[15rem] max-w-[20rem] p-5 border-r border-main-gray-border absolute md:fixed ${styles} md:left-0 transition-all z-10`}
+            className={`bg-sidebar min-h-[100vh] w-[15rem] max-w-[20rem] p-5 border-r border-main-gray-border absolute xl:fixed ${styles} xl:left-0 transition-all z-10`}
         >
             <button
-                className="absolute right-[-2.5rem] cursor-pointer flex md:hidden"
+                className="absolute right-[-2.5rem] cursor-pointer flex xl:hidden"
                 onClick={() => setToogle((state) => !state)}
             >
                 {toogle ? (

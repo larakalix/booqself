@@ -44,7 +44,7 @@ export const Radio = ({
                       ${
                           checked
                               ? "bg-green-600 bg-opacity-75 text-white"
-                              : "bg-white"
+                              : "bg-gray-100"
                       }
                         relative flex cursor-pointer border border-input-border rounded-md w-full py-3 px-5 focus:outline-none`
                                     }

@@ -21,7 +21,7 @@ export const RegisterForm = ({ formFields, close }: Props) => {
                 enableReinitialize
                 validationSchema={yup.object(validationSchema)}
                 initialValues={initialValues}
-                onSubmit={(values, actions) => {
+                onSubmit={(values: typeof initialValues, actions) => {
                     const { name, email, phone, lastName } = values;
                     const client: IClientAttributes = {
                         name,
