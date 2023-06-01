@@ -23,7 +23,7 @@ export const DynamicForm = ({ formFields, config, submit }: Props) => {
             initialValues={initialValues}
             onSubmit={submit}
         >
-            {({ errors, isSubmitting }) => (
+            {({ errors, isSubmitting, resetForm }) => (
                 <Form
                     // className={`grid grid-cols-1 md:grid-cols-${formFields.length + 1} gap-2 md:gap-4`}
                     className="flex flex-wrap items-stretch justify-start gap-2 md:gap-4 w-full"
@@ -34,6 +34,15 @@ export const DynamicForm = ({ formFields, config, submit }: Props) => {
                         ))
                     )}
 
+                    <div className="flex flex-col items-center justify-end">
+                        <button
+                            className="bg-blue-400 text-white text-sm rounded-md py-[0.6rem] px-8"
+                            type="button"
+                            onClick={() => resetForm()}
+                        >
+                            Clear filters
+                        </button>
+                    </div>
                     <div className="flex flex-col items-center justify-end">
                         <button
                             disabled={isSubmitting}

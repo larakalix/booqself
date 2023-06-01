@@ -1,6 +1,6 @@
 import { ErrorMessage, Field } from "formik";
 import { RiErrorWarningFill } from "react-icons/ri";
-import { Checkbox, Dropdown, Input, Switch, Radio } from "./childs";
+import { Checkbox, Dropdown, Input, Switch, Radio, DatePicker } from "./childs";
 import type { IFormField } from "@/types/forms/form";
 
 const componentMap: { [key: string]: React.ComponentType<any> } = {
@@ -9,6 +9,7 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
     checkbox: Checkbox,
     switch: Switch,
     radio: Radio,
+    date: DatePicker,
 };
 
 export const FormField = ({

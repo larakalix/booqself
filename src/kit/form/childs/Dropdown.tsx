@@ -31,7 +31,7 @@ export const Dropdown = ({
             }}
         >
             <div className="relative">
-                <Listbox.Button className="flex relative cursor-default border border-input-border rounded-md w-full bg-gray-100 py-3 px-5">
+                <Listbox.Button className="flex relative cursor-default border border-input-border rounded-md w-full bg-gray-100 py-[0.9rem] px-5">
                     <span className="block truncate">
                         {tag ? tag : formField.label}
                     </span>

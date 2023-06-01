@@ -55,7 +55,13 @@ export const Appointments = ({
                                     ) ? (
                                         <span className="flex items-center gap-2 text-sm whitespace-nowrap">
                                             <AiOutlineCheckCircle className="text-green-500" />{" "}
-                                            Done
+                                            Done on{" "}
+                                            {format(
+                                                new Date(
+                                                    appointment.appointmentDay
+                                                ),
+                                                "dd/MM/yyyy"
+                                            )}
                                         </span>
                                     ) : (
                                         <span className="flex items-center gap-2 text-sm whitespace-nowrap">
@@ -70,13 +76,6 @@ export const Appointments = ({
                                         </span>
                                     )}
                                 </TableCell>
-                                {/* <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Link
-                                        href={`/appointment/${appointment.id}`}
-                                    >
-                                        <Text color="blue">View details</Text>
-                                    </Link>
-                                </TableCell> */}
                             </TableRow>
                         ))
                     )}

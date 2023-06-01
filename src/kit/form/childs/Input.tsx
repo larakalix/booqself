@@ -14,7 +14,7 @@ export const Input = ({
         <input
             type="text"
             placeholder={formField.placeholder ? formField.placeholder : ""}
-            className={`border border-input-border rounded-md w-full bg-gray-100 py-2 px-4 text-sm disabled:bg-gray-200 disabled:text-gray-600`}
+            className={`border border-input-border rounded-md w-full bg-gray-100 py-4 px-6 text-sm disabled:bg-gray-200 disabled:text-gray-600`}
             {...field}
         />
     );

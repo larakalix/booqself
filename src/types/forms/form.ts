@@ -15,7 +15,8 @@ export type IFormField =
     | IFormDropdown
     | IFormCheckboxGroup
     | IFormSwitchInput
-    | IFormRadioGroup;
+    | IFormRadioGroup
+    | IDatePickerForm;
 
 export interface IFormSelections extends ILabelable {
     value: string;
@@ -49,4 +50,8 @@ export interface IFormSwitchInput extends ICommon {
 
 export interface IFormRadioGroup extends ICommon, IOptionable {
     type: "radio";
+}
+
+export interface IDatePickerForm extends ICommon {
+    type: "date";
 }

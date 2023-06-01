@@ -7,6 +7,7 @@ import { FiltersForm } from "./FiltersForm";
 import { Appointments } from "../home";
 import { useAppoinmentsFilterStore } from "@/stores/filterStore";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
+import { EmptyResults } from "../generic/EmptyResults";
 import type { IMeta } from "@/types/models/generic";
 import type { IAppointment } from "@/types/models/appointment";
 
@@ -21,12 +22,12 @@ export const AppointmentsWithFilter = ({
         useAppoinmentsFilterStore((state) => state);
 
     const handleSubtmit = async (values: any, actions: any) => {
-        console.log("handleSubtmit__VALUES", values);
-        const { name, email, hideCompleted } = values;
+        setLoading(true);
+        const { name, email, rangeDate } = values;
 
         const filteredAppointments = await AppointmentService().getByFilter(
             process.env.NEXT_APP_CLIENT_ID!,
-            { name, email, offset: 0, limit: 10 }
+            { name, email, rangeDate, offset: 0, limit: 10 }
         );
 
         setAppointments(filteredAppointments?.data || []);
@@ -36,16 +37,6 @@ export const AppointmentsWithFilter = ({
     useEffect(() => {
         setAppointments(data);
     }, []);
-
-    if (!appointments) {
-        return (
-            <Card>
-                <div className="flex items-center justify-center">
-                    <Text>No appointments found</Text>
-                </div>
-            </Card>
-        );
-    }
 
     return (
         <div className="flex flex-col gap-6">
@@ -64,9 +55,10 @@ export const AppointmentsWithFilter = ({
                         placeholder: "ex: john@doe.com",
                     },
                     {
-                        name: "hideCompleted",
-                        label: "Hide completed",
-                        type: "switch",
+                        name: "rangeDate",
+                        label: "Range Date",
+                        placeholder: "ex: 2021-10-01 - 2021-10-31",
+                        type: "date",
                     },
                 ]}
                 config={{
@@ -75,7 +67,12 @@ export const AppointmentsWithFilter = ({
                 }}
                 submit={handleSubtmit}
             />
-            <Appointments data={appointments} meta={meta} />
+
+            {!appointments || appointments.length === 0 ? (
+                <EmptyResults text="No appointments found" />
+            ) : (
+                <Appointments data={appointments} meta={meta} />
+            )}
         </div>
     );
 };

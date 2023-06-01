@@ -20,7 +20,8 @@ export const useAppoinmentsFilterStore = create<AppointmentsFilterStoreProps>(
     (set, get) => ({
         loading: false,
         appointments: [],
-        setAppointments: (appointments) => set({ appointments }),
+        setAppointments: (appointments) =>
+            set({ appointments, loading: false }),
         setLoading: (loading) => set({ loading }),
     })
 );
@@ -29,7 +30,7 @@ export const useClientsFilterStore = create<ClientsFilterStoreProps>(
     (set, get) => ({
         loading: false,
         clients: [],
-        setClients: (clients) => set({ clients }),
+        setClients: (clients) => set({ clients, loading: false }),
         setLoading: (loading) => set({ loading }),
     })
 );

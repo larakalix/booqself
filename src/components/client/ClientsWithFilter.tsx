@@ -7,6 +7,7 @@ import { FiltersForm } from "../appointments";
 import { Clients } from "../home";
 import { useClientsFilterStore } from "@/stores/filterStore";
 import { ClientService } from "@/services/client/ClientService";
+import { EmptyResults } from "../generic/EmptyResults";
 import type { IMeta } from "@/types/models/generic";
 import type { IClient } from "@/types/models/clients";
 
@@ -22,7 +23,7 @@ export const ClientsWithFilter = ({
     );
 
     const handleSubtmit = async (values: any, actions: any) => {
-        console.log("handleSubtmit__VALUES", values);
+        setLoading(true);
         const { name, email } = values;
 
         const filteredClients = await ClientService().getByFilter(
@@ -38,18 +39,8 @@ export const ClientsWithFilter = ({
         setClients(data);
     }, []);
 
-    if (!clients) {
-        return (
-            <Card>
-                <div className="flex items-center justify-center">
-                    <Text>No appointments found</Text>
-                </div>
-            </Card>
-        );
-    }
-
     return (
-        <div>
+        <div className="flex flex-col gap-6">
             <FiltersForm
                 formFields={[
                     {
@@ -71,7 +62,12 @@ export const ClientsWithFilter = ({
                 }}
                 submit={handleSubtmit}
             />
-            <Clients data={clients} meta={meta} />
+
+            {!clients || clients.length === 0 ? (
+                <EmptyResults text="No appointments found" />
+            ) : (
+                <Clients data={clients} meta={meta} />
+            )}
         </div>
     );
 };

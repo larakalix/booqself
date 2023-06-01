@@ -10,8 +10,6 @@ export default async function Dashboard() {
             process.env.NEXT_APP_CLIENT_ID!
         );
 
-    console.log("__CLIENTS__", props);
-
     return (
         <PageWrapper className="flex flex-col gap-8">
             <Header tenant={props as ITenantAttributes} />

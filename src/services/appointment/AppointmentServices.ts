@@ -83,18 +83,20 @@ export const AppointmentService = () => {
         {
             name,
             email,
+            rangeDate,
             offset = 0,
             limit = 20,
         }: Partial<IPaginable> &
             Partial<{
                 name: string;
                 email: string;
+                rangeDate: string;
             }>
     ) => {
         try {
             const URI = appendQueryParams(
                 `${process.env.NEXT_STRAPI_URL}/appointment-custom/filter/${tenantId}/${offset}/${limit}`,
-                { name, email }
+                { name, email, rangeDate }
             );
             const res = await fetch(URI, GET_CONFIG);
             if (!res.ok) throw new Error("Failed to create appointment");
