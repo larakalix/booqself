@@ -8,7 +8,7 @@ export const AppointmentList = ({
 }: {
     appointments: IAppointment[];
 }) => {
-    if (!appointments || appointments.length === 0) {
+    if (!appointments || appointments?.length === 0) {
         return (
             <div className="flex items-center justify-center">
                 <Text>No appointments found</Text>
