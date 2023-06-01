@@ -29,9 +29,7 @@ export const AppointmentsWithFilter = ({
             { name, email, offset: 0, limit: 10 }
         );
 
-        console.log("handleSubtmit__RESPONSE", filteredAppointments?.data);
-
-        // setAppointments(filteredAppointments);
+        setAppointments(filteredAppointments?.data || []);
         actions.setSubmitting(false);
     };
 

@@ -25,14 +25,12 @@ export const ClientsWithFilter = ({
         console.log("handleSubtmit__VALUES", values);
         const { name, email } = values;
 
-        const filteredAppointments = await ClientService().getByFilter(
+        const filteredClients = await ClientService().getByFilter(
             process.env.NEXT_APP_CLIENT_ID!,
             { name, email, offset: 0, limit: 10 }
         );
 
-        console.log("handleSubtmit__RESPONSE", filteredAppointments?.data);
-
-        // setAppointments(filteredAppointments);
+        setClients(filteredClients?.data || []);
         actions.setSubmitting(false);
     };
 
