@@ -15,6 +15,7 @@ const links: NavItems[] = [
     { label: "Register client", route: ROUTES.REGISTER },
     { label: "Clients", route: ROUTES.CLIENTS },
     { label: "Appointments", route: ROUTES.APPOINTMENTS },
+    { label: "Reports", route: ROUTES.APPOINTMENTS },
 ];
 
 export const Sidebar = () => {

@@ -6,6 +6,7 @@ export const ROUTES = {
     REGISTER: "/dashboard/register",
     CLIENTS: "/dashboard/clients",
     APPOINTMENTS: "/dashboard/appointments",
+    REPORTS: "/dashboard/reports",
     // ----
     PROFILE: "/profile",
     NOT_FOUND: "/not-found",
