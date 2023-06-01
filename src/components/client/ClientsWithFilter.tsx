@@ -47,7 +47,19 @@ export const ClientsWithFilter = ({
                         name: "name",
                         label: "Name",
                         type: "text",
-                        placeholder: "ex: John Doe",
+                        placeholder: "ex: John",
+                    },
+                    {
+                        name: "name",
+                        label: "lastName",
+                        type: "text",
+                        placeholder: "ex: Doe",
+                    },
+                    {
+                        name: "phone",
+                        label: "Phone",
+                        type: "text",
+                        placeholder: "ex: 1234567890",
                     },
                     {
                         name: "email",
