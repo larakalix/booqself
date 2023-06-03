@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Card } from "@tremor/react";
 import { ROUTES } from "@/ constants/routes";
-import { ITenantAttributes } from "@/types/models/tenant";
+import type { ITenantAttributes } from "@/types/models/tenant";
 
 export const Header = ({ tenant }: { tenant: ITenantAttributes }) => {
     return (

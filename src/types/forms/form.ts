@@ -8,6 +8,8 @@ interface ICommon extends ILabelable {
     required?: boolean;
     fullWidth?: boolean;
     placeholder?: string;
+    parentId?: string | number;
+    validateWithField?: { name: string; value: string | number } | undefined;
 }
 
 export type IFormField =

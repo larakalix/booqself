@@ -22,7 +22,7 @@ export const FormField = ({
     return (
         <div
             className={`flex flex-col space-between ${
-                formField.fullWidth ? "col-span-1 md:col-span-2" : "form-box"
+                formField.fullWidth ? "col-span-1 lg:col-span-2" : "form-box"
             }`}
         >
             {!hideLabel && (

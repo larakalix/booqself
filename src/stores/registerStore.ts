@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { IClientAttributes } from "@/types/models/clients";
+import type { IClientAttributes } from "@/types/models/client";
 
 type Props = {
     assignee: IClientAttributes | null;

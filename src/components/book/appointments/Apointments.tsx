@@ -3,30 +3,25 @@
 import { format } from "date-fns";
 import { useBookingStore, useSuccesBookingStore } from "@/stores/bookingStore";
 import { AppointmentForm } from "../AppointmentForm";
-import { generateTimeArray } from "@/utils/time";
 import { NoSelectedDay, Success } from "./childs";
-import type { IFormSelections } from "@/types/forms/form";
-import type { ITenantAttributes } from "@/types/models/tenant";
+import type { ITenantBooking } from "@/types/models/tenant";
+import { useAppointments } from "./hooks/useAppointments";
 
-type Props = { tenant: ITenantAttributes; appointments: any[] };
-
-export const Apointments = ({ tenant, appointments }: Props) => {
+export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
     const { selectedDay } = useBookingStore((state) => state);
     const { appointment } = useSuccesBookingStore((state) => state);
+    const { timeOptions, buildDropdownlists } = useAppointments();
 
-    const timeOptions = generateTimeArray<IFormSelections>(
-        "9:00 AM",
-        "4:00 PM",
-        60
-    );
+    const { employeeDp, serviceDp } = buildDropdownlists(tenant);
 
     if (appointment && selectedDay)
-        return <Success appointment={appointment} />;
+        return <Success appointment={appointment} tenant={tenant} />;
 
     if (!selectedDay) return <NoSelectedDay />;
 
     return (
         <div className="flex items-center justify-center flex-col gap-8 p-5 border-t border-l-0 md:border-t-0 md:border-l border-gray-300">
+            <span>{JSON.stringify(appointment, null, 10)}</span>
             <h2 className="font-semibold text-gray-900">
                 Schedule for{" "}
                 <time dateTime={format(selectedDay!, "yyyy-MM-dd")}>
@@ -67,6 +62,8 @@ export const Apointments = ({ tenant, appointments }: Props) => {
                         required: true,
                         placeholder: "ex: 555-555-5555",
                     },
+                    employeeDp,
+                    serviceDp,
                     {
                         type: "text",
                         label: "Comments",
@@ -77,7 +74,7 @@ export const Apointments = ({ tenant, appointments }: Props) => {
                 ]}
             />
 
-            <ol className="w-full mt-4 space-y-1 text-sm leading-6 text-gray-500 border-t border-gray-300 pt-8 text-center">
+            {/* <ol className="w-full mt-4 space-y-1 text-sm leading-6 text-gray-500 border-t border-gray-300 pt-8 text-center">
                 {appointments.length > 0 ? (
                     appointments.map((appointment) => (
                         <>
@@ -87,7 +84,7 @@ export const Apointments = ({ tenant, appointments }: Props) => {
                 ) : (
                     <p>No appointments for today.</p>
                 )}
-            </ol>
+            </ol> */}
         </div>
     );
 };

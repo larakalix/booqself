@@ -6,7 +6,7 @@ import type { IMeta } from "@/types/models/generic";
 export default async function AppointmentsPage() {
     const result = await AppointmentService().getByFilter(
         process.env.NEXT_APP_CLIENT_ID!,
-        { offset: 0, limit: 10 }
+        { offset: 0, limit: 30 }
     );
 
     return (

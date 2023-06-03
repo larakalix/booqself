@@ -1,8 +1,8 @@
-import { Card, Text } from "@tremor/react";
+import { Card } from "@tremor/react";
 import { formatDistanceToNow } from "date-fns";
 import { HiOutlineMail, HiOutlinePhone, HiOutlineClock } from "react-icons/hi";
 import { AppointmentList } from "./childs";
-import type { IClient } from "@/types/models/clients";
+import type { IClient } from "@/types/models/client";
 import type { IAppointment } from "@/types/models/appointment";
 
 type Props = { client: IClient; appointments: IAppointment[] };

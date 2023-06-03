@@ -3,8 +3,14 @@ import type {
     IAppointmentAttributes,
     IAppointment,
     IAppointmentFiltered,
+    IFormAppointment,
 } from "@/types/models/appointment";
-import type { IEntity, IMeta, IPaginable } from "@/types/models/generic";
+import type {
+    IEntity,
+    IIdentifier,
+    IMeta,
+    IPaginable,
+} from "@/types/models/generic";
 import { appendQueryParams } from "@/utils/utils";
 
 export const AppointmentService = () => {
@@ -36,31 +42,26 @@ export const AppointmentService = () => {
         };
     };
 
-    const create = async (
-        appointment: Omit<IAppointmentAttributes, "createdAt">,
-        tenant: number
-    ) => {
+    const create = async (appointment: IFormAppointment, tenant: number) => {
         try {
             const res = await fetch(
-                `${process.env.NEXT_STRAPI_URL}/appointments`,
+                `${process.env.NEXT_STRAPI_URL}/custom-appointment/create`,
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        data: {
-                            ...appointment,
-                            tenant,
-                        },
+                        ...appointment,
+                        tenant,
                     }),
                 }
             );
             if (!res.ok) throw new Error("Failed to create appointment");
 
-            const { data } = await res.json();
+            const data = await res.json();
 
-            return data as IEntity<IAppointmentAttributes>;
+            return data as IFormAppointment;
         } catch (error) {
             console.log("error", error);
         }
@@ -68,7 +69,7 @@ export const AppointmentService = () => {
 
     const getClientAppointments = async (tenantId: string, email: string) => {
         const res = await fetch(
-            `${process.env.NEXT_STRAPI_URL}/client-custom/appointment/${tenantId}/${email}/0/30`,
+            `${process.env.NEXT_STRAPI_URL}/custom-client/appointment/${tenantId}/${email}/0/30`,
             GET_CONFIG
         );
         if (!res.ok) throw new Error("Failed to fetch data");
@@ -95,7 +96,7 @@ export const AppointmentService = () => {
     ) => {
         try {
             const URI = appendQueryParams(
-                `${process.env.NEXT_STRAPI_URL}/appointment-custom/filter/${tenantId}/${offset}/${limit}`,
+                `${process.env.NEXT_STRAPI_URL}/custom-appointment/filter/${tenantId}/${offset}/${limit}`,
                 { name, email, rangeDate }
             );
             const res = await fetch(URI, GET_CONFIG);

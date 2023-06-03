@@ -2,6 +2,7 @@ import { Children } from "react";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
 import clsx from "clsx";
+import { AiOutlineLoading } from "react-icons/ai";
 import { useDyForm } from "./hooks/useDyForm";
 import { FormField } from "@/kit/form/FormField";
 import type { IFormField } from "@/types/forms/form";
@@ -10,10 +11,16 @@ import type { IFormConfig } from "@/kit/form/types";
 type Props = {
     formFields: IFormField[];
     config: IFormConfig;
+    isLoading: boolean;
     submit: (values: any, actions: any) => void;
 };
 
-export const DynamicForm = ({ formFields, config, submit }: Props) => {
+export const DynamicForm = ({
+    formFields,
+    isLoading,
+    config,
+    submit,
+}: Props) => {
     const { initialValues, validationSchema } = useDyForm({ formFields });
 
     return (
@@ -36,7 +43,7 @@ export const DynamicForm = ({ formFields, config, submit }: Props) => {
 
                     <div className="flex flex-col items-center justify-end">
                         <button
-                            className="bg-blue-400 text-white text-sm rounded-md py-[0.6rem] px-8"
+                            className="bg-yellow-400 text-white text-sm rounded-md py-[0.6rem] px-6"
                             type="button"
                             onClick={() => resetForm()}
                         >
@@ -46,9 +53,12 @@ export const DynamicForm = ({ formFields, config, submit }: Props) => {
                     <div className="flex flex-col items-center justify-end">
                         <button
                             disabled={isSubmitting}
-                            className="bg-blue-400 text-white text-sm rounded-md py-[0.6rem] px-8"
+                            className="flex items-center gap-2 bg-blue-400 text-white text-sm rounded-md py-[0.6rem] px-6"
                             type="submit"
                         >
+                            {isLoading && (
+                                <AiOutlineLoading className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+                            )}
                             {config?.buttonLabel ?? "Submit"}
                         </button>
                     </div>

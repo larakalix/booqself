@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { format, startOfToday } from "date-fns";
-import type { IEntity } from "@/types/models/generic";
-import type { IAppointmentAttributes } from "@/types/models/appointment";
+import type { IFormAppointment } from "@/types/models/appointment";
 
 type BookingStoreProps = {
     selectedDay: Date | null;
@@ -11,8 +10,8 @@ type BookingStoreProps = {
 };
 
 type SuccessBookingStoreProps = {
-    appointment: IEntity<IAppointmentAttributes> | null;
-    setAppointment: (appointment: IEntity<IAppointmentAttributes>) => void;
+    appointment: IFormAppointment | null;
+    setAppointment: (appointment: IFormAppointment) => void;
 };
 
 const today = startOfToday();

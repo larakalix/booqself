@@ -9,6 +9,7 @@ import {
     Text,
     Title,
 } from "@tremor/react";
+import { HiOutlineMail, HiOutlinePhone, HiOutlineUser } from "react-icons/hi";
 import { AiOutlineCheckCircle, AiOutlineFieldTime } from "react-icons/ai";
 import { format, isPast } from "date-fns";
 import { GenericTableHead } from "../generic/GenericTableHead";
@@ -28,27 +29,66 @@ export const Appointments = ({
             <Title className="text-gray-700 text-lg font-medium">
                 Appointments
             </Title>
+
             <Table className="mt-5">
                 <GenericTableHead
-                    headers={["Name", "Email", "Comments", "Status"]}
+                    headers={["Client", "Employee", "Service", "Status"]}
                 />
                 <TableBody className="align-top overflow-x-auto divide-y divide-gray-200">
                     {Children.toArray(
                         appointments.map((appointment) => (
                             <TableRow>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Text>{appointment.name}</Text>
+                                    <div className="flex flex-col">
+                                        <Text className="flex items-center gap-1 text-sm text-gray-500">
+                                            <HiOutlineUser className="text-gray-800" />
+                                            {appointment.name}
+                                        </Text>
+                                        <Text className="flex items-center gap-1 text-sm text-gray-500">
+                                            <HiOutlineMail className="text-gray-800" />
+                                            {appointment.email}
+                                        </Text>
+                                    </div>
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Text>{appointment.email}</Text>
+                                    {appointment.employee ? (
+                                        <div className="flex flex-col">
+                                            <Text className="flex items-center gap-1 text-sm text-gray-500">
+                                                <HiOutlineUser className="text-gray-800" />
+                                                {appointment.employee.name}{" "}
+                                                {appointment.employee
+                                                    ?.nickname &&
+                                                    `(${appointment.employee?.nickname})`}
+                                            </Text>
+                                            <Text className="flex items-center gap-1 text-sm text-gray-500">
+                                                <HiOutlineMail className="text-gray-800" />
+                                                {appointment.employee.email}
+                                            </Text>
+                                        </div>
+                                    ) : (
+                                        <span>No employee</span>
+                                    )}
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
+                                    <Text>
+                                        {appointment.service ? (
+                                            <div className="flex flex-col">
+                                                <span className="flex items-center gap-1">
+                                                    {appointment.service.name}
+                                                </span>
+                                            </div>
+                                        ) : (
+                                            <span>No service</span>
+                                        )}
+                                    </Text>
+                                </TableCell>
+                                {/* <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
                                     <Text className="text-ellipsis overflow-hidden max-w-[15rem]">
                                         {appointment.comment
                                             ? appointment.comment
                                             : "No comments"}
                                     </Text>
-                                </TableCell>
+                                </TableCell> */}
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
                                     {isPast(
                                         new Date(appointment.appointmentDay)

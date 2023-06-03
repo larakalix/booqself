@@ -14,9 +14,9 @@ import { Day } from "@/components/book/Day";
 import { useBookingStore } from "@/stores/bookingStore";
 import type { ITenantAttributes } from "@/types/models/tenant";
 
-type Props = { tenant: ITenantAttributes; appointments: any[] };
+type Props = { tenant: ITenantAttributes };
 
-export const Calendar = ({ tenant, appointments }: Props) => {
+export const Calendar = ({ tenant }: Props) => {
     const { currentMonth, setCurrentMonth } = useBookingStore((state) => state);
     const firstDayOfCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 

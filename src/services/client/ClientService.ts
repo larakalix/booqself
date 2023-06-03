@@ -4,7 +4,7 @@ import type {
     IClient,
     IClientAttributes,
     IClientFiltered,
-} from "@/types/models/clients";
+} from "@/types/models/client";
 import { appendQueryParams } from "@/utils/utils";
 
 export const ClientService = () => {
@@ -64,7 +64,7 @@ export const ClientService = () => {
     ) => {
         try {
             const URI = appendQueryParams(
-                `${process.env.NEXT_STRAPI_URL}/client-custom/filter/${tenantId}/${offset}/${limit}`,
+                `${process.env.NEXT_STRAPI_URL}/custom-client/filter/${tenantId}/${offset}/${limit}`,
                 { name, lastName, email, phone }
             );
             const res = await fetch(URI, GET_CONFIG);

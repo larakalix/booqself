@@ -1,15 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useEffect } from "react";
-import { Card, Text } from "@tremor/react";
+import { useEffect, useMemo } from "react";
 import { FiltersForm } from "../appointments";
 import { Clients } from "../home";
 import { useClientsFilterStore } from "@/stores/filterStore";
 import { ClientService } from "@/services/client/ClientService";
 import { EmptyResults } from "../generic/EmptyResults";
 import type { IMeta } from "@/types/models/generic";
-import type { IClient } from "@/types/models/clients";
+import type { IClient } from "@/types/models/client";
 
 export const ClientsWithFilter = ({
     clients: data,
@@ -22,18 +21,21 @@ export const ClientsWithFilter = ({
         (state) => state
     );
 
-    const handleSubtmit = async (values: any, actions: any) => {
-        setLoading(true);
-        const { name, email } = values;
+    const handleSubtmit = useMemo(
+        () => async (values: any, actions: any) => {
+            setLoading(true);
+            const { name, email } = values;
 
-        const filteredClients = await ClientService().getByFilter(
-            process.env.NEXT_APP_CLIENT_ID!,
-            { name, email, offset: 0, limit: 10 }
-        );
+            const filteredClients = await ClientService().getByFilter(
+                process.env.NEXT_APP_CLIENT_ID!,
+                { name, email, offset: 0, limit: 10 }
+            );
 
-        setClients(filteredClients?.data || []);
-        actions.setSubmitting(false);
-    };
+            setClients(filteredClients?.data || []);
+            actions.setSubmitting(false);
+        },
+        []
+    );
 
     useEffect(() => {
         setClients(data);
@@ -72,6 +74,7 @@ export const ClientsWithFilter = ({
                     buttonLabel: "Search",
                     areFilters: true,
                 }}
+                isLoading={loading}
                 submit={handleSubtmit}
             />
 

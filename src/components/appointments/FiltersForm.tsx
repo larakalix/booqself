@@ -8,13 +8,20 @@ import type { IFormConfig } from "@/kit/form/types";
 type Props = {
     formFields: IFormField[];
     config: IFormConfig;
+    isLoading: boolean;
     submit: (values: any, actions: any) => void;
 };
 
-export const FiltersForm = ({ formFields, config, submit }: Props) => {
+export const FiltersForm = ({
+    formFields,
+    isLoading,
+    config,
+    submit,
+}: Props) => {
     return (
         <Card>
             <DynamicForm
+                isLoading={isLoading}
                 formFields={formFields}
                 config={config}
                 submit={submit}

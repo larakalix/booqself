@@ -1,13 +1,22 @@
-import type { ICreatedAt, IData, IIdentifier, IMeta } from "./generic";
+import type {
+    ICreatedAt,
+    IData,
+    IIdentifier,
+    IIsActive,
+    IMeta,
+} from "./generic";
 import type { IAppointment } from "./appointment";
-import type { IClient } from "./clients";
+import type { IClient } from "./client";
+import type { IService } from "./service";
+import type { IEmployee } from "./employee";
 
 export type ITenant = {
     data: IData<ITenantAttributes>;
     error: any;
 };
 
-export type ITenantAttributes = IIdentifier &
+export type ITenantAttributes = IIsActive &
+    IIdentifier &
     ICreatedAt & {
         name: string;
         email: string;
@@ -19,9 +28,15 @@ export type ITenantBoilerplate = ITenantAttributes & {
     appointments: ITenantAppointmentBoilerplate;
 };
 
+export type ITenantBooking = ITenantAttributes & {
+    employees: IEmployee[];
+    services: IService[];
+};
+
 export type ITenantClientBoilerplate = ITenantBoilerplateChunk<IClient>;
 
-export type ITenantAppointmentBoilerplate = ITenantBoilerplateChunk<IAppointment>;
+export type ITenantAppointmentBoilerplate =
+    ITenantBoilerplateChunk<IAppointment>;
 
 export type ITenantBoilerplateChunk<T> = {
     data: T[];

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { IAppointment } from "@/types/models/appointment";
-import type { IClient } from "@/types/models/clients";
+import type { IClient } from "@/types/models/client";
 
 type AppointmentsFilterStoreProps = {
     appointments: IAppointment[];

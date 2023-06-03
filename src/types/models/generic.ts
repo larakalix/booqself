@@ -2,6 +2,10 @@ export interface IIdentifier {
     id: number;
 }
 
+export interface IIsActive {
+    isActive: boolean;
+}
+
 export interface IEntity<T> extends IIdentifier {
     attributes: T;
 }

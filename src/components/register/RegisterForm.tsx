@@ -7,7 +7,7 @@ import { useRegisterForm } from "./hooks/useRegisterForm";
 import { FormField } from "@/kit/form/FormField";
 import { useRegisterStore } from "@/stores/registerStore";
 import type { IFormField } from "@/types/forms/form";
-import type { IClientAttributes } from "@/types/models/clients";
+import type { IClientAttributes } from "@/types/models/client";
 
 type Props = { formFields: IFormField[]; close: () => void };
 

@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useEffect } from "react";
-import { Card, Text } from "@tremor/react";
+import { useEffect, useMemo } from "react";
 import { FiltersForm } from "./FiltersForm";
 import { Appointments } from "../home";
 import { useAppoinmentsFilterStore } from "@/stores/filterStore";
@@ -21,18 +20,21 @@ export const AppointmentsWithFilter = ({
     const { loading, appointments, setLoading, setAppointments } =
         useAppoinmentsFilterStore((state) => state);
 
-    const handleSubtmit = async (values: any, actions: any) => {
-        setLoading(true);
-        const { name, email, rangeDate } = values;
+    const handleSubtmit = useMemo(
+        () => async (values: any, actions: any) => {
+            setLoading(true);
+            const { name, email, rangeDate } = values;
 
-        const filteredAppointments = await AppointmentService().getByFilter(
-            process.env.NEXT_APP_CLIENT_ID!,
-            { name, email, rangeDate, offset: 0, limit: 10 }
-        );
+            const filteredAppointments = await AppointmentService().getByFilter(
+                process.env.NEXT_APP_CLIENT_ID!,
+                { name, email, rangeDate, offset: 0, limit: 10 }
+            );
 
-        setAppointments(filteredAppointments?.data || []);
-        actions.setSubmitting(false);
-    };
+            setAppointments(filteredAppointments?.data || []);
+            actions.setSubmitting(false);
+        },
+        []
+    );
 
     useEffect(() => {
         setAppointments(data);
@@ -44,7 +46,7 @@ export const AppointmentsWithFilter = ({
                 formFields={[
                     {
                         name: "name",
-                        label: "Name",
+                        label: "Client name",
                         type: "text",
                         placeholder: "ex: John Doe",
                     },
@@ -55,16 +57,23 @@ export const AppointmentsWithFilter = ({
                         placeholder: "ex: john@doe.com",
                     },
                     {
-                        name: "rangeDate",
-                        label: "Range Date",
-                        placeholder: "ex: 2021-10-01 - 2021-10-31",
-                        type: "date",
+                        name: "employee",
+                        label: "Employee",
+                        type: "text",
+                        placeholder: "ex: John Doe",
                     },
+                    // {
+                    //     name: "rangeDate",
+                    //     label: "Range Date",
+                    //     placeholder: "ex: 2021-10-01 - 2021-10-31",
+                    //     type: "date",
+                    // },
                 ]}
                 config={{
                     buttonLabel: "Search",
                     areFilters: true,
                 }}
+                isLoading={loading}
                 submit={handleSubtmit}
             />
 

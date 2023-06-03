@@ -10,7 +10,7 @@ import { AppointmentService } from "@/services/appointment/AppointmentServices";
 import { useSuccesBookingStore } from "@/stores/bookingStore";
 import type { IFormField, IFormSelections } from "@/types/forms/form";
 import type { ITenantAttributes } from "@/types/models/tenant";
-import type { IAppointmentAttributes } from "@/types/models/appointment";
+import type { IFormAppointment } from "@/types/models/appointment";
 
 type Props = {
     selectedDay: Date | null;
@@ -37,22 +37,29 @@ export const AppointmentForm = ({
                 onSubmit={async (values, actions) => {
                     if (!selectedDay) return;
 
-                    const { name, email, phone, comment, time } = values;
-                    const hour = timeOptions.find((t) => t.value === time)
-                        ?.label!;
-                    const appointment: Omit<
-                        IAppointmentAttributes,
-                        "createdAt"
-                    > = {
+                    const {
                         name,
                         email,
                         phone,
                         comment,
-                        appointmentDay: `${formatToISO(
-                            mergeTimeWithDate(hour, selectedDay)
-                        )}`,
+                        employee,
+                        service,
+                        time,
+                    } = values;
+                    const hour = timeOptions.find((t) => t.value === time)
+                        ?.label!;
+                    const appointmentDay = `${formatToISO(
+                        mergeTimeWithDate(hour, selectedDay)
+                    )}`;
+                    const appointment: IFormAppointment = {
+                        name,
+                        email,
+                        phone,
+                        comment,
+                        employee,
+                        service,
+                        appointmentDay,
                     };
-
                     const response = await AppointmentService().create(
                         appointment,
                         tenant.id
@@ -66,8 +73,8 @@ export const AppointmentForm = ({
                     actions.setSubmitting(false);
                 }}
             >
-                {({ errors, isSubmitting }) => (
-                    <Form className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+                {({ values, errors, isSubmitting }) => (
+                    <Form className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4">
                         {Children.toArray(
                             formFields.map((field) => (
                                 <FormField formField={field} />
@@ -76,7 +83,7 @@ export const AppointmentForm = ({
 
                         <button
                             disabled={isSubmitting || !selectedDay}
-                            className="col-span-1 md:col-span-2 bg-blue-400 text-white rounded-md py-4 px-8"
+                            className="col-span-1 lg:col-span-2 bg-blue-400 text-white rounded-md py-4 px-8"
                             type="submit"
                         >
                             Submit
