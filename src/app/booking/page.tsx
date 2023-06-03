@@ -18,7 +18,7 @@ export default async function Booking() {
         );
     }
 
-    if (!tenant.isActive) {
+    if (tenant && !tenant.isActive) {
         return (
             <AdviceCard
                 title="Your tenant is not active."

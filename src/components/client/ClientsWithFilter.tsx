@@ -21,7 +21,7 @@ export const ClientsWithFilter = ({
         (state) => state
     );
 
-    const handleSubtmit = useMemo(
+    const handleSubmit = useMemo(
         () => async (values: any, actions: any) => {
             setLoading(true);
             const { name, email } = values;
@@ -52,8 +52,8 @@ export const ClientsWithFilter = ({
                         placeholder: "ex: John",
                     },
                     {
-                        name: "name",
-                        label: "lastName",
+                        name: "lastName",
+                        label: "Last name",
                         type: "text",
                         placeholder: "ex: Doe",
                     },
@@ -75,7 +75,7 @@ export const ClientsWithFilter = ({
                     areFilters: true,
                 }}
                 isLoading={loading}
-                submit={handleSubtmit}
+                submit={handleSubmit}
             />
 
             {!clients || clients.length === 0 ? (

@@ -37,10 +37,13 @@ export const Success = ({ appointment, tenant }: Props) => {
                 </li>
                 <li>
                     <p>
-                        {appointment.name} has booked an appointment
-                        {employee && ` with ${employee?.name}`}
-                        for {service?.name}, we will send you an email
-                        confirmation shortly.
+                        Thank you for booking an appointment with us. We have
+                        scheduled {employee && ` with ${employee?.name}`}, for{" "}
+                        {service?.name}. An email confirmation will be sent to
+                        you shortly.
+                    </p>
+                    <p>
+                        Looking forward to seeing you soon {appointment.name}!
                     </p>
                 </li>
             </ul>
