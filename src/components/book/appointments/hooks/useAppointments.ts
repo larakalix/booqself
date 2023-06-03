@@ -3,11 +3,11 @@ import type { IFormField, IFormSelections } from "@/types/forms/form";
 import type { ITenantBooking } from "@/types/models/tenant";
 
 export const useAppointments = () => {
-    const timeOptions = generateTimeArray<IFormSelections>(
-        "9:00 AM",
-        "4:00 PM",
-        60
-    );
+    // const timeOptions = generateTimeArray<IFormSelections>(
+    //     "9:00 AM",
+    //     "4:00 PM",
+    //     60
+    // );
 
     const buildDropdownlists = (tenant: ITenantBooking) => {
         const employeeDp: IFormField = {
@@ -35,8 +35,5 @@ export const useAppointments = () => {
         return { employeeDp, serviceDp };
     };
 
-    return {
-        timeOptions,
-        buildDropdownlists,
-    };
+    return { buildDropdownlists };
 };

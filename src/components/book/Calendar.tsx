@@ -51,10 +51,10 @@ export const Calendar = ({ tenant }: Props) => {
                         </li>
                         <li className="flex items-center gap-4">
                             <button type="button" onClick={prevMonth}>
-                                <FiChevronLeft />
+                                <FiChevronLeft className="text-2xl" />
                             </button>
                             <button type="button" onClick={nextMonth}>
-                                <FiChevronRight />
+                                <FiChevronRight className="text-2xl" />
                             </button>
                         </li>
                     </ul>

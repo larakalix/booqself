@@ -10,10 +10,10 @@ import { useAppointments } from "./hooks/useAppointments";
 export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
     const { selectedDay } = useBookingStore((state) => state);
     const { appointment } = useSuccesBookingStore((state) => state);
-    const { timeOptions, buildDropdownlists } = useAppointments();
+    const { buildDropdownlists } = useAppointments();
 
     const { employeeDp, serviceDp } = buildDropdownlists(tenant);
-    console.log(timeOptions.map((t) => t.label));
+
     if (appointment && selectedDay)
         return <Success appointment={appointment} tenant={tenant} />;
 
@@ -31,14 +31,14 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
             <AppointmentForm
                 tenant={tenant}
                 selectedDay={selectedDay!}
-                timeOptions={timeOptions}
+                timeOptions={tenant.timeOptions}
                 formFields={[
                     {
                         type: "dropdown",
                         label: "What time?",
                         name: "time",
                         required: true,
-                        options: timeOptions,
+                        options: tenant.timeOptions,
                     },
                     {
                         type: "text",

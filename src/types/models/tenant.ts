@@ -4,6 +4,7 @@ import type {
     IIdentifier,
     IIsActive,
     IMeta,
+    IOptionable,
 } from "./generic";
 import type { IAppointment } from "./appointment";
 import type { IClient } from "./client";
@@ -33,6 +34,7 @@ export type ITenantBooking = ITenantAttributes & {
     employees: IEmployee[];
     services: IService[];
     appointments: IIdentifier & { appointmentDay: string }[];
+    timeOptions: IOptionable[];
 };
 
 export type ITenantClientBoilerplate = ITenantBoilerplateChunk<IClient>;

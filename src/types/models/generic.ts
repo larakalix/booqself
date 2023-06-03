@@ -33,3 +33,8 @@ export interface IPaginable {
     offset: number;
     limit: number;
 }
+
+export interface IOptionable {
+    value: string;
+    label: string;
+}
