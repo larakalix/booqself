@@ -30,7 +30,7 @@ export default async function Booking() {
     return (
         <section className="min-h-screen w-full p-5">
             <Card className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[calc(100vh-2.5rem)] p-0">
-                <Calendar tenant={tenant} appointments={[]} />
+                <Calendar tenant={tenant} />
                 <Apointments tenant={tenant} />
             </Card>
         </section>
