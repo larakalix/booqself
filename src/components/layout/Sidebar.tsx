@@ -2,6 +2,8 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import clsx from "clsx";
 import { useOnClickOutside } from "usehooks-ts";
 import { CgMenuLeft, CgClose } from "react-icons/cg";
@@ -15,13 +17,21 @@ const links: NavItems[] = [
     { label: "Register client", route: ROUTES.REGISTER },
     { label: "Clients", route: ROUTES.CLIENTS },
     { label: "Appointments", route: ROUTES.APPOINTMENTS },
-    { label: "Reports", route: ROUTES.APPOINTMENTS },
+    { label: "Employees", route: ROUTES.EMPLOYEES },
+    { label: "Services", route: ROUTES.SERVICES },
+    { label: "Reports", route: ROUTES.REPORTS },
 ];
 
 export const Sidebar = () => {
     const [toogle, setToogle] = useState(false);
+    const router = useRouter();
     // const { user } = useUserStore((state) => state);
     const ref = useRef(null);
+
+    const handleClick = (route: string) => {
+        setToogle(false);
+        router.push(route);
+    };
 
     const handleClickOutside = () => {
         if (toogle) setToogle(false);
@@ -58,13 +68,15 @@ export const Sidebar = () => {
                 <ol className="space-y-4">
                     {links.map(({ label, route }) => (
                         <li key={`${label}-nav-item`}>
-                            <Link
-                                href={route}
-                                passHref
-                                className="bg-transparent text-link-gray text-[0.875rem] font-medium leading-[1.25rem] hover:bg-white hover:text-gray-800 block w-full p-2 rounded-md"
+                            <button
+                                type="button"
+                                // href={route}
+                                // passHref
+                                onClick={() => handleClick(route)}
+                                className="text-start bg-transparent text-link-gray text-[0.875rem] font-medium leading-[1.25rem] hover:bg-white hover:text-gray-800 block w-full p-2 rounded-md"
                             >
                                 {label}
-                            </Link>
+                            </button>
                         </li>
                     ))}
                     {/* <li key={`logout-nav-item`}>

@@ -6,6 +6,8 @@ export const ROUTES = {
     REGISTER: "/dashboard/register",
     CLIENTS: "/dashboard/clients",
     APPOINTMENTS: "/dashboard/appointments",
+    EMPLOYEES: "/dashboard/employees",
+    SERVICES: "/dashboard/services",
     REPORTS: "/dashboard/reports",
     // ----
     PROFILE: "/profile",

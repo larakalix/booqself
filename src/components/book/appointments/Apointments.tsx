@@ -13,7 +13,7 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
     const { timeOptions, buildDropdownlists } = useAppointments();
 
     const { employeeDp, serviceDp } = buildDropdownlists(tenant);
-
+    console.log(timeOptions.map((t) => t.label));
     if (appointment && selectedDay)
         return <Success appointment={appointment} tenant={tenant} />;
 
@@ -21,7 +21,6 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
 
     return (
         <div className="flex items-center justify-center flex-col gap-8 p-5 border-t border-l-0 md:border-t-0 md:border-l border-gray-300">
-            <span>{JSON.stringify(appointment, null, 10)}</span>
             <h2 className="font-semibold text-gray-900">
                 Schedule for{" "}
                 <time dateTime={format(selectedDay!, "yyyy-MM-dd")}>

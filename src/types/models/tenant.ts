@@ -24,19 +24,18 @@ export type ITenantAttributes = IIsActive &
     };
 
 export type ITenantBoilerplate = ITenantAttributes & {
-    clients: ITenantClientBoilerplate;
-    appointments: ITenantAppointmentBoilerplate;
+    clients: ITenantBoilerplateChunk<IClient>;
+    appointments: ITenantBoilerplateChunk<IAppointment>;
+    employees: ITenantBoilerplateChunk<IEmployee>;
 };
 
 export type ITenantBooking = ITenantAttributes & {
     employees: IEmployee[];
     services: IService[];
+    appointments: IIdentifier & { appointmentDay: string }[];
 };
 
 export type ITenantClientBoilerplate = ITenantBoilerplateChunk<IClient>;
-
-export type ITenantAppointmentBoilerplate =
-    ITenantBoilerplateChunk<IAppointment>;
 
 export type ITenantBoilerplateChunk<T> = {
     data: T[];

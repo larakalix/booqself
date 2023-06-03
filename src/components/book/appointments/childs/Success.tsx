@@ -25,7 +25,7 @@ export const Success = ({ appointment, tenant }: Props) => {
                 </h2>
             </header>
 
-            <ul className="text-base text-gray-600 text-center">
+            <ul className="flex flex-col gap-2 text-base text-gray-600 text-center px-8">
                 <li className="flex items-center justify-center gap-2">
                     <BsCalendar3 />
                     <time dateTime={appointment.appointmentDay}>
@@ -47,10 +47,6 @@ export const Success = ({ appointment, tenant }: Props) => {
                     </p>
                 </li>
             </ul>
-
-            {/* <p className="text-gray-800 font-bold">
-                We will send you an email confirmation shortly.
-            </p> */}
         </div>
     );
 };

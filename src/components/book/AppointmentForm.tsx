@@ -86,7 +86,7 @@ export const AppointmentForm = ({
                             className="col-span-1 lg:col-span-2 bg-blue-400 text-white rounded-md py-4 px-8"
                             type="submit"
                         >
-                            Submit
+                            Book now
                         </button>
                     </Form>
                 )}

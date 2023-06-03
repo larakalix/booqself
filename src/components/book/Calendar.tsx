@@ -12,9 +12,9 @@ import {
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Day } from "@/components/book/Day";
 import { useBookingStore } from "@/stores/bookingStore";
-import type { ITenantAttributes } from "@/types/models/tenant";
+import type { ITenantBooking } from "@/types/models/tenant";
 
-type Props = { tenant: ITenantAttributes };
+type Props = { tenant: ITenantBooking };
 
 export const Calendar = ({ tenant }: Props) => {
     const { currentMonth, setCurrentMonth } = useBookingStore((state) => state);

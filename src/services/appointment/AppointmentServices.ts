@@ -82,22 +82,20 @@ export const AppointmentService = () => {
     const getByFilter = async (
         tenantId: string,
         {
-            name,
-            email,
-            rangeDate,
             offset = 0,
             limit = 20,
+            ...params
         }: Partial<IPaginable> &
             Partial<{
                 name: string;
                 email: string;
-                rangeDate: string;
+                employee: string;
             }>
     ) => {
         try {
             const URI = appendQueryParams(
                 `${process.env.NEXT_STRAPI_URL}/custom-appointment/filter/${tenantId}/${offset}/${limit}`,
-                { name, email, rangeDate }
+                { ...params }
             );
             const res = await fetch(URI, GET_CONFIG);
             if (!res.ok) throw new Error("Failed to create appointment");

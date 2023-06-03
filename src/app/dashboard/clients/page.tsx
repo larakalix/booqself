@@ -1,14 +1,7 @@
 import { PageWrapper } from "@/components/wrapper/PageWrapper";
-import { ClientService } from "@/services/client/ClientService";
 import { ClientsWithFilter } from "@/components/client/ClientsWithFilter";
-import type { IMeta } from "@/types/models/generic";
 
-export default async function ClientsPage() {
-    const result = await ClientService().getByFilter(
-        process.env.NEXT_APP_CLIENT_ID!,
-        { offset: 0, limit: 10 }
-    );
-
+export default function ClientsPage() {
     return (
         <PageWrapper>
             <header className="w-full lg:flex lg:items-center lg:justify-between p-6">
@@ -19,10 +12,7 @@ export default async function ClientsPage() {
                 </div>
             </header>
 
-            <ClientsWithFilter
-                clients={result?.data ?? []}
-                meta={result?.meta ?? ({} as IMeta)}
-            />
+            <ClientsWithFilter />
         </PageWrapper>
     );
 }

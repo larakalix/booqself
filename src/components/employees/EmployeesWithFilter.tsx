@@ -2,30 +2,26 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { FiltersForm } from "../appointments";
-import { Clients } from "../home";
-import { useClientsFilterStore } from "@/stores/filterStore";
-import { ClientService } from "@/services/client/ClientService";
 import { EmptyResults } from "../generic/EmptyResults";
-import type { IMeta } from "@/types/models/generic";
-import type { IClient } from "@/types/models/client";
+import { useEmployeesFilterStore } from "@/stores/filterStore";
+import { EmployeeService } from "@/services/employee/EmployeeService";
+import { FiltersForm } from "../appointments";
+import { Employees } from "../home/Employees";
 
-export const ClientsWithFilter = () => {
-    const { loading, clients, setLoading, setClients } = useClientsFilterStore(
-        (state) => state
-    );
+export const EmployeesWithFilter = () => {
+    const { loading, employees, setLoading, setEmployees } = useEmployeesFilterStore((state) => state);
 
-    const handleSubmit = useMemo(
+    const handleSubtmit = useMemo(
         () => async (values: any, actions: any) => {
             setLoading(true);
-            const { name, lastName, email, phone } = values;
+            const { name, email, nickname, pin } = values;
 
-            const filteredClients = await ClientService().getByFilter(
+            const filteredEmployees = await EmployeeService().getByFilter(
                 process.env.NEXT_APP_CLIENT_ID!,
-                { name, lastName, email, phone, offset: 0, limit: 50 }
+                { name, email, nickname, pin, offset: 0, limit: 50 }
             );
 
-            if (filteredClients) setClients(filteredClients);
+            if (filteredEmployees) setEmployees(filteredEmployees);
             actions.setSubmitting(false);
         },
         []
@@ -33,12 +29,12 @@ export const ClientsWithFilter = () => {
 
     useEffect(() => {
         (async () => {
-            const filteredClients = await ClientService().getByFilter(
+            const filteredEmployees = await EmployeeService().getByFilter(
                 process.env.NEXT_APP_CLIENT_ID!,
                 { offset: 0, limit: 50 }
             );
 
-            if (filteredClients) setClients(filteredClients);
+            if (filteredEmployees) setEmployees(filteredEmployees);
         })();
     }, []);
 
@@ -53,16 +49,16 @@ export const ClientsWithFilter = () => {
                         placeholder: "ex: John",
                     },
                     {
-                        name: "lastName",
-                        label: "Last name",
+                        name: "nickname",
+                        label: "Nickname",
                         type: "text",
-                        placeholder: "ex: Doe",
+                        placeholder: "ex: John",
                     },
                     {
-                        name: "phone",
-                        label: "Phone",
+                        name: "pin",
+                        label: "Pin",
                         type: "text",
-                        placeholder: "ex: 1234567890",
+                        placeholder: "ex: 987986",
                     },
                     {
                         name: "email",
@@ -76,13 +72,13 @@ export const ClientsWithFilter = () => {
                     areFilters: true,
                 }}
                 isLoading={loading}
-                submit={handleSubmit}
+                submit={handleSubtmit}
             />
 
-            {!clients || clients.data.length === 0 ? (
-                <EmptyResults text="No appointments found" />
+            {!employees || employees.data.length === 0 ? (
+                <EmptyResults text="No employees found" />
             ) : (
-                <Clients data={clients.data} meta={clients.meta} />
+                <Employees data={employees.data} meta={employees.meta} />
             )}
         </div>
     );

@@ -14,13 +14,13 @@ import {
     AiOutlineExclamationCircle,
 } from "react-icons/ai";
 import { GenericTableHead } from "../generic/GenericTableHead";
-import type { ITenantClientBoilerplate } from "@/types/models/tenant";
+import type { ITenantBoilerplateChunk } from "@/types/models/tenant";
+import { IClient } from "@/types/models/client";
 
-type Props = ITenantClientBoilerplate & {
-    showFooter?: boolean;
-};
-
-export const Clients = ({ data: clients, meta, showFooter = false }: Props) => {
+export const Clients = ({
+    data: clients,
+    meta,
+}: ITenantBoilerplateChunk<IClient>) => {
     if (!clients || clients?.length === 0) return null;
 
     return (
@@ -80,13 +80,6 @@ export const Clients = ({ data: clients, meta, showFooter = false }: Props) => {
                     )}
                 </TableBody>
             </Table>
-            {showFooter && (
-                <footer className="w-full py-4 text-center">
-                    <Link href="/dashboard/appointments">
-                        <Text color="blue">View more</Text>
-                    </Link>
-                </footer>
-            )}
         </Card>
     );
 };

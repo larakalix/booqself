@@ -7,37 +7,36 @@ import { Appointments } from "../home";
 import { useAppoinmentsFilterStore } from "@/stores/filterStore";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
 import { EmptyResults } from "../generic/EmptyResults";
-import type { IMeta } from "@/types/models/generic";
-import type { IAppointment } from "@/types/models/appointment";
 
-export const AppointmentsWithFilter = ({
-    appointments: data,
-    meta,
-}: {
-    appointments: IAppointment[];
-    meta: IMeta;
-}) => {
+export const AppointmentsWithFilter = () => {
     const { loading, appointments, setLoading, setAppointments } =
         useAppoinmentsFilterStore((state) => state);
 
     const handleSubtmit = useMemo(
         () => async (values: any, actions: any) => {
             setLoading(true);
-            const { name, email, rangeDate } = values;
+            const { name, email, employee } = values;
 
             const filteredAppointments = await AppointmentService().getByFilter(
                 process.env.NEXT_APP_CLIENT_ID!,
-                { name, email, rangeDate, offset: 0, limit: 10 }
+                { name, email, employee, offset: 0, limit: 50 }
             );
 
-            setAppointments(filteredAppointments?.data || []);
+            if (filteredAppointments) setAppointments(filteredAppointments);
             actions.setSubmitting(false);
         },
         []
     );
 
     useEffect(() => {
-        setAppointments(data);
+        (async () => {
+            const filteredAppointments = await AppointmentService().getByFilter(
+                process.env.NEXT_APP_CLIENT_ID!,
+                { offset: 0, limit: 50 }
+            );
+
+            if (filteredAppointments) setAppointments(filteredAppointments);
+        })();
     }, []);
 
     return (
@@ -77,10 +76,13 @@ export const AppointmentsWithFilter = ({
                 submit={handleSubtmit}
             />
 
-            {!appointments || appointments.length === 0 ? (
+            {!appointments || appointments.data.length === 0 ? (
                 <EmptyResults text="No appointments found" />
             ) : (
-                <Appointments data={appointments} meta={meta} />
+                <Appointments
+                    data={appointments.data}
+                    meta={appointments.meta}
+                />
             )}
         </div>
     );
