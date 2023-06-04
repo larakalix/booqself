@@ -79,6 +79,24 @@ export const AppointmentService = () => {
         return data as IAppointment[];
     };
 
+    const getBookAppointments = async (
+        tenantId: string,
+        month?: string,
+        year?: string
+    ) => {
+        const URI = appendQueryParams(
+            `${process.env.NEXT_STRAPI_URL}/custom-appointment/book/${tenantId}`,
+            { month, year }
+        );
+
+        const res = await fetch(URI, GET_CONFIG);
+        if (!res.ok) throw new Error("Failed to fetch data");
+
+        const { data } = await res.json();
+
+        return data as IAppointment[];
+    };
+
     const getByFilter = async (
         tenantId: string,
         {
@@ -90,6 +108,7 @@ export const AppointmentService = () => {
                 name: string;
                 email: string;
                 employee: string;
+                rangeDate: string;
             }>
     ) => {
         try {
@@ -112,6 +131,7 @@ export const AppointmentService = () => {
         create,
         getByFilter,
         getAppointments,
+        getBookAppointments,
         getClientAppointments,
     };
 };

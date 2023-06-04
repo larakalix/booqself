@@ -1,5 +1,5 @@
-import { PageWrapper } from "@/components/wrapper/PageWrapper";
 import Link from "next/link";
+import { PageWrapper } from "@/components/wrapper/PageWrapper";
 
 export default async function Home() {
     return (

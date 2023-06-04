@@ -1,4 +1,4 @@
-import { Card } from "@tremor/react";
+import { Card } from "@/kit/card/Card";
 import { formatDistanceToNow } from "date-fns";
 import { HiOutlineMail, HiOutlinePhone, HiOutlineClock } from "react-icons/hi";
 import { AppointmentList } from "./childs";

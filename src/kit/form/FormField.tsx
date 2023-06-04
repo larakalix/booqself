@@ -1,6 +1,14 @@
 import { ErrorMessage, Field } from "formik";
 import { RiErrorWarningFill } from "react-icons/ri";
-import { Checkbox, Dropdown, Input, Switch, Radio, DatePicker } from "./childs";
+import {
+    Checkbox,
+    Dropdown,
+    Input,
+    Switch,
+    Radio,
+    DatePicker,
+    Textarea,
+} from "./childs";
 import type { IFormField } from "@/types/forms/form";
 
 const componentMap: { [key: string]: React.ComponentType<any> } = {
@@ -10,6 +18,7 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
     switch: Switch,
     radio: Radio,
     date: DatePicker,
+    area: Textarea,
 };
 
 export const FormField = ({
@@ -47,8 +56,8 @@ export const FormField = ({
             </Field>
             <ErrorMessage name={formField.name} component="div">
                 {(msg) => (
-                    <div className="flex items-center gap-1 text-rose-400">
-                        <RiErrorWarningFill /> <span>{msg}</span>
+                    <div className="flex items-center gap-1 text-rose-400 text-sm mt-1 font-light transition-all">
+                        <RiErrorWarningFill className="animate-bounce" /> {msg}
                     </div>
                 )}
             </ErrorMessage>

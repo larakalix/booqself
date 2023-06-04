@@ -26,3 +26,5 @@ export type IFormAppointment = Partial<IIdentifier> &
         employee?: string;
         service?: string;
     };
+
+export type IFlatAppointment = IIdentifier & { appointmentDay: string };

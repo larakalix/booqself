@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { FiltersForm } from "./FiltersForm";
+import { DynamicForm } from "../generic/form/DynamicForm";
 import { Appointments } from "../home";
 import { useAppoinmentsFilterStore } from "@/stores/filterStore";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
@@ -15,15 +15,16 @@ export const AppointmentsWithFilter = () => {
     const handleSubtmit = useMemo(
         () => async (values: any, actions: any) => {
             setLoading(true);
-            const { name, email, employee } = values;
+            const { name, email, employee, rangeDate } = values;
 
             const filteredAppointments = await AppointmentService().getByFilter(
                 process.env.NEXT_APP_CLIENT_ID!,
-                { name, email, employee, offset: 0, limit: 50 }
+                { name, email, employee, rangeDate, offset: 0, limit: 50 }
             );
 
             if (filteredAppointments) setAppointments(filteredAppointments);
             actions.setSubmitting(false);
+            setLoading(false);
         },
         []
     );
@@ -41,7 +42,7 @@ export const AppointmentsWithFilter = () => {
 
     return (
         <div className="flex flex-col gap-6">
-            <FiltersForm
+            <DynamicForm
                 formFields={[
                     {
                         name: "name",
@@ -61,12 +62,12 @@ export const AppointmentsWithFilter = () => {
                         type: "text",
                         placeholder: "ex: John Doe",
                     },
-                    // {
-                    //     name: "rangeDate",
-                    //     label: "Range Date",
-                    //     placeholder: "ex: 2021-10-01 - 2021-10-31",
-                    //     type: "date",
-                    // },
+                    {
+                        name: "rangeDate",
+                        label: "Range Date",
+                        placeholder: "ex: 2021-10-01 - 2021-10-31",
+                        type: "date",
+                    },
                 ]}
                 config={{
                     buttonLabel: "Search",

@@ -1,5 +1,4 @@
-import { generateTimeArray } from "@/utils/time";
-import type { IFormField, IFormSelections } from "@/types/forms/form";
+import type { IFormField } from "@/types/forms/form";
 import type { ITenantBooking } from "@/types/models/tenant";
 
 export const useAppointments = () => {

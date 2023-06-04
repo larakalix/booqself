@@ -17,7 +17,7 @@ import type { ITenantBooking } from "@/types/models/tenant";
 type Props = { tenant: ITenantBooking };
 
 export const Calendar = ({ tenant }: Props) => {
-    const { currentMonth, setCurrentMonth } = useBookingStore((state) => state);
+    const { loading, currentMonth, setCurrentMonth } = useBookingStore((state) => state);
     const firstDayOfCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
     let days = eachDayOfInterval({

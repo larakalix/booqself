@@ -47,6 +47,9 @@ export const useDyForm = ({ formFields }: { formFields: IFormField[] }) => {
             case "switch":
                 validationSchema[field.name] = yup.boolean();
                 break;
+            // case "date":
+            //     validationSchema[field.name] = yup.date();
+            //     break;
             default:
                 break;
         }

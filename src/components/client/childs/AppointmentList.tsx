@@ -37,9 +37,9 @@ export const AppointmentList = ({
                                 ago
                             </h5>
 
-                            <Subtitle className="text-gray-800 font-semibold mt-4">
+                            <Text className="text-gray-800 font-semibold mt-4">
                                 Comments
-                            </Subtitle>
+                            </Text>
                             <p className="break-words whitespace-normal w-full">
                                 {appointment.comment
                                     ? appointment.comment

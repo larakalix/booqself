@@ -1,7 +1,10 @@
-import { Card } from "@tremor/react";
+// import { Card } from "@tremor/react";
+import { Card, CardContent } from "@/kit/card/Card";
 import { Apointments, Calendar } from "@/components/book";
 import { TenantService } from "@/services/tenant/TenantService";
 import { AdviceCard } from "@/components/generic/AdviceCard";
+
+export const revalidate = 60;
 
 export default async function Booking() {
     const { tenant } = await TenantService().getTenantById({

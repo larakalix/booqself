@@ -1,8 +1,8 @@
 "use client";
 
-import { Card } from "@tremor/react";
-import type { IFormField } from "@/types/forms/form";
+import { Card } from "@/kit/card/Card";
 import { DynamicForm } from "../generic/form/DynamicForm";
+import type { IFormField } from "@/types/forms/form";
 import type { IFormConfig } from "@/kit/form/types";
 
 type Props = {

@@ -17,6 +17,7 @@ type Props = {
     timeOptions: IFormSelections[];
     formFields: IFormField[];
     tenant: ITenantAttributes;
+    loading: boolean;
 };
 
 export const AppointmentForm = ({
@@ -24,6 +25,7 @@ export const AppointmentForm = ({
     selectedDay,
     timeOptions,
     formFields,
+    loading,
 }: Props) => {
     const { initialValues, validationSchema } = useRegisterForm({ formFields });
     const { setAppointment } = useSuccesBookingStore((state) => state);
@@ -82,7 +84,7 @@ export const AppointmentForm = ({
                         )}
 
                         <button
-                            disabled={isSubmitting || !selectedDay}
+                            disabled={isSubmitting || !selectedDay || loading}
                             className="col-span-1 lg:col-span-2 bg-blue-400 text-white rounded-md py-4 px-8"
                             type="submit"
                         >

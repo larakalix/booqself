@@ -1,6 +1,7 @@
-export { Input } from "./Input";
 export { Dropdown } from "./Dropdown";
 export { Checkbox } from "./Checkbox";
-export { Switch } from "./Switch";
 export { Radio } from "./Radio";
 export { DatePicker } from "./DatePicker";
+export { Textarea } from "./TextArea";
+export { Input } from "./Input";
+export { Switch } from "./Switch";

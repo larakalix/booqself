@@ -1,18 +1,47 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { format } from "date-fns";
+import { useEffect } from "react";
+import { format, getMonth, getYear, parse } from "date-fns";
 import { useBookingStore, useSuccesBookingStore } from "@/stores/bookingStore";
 import { AppointmentForm } from "../AppointmentForm";
-import { NoSelectedDay, Success } from "./childs";
-import type { ITenantBooking } from "@/types/models/tenant";
+import { Availability, NoSelectedDay, Success } from "./childs";
 import { useAppointments } from "./hooks/useAppointments";
+import { AppointmentService } from "@/services/appointment/AppointmentServices";
+import type { ITenantBooking } from "@/types/models/tenant";
 
 export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
-    const { selectedDay } = useBookingStore((state) => state);
+    const {
+        loading,
+        appointments,
+        currentMonth,
+        selectedDay,
+        setLoading,
+        setFlatAppointments,
+    } = useBookingStore((state) => state);
     const { appointment } = useSuccesBookingStore((state) => state);
     const { buildDropdownlists } = useAppointments();
 
     const { employeeDp, serviceDp } = buildDropdownlists(tenant);
+
+    useEffect(() => {
+        (async () => {
+            setLoading(true);
+            const date = parse(currentMonth, "MMMM-yyyy", new Date());
+
+            if (currentMonth) {
+                const appointments =
+                    await AppointmentService().getBookAppointments(
+                        tenant.tenantId,
+                        `${getMonth(date)}`,
+                        `${getYear(date)}`
+                    );
+                if (appointments) setFlatAppointments(appointments);
+            }
+        })();
+
+        return () => {};
+    }, [currentMonth]);
 
     if (appointment && selectedDay)
         return <Success appointment={appointment} tenant={tenant} />;
@@ -29,6 +58,7 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
             </h2>
 
             <AppointmentForm
+                loading={loading}
                 tenant={tenant}
                 selectedDay={selectedDay!}
                 timeOptions={tenant.timeOptions}
@@ -64,7 +94,7 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
                     employeeDp,
                     serviceDp,
                     {
-                        type: "text",
+                        type: "area",
                         label: "Comments",
                         name: "comment",
                         required: false,
@@ -73,17 +103,7 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
                 ]}
             />
 
-            {/* <ol className="w-full mt-4 space-y-1 text-sm leading-6 text-gray-500 border-t border-gray-300 pt-8 text-center">
-                {appointments.length > 0 ? (
-                    appointments.map((appointment) => (
-                        <>
-                            <h1>Appointment</h1>
-                        </>
-                    ))
-                ) : (
-                    <p>No appointments for today.</p>
-                )}
-            </ol> */}
+            <Availability appointments={appointments} />
         </div>
     );
 };

@@ -1,53 +1,56 @@
 "use client";
 
+import { Title, Text, BarChart } from "@tremor/react";
 import { kFormatter } from "@/utils/format";
-import { Title, LineChart } from "@tremor/react";
-import { useState } from "react";
+
+const data = [
+    {
+        Month: "Jan 23",
+        Clients: 2890,
+        Appointments: 2400,
+    },
+    {
+        Month: "Feb 23",
+        Clients: 1890,
+        Appointments: 1398,
+    },
+    {
+        Month: "Mar 23",
+        Clients: 3890,
+        Appointments: 2980,
+    },
+    {
+        Month: "Apr 23",
+        Clients: 4890,
+        Appointments: 3980,
+    },
+    {
+        Month: "May 23",
+        Clients: 5890,
+        Appointments: 4980,
+    },
+    {
+        Month: "Jun 23",
+        Clients: 6890,
+        Appointments: 5980,
+    },
+];
 
 export const Charts = () => {
-    const [data, setData] = useState([
-        {
-            month: "Jan 23",
-            Appointments: 500,
-            Clients: 1_000,
-        },
-        {
-            month: "Feb 23",
-            Appointments: 340,
-            Clients: 2_312,
-        },
-        {
-            month: "Mar 23",
-            Appointments: 231,
-            Clients: 2_789,
-        },
-        {
-            month: "April 23",
-            Appointments: 420,
-            Clients: 3_321,
-        },
-        {
-            month: "May 23",
-            Appointments: 1290,
-            Clients: 3_992,
-        },
-        {
-            month: "Jun 2023",
-            Appointments: 213,
-            Clients: 4_317,
-        },
-    ]);
     return (
         <>
-            <Title>Export/Import Growth Rates (2020 to 2023)</Title>
-            <LineChart
+            <BarChart
+                className="mt-4 h-80"
                 data={data}
-                index="month"
-                categories={["Appointments", "Clients"]}
-                colors={["blue", "green"]}
+                index="Month"
+                categories={["Clients", "Appointments"]}
+                colors={["green", "blue"]}
+                stack={false}
                 valueFormatter={kFormatter}
-                yAxisWidth={40}
-            />
+            >
+                <Title>Performance</Title>
+                <Text>Comparison between Sales and Profit</Text>
+            </BarChart>
         </>
     );
 };
