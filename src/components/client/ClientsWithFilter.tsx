@@ -2,13 +2,11 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { FiltersForm } from "../appointments";
+import { DynamicForm } from "../generic/form/DynamicForm";
 import { Clients } from "../home";
 import { useClientsFilterStore } from "@/stores/filterStore";
 import { ClientService } from "@/services/client/ClientService";
 import { EmptyResults } from "../generic/EmptyResults";
-import type { IMeta } from "@/types/models/generic";
-import type { IClient } from "@/types/models/client";
 
 export const ClientsWithFilter = () => {
     const { loading, clients, setLoading, setClients } = useClientsFilterStore(
@@ -44,7 +42,7 @@ export const ClientsWithFilter = () => {
 
     return (
         <div className="flex flex-col gap-6">
-            <FiltersForm
+            <DynamicForm
                 formFields={[
                     {
                         name: "name",

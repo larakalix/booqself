@@ -5,11 +5,12 @@ import { useEffect, useMemo } from "react";
 import { EmptyResults } from "../generic/EmptyResults";
 import { useEmployeesFilterStore } from "@/stores/filterStore";
 import { EmployeeService } from "@/services/employee/EmployeeService";
-import { FiltersForm } from "../appointments";
+import { DynamicForm } from "../generic/form/DynamicForm";
 import { Employees } from "../home/Employees";
 
 export const EmployeesWithFilter = () => {
-    const { loading, employees, setLoading, setEmployees } = useEmployeesFilterStore((state) => state);
+    const { loading, employees, setLoading, setEmployees } =
+        useEmployeesFilterStore((state) => state);
 
     const handleSubtmit = useMemo(
         () => async (values: any, actions: any) => {
@@ -40,7 +41,7 @@ export const EmployeesWithFilter = () => {
 
     return (
         <div className="flex flex-col gap-6">
-            <FiltersForm
+            <DynamicForm
                 formFields={[
                     {
                         name: "name",

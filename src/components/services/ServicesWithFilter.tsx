@@ -5,7 +5,7 @@ import { useEffect, useMemo } from "react";
 import { EmptyResults } from "../generic/EmptyResults";
 import { useServicesFilterStore } from "@/stores/filterStore";
 import { ServiceService } from "@/services/service/ServiceService";
-import { FiltersForm } from "../appointments";
+import { DynamicForm } from "../generic/form/DynamicForm";
 import { Services } from "../home/Services";
 
 export const ServicesWithFilter = () => {
@@ -41,7 +41,7 @@ export const ServicesWithFilter = () => {
 
     return (
         <div className="flex flex-col gap-6">
-            <FiltersForm
+            <DynamicForm
                 formFields={[
                     {
                         name: "name",
