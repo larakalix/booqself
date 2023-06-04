@@ -20,9 +20,13 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
         setFlatAppointments,
     } = useBookingStore((state) => state);
     const { appointment } = useSuccesBookingStore((state) => state);
-    const { buildDropdownlists } = useAppointments();
+    const { buildDropdownlists } = useAppointments({
+        timeOptions: tenant.timeOptions,
+        appointments,
+        selectedDay,
+    });
 
-    const { employeeDp, serviceDp } = buildDropdownlists(tenant);
+    const { timeOptions, employeeDp, serviceDp } = buildDropdownlists(tenant);
 
     useEffect(() => {
         (async () => {
@@ -61,14 +65,14 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
                 loading={loading}
                 tenant={tenant}
                 selectedDay={selectedDay!}
-                timeOptions={tenant.timeOptions}
+                timeOptions={timeOptions}
                 formFields={[
                     {
                         type: "dropdown",
                         label: "What time?",
                         name: "time",
                         required: true,
-                        options: tenant.timeOptions,
+                        options: timeOptions,
                     },
                     {
                         type: "text",
@@ -103,7 +107,10 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
                 ]}
             />
 
-            <Availability appointments={appointments} />
+            <Availability
+                selectedDay={selectedDay}
+                appointments={appointments}
+            />
         </div>
     );
 };

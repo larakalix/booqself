@@ -31,8 +31,6 @@ export const DatePicker = ({
 
     const handleSelect = (date: DateRange | undefined) => {
         const value = !!date ? date : defaultDate;
-        console.log(value);
-        console.log(!!value);
         const formatted = `${new Date(value?.from!)?.toISOString()}|${new Date(
             value?.to!
         )?.toISOString()}`;

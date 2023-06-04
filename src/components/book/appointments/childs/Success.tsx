@@ -12,11 +12,9 @@ export const Success = ({ appointment, tenant }: Props) => {
     const employee = tenant.employees.find(
         (employee) => `${employee.id}` === appointment.employee!
     );
-    console.log(employee);
     const service = tenant.services.find(
         (service) => `${service.id}` === appointment.service!
     );
-    console.log(service);
 
     return (
         <div className="flex items-center justify-center flex-col gap-8 p-5 border-t border-l-0 md:border-t-0 md:border-l border-gray-300">

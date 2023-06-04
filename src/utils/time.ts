@@ -36,13 +36,19 @@ export const generateTimeArray = <T extends { label: string; value: string }>(
 };
 
 export const mergeTimeWithDate = (timeValue: string, date: Date): Date => {
-    const [hours, minutes] = timeValue
-        .split(":")
-        .map((part) => parseInt(part, 10));
+    const [hoursStr, minutesStr, period] = timeValue.split(/:| /);
+    const hours = parseInt(hoursStr, 10);
+    const minutes = parseInt(minutesStr, 10);
 
-    const mergedDateTime = set(date, { hours, minutes });
+    let mergedDateTime: Date;
 
-    return mergedDateTime;
+    if (period.toUpperCase() === "PM" && hours !== 12) {
+        return set(date, { hours: hours + 12, minutes });
+    } else if (period.toUpperCase() === "AM" && hours === 12) {
+        return set(date, { hours: 0, minutes });
+    } else {
+        return set(date, { hours, minutes });
+    }
 };
 
 export const formatToISO = (date: Date): string => {

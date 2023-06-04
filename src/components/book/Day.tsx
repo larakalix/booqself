@@ -28,8 +28,9 @@ export const Day = ({ day, index }: Props) => {
 
     const styles = clsx({
         "bg-green-500 text-white": isEqual(day, selectedDay!) && !isToday(day),
-        "text-gray-500 cursor-not-allowed": isPast(day) && isSameMonth(day, new Date()),
+        "text-gray-500 cursor-not-allowed" :isPast(day) && isSameMonth(day, new Date()),
         "text-blue-600 font-bold": isToday(day),
+        "hover:transition-all font-bold hover:border-green-500": !isToday(day) && !isPast(day),
     });
 
     return (
@@ -37,7 +38,7 @@ export const Day = ({ day, index }: Props) => {
             type="button"
             disabled={isPast(day)}
             className={`
-                flex flex-col items-center justify-center p-5 rounded-full h-8 w-8 font-light text-sm
+            border border-transparent flex flex-col items-center justify-center p-5 rounded-full h-8 w-8 font-light text-sm
                 ${index === 0 && colStartClasses[getDay(day)]}
                 ${styles}
             `}

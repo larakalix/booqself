@@ -11,6 +11,7 @@ import { useSuccesBookingStore } from "@/stores/bookingStore";
 import type { IFormField, IFormSelections } from "@/types/forms/form";
 import type { ITenantAttributes } from "@/types/models/tenant";
 import type { IFormAppointment } from "@/types/models/appointment";
+import { intlFormat } from "date-fns";
 
 type Props = {
     selectedDay: Date | null;
@@ -48,11 +49,8 @@ export const AppointmentForm = ({
                         service,
                         time,
                     } = values;
-                    const hour = timeOptions.find((t) => t.value === time)
-                        ?.label!;
-                    const appointmentDay = `${formatToISO(
-                        mergeTimeWithDate(hour, selectedDay)
-                    )}`;
+                    const hour = timeOptions.find((t) => t.value === time)?.label!;
+                    const appointmentDay = `${formatToISO(mergeTimeWithDate(hour, selectedDay))}`;
                     const appointment: IFormAppointment = {
                         name,
                         email,
@@ -62,6 +60,7 @@ export const AppointmentForm = ({
                         service,
                         appointmentDay,
                     };
+
                     const response = await AppointmentService().create(
                         appointment,
                         tenant.id
@@ -69,7 +68,11 @@ export const AppointmentForm = ({
 
                     if (response?.id) {
                         actions.resetForm();
-                        setAppointment(response);
+                        setAppointment({
+                            ...response,
+                            employee,
+                            service,
+                        });
                     }
 
                     actions.setSubmitting(false);
