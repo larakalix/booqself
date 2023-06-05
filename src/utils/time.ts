@@ -14,11 +14,6 @@ export const generateTimeArray = <T extends { label: string; value: string }>(
     let currentTime = start.getTime();
 
     while (currentTime <= end.getTime()) {
-        const timeLabel = new Date(currentTime).toLocaleTimeString([], {
-            hour: "numeric",
-            minute: "2-digit",
-        });
-
         const timeValue = new Date(currentTime).toLocaleTimeString([], {
             hour: "numeric",
             minute: "2-digit",
@@ -36,11 +31,9 @@ export const generateTimeArray = <T extends { label: string; value: string }>(
 };
 
 export const mergeTimeWithDate = (timeValue: string, date: Date): Date => {
-    const [hoursStr, minutesStr, period] = timeValue.split(/:| /);
+    const [hoursStr, minutesStr, period] = timeValue.split(/:|\s(?=(?:AM|PM))/);
     const hours = parseInt(hoursStr, 10);
     const minutes = parseInt(minutesStr, 10);
-
-    let mergedDateTime: Date;
 
     if (period.toUpperCase() === "PM" && hours !== 12) {
         return set(date, { hours: hours + 12, minutes });

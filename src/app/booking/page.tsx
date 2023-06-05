@@ -1,5 +1,4 @@
-// import { Card } from "@tremor/react";
-import { Card, CardContent } from "@/kit/card/Card";
+import { Card } from "@/kit/card/Card";
 import { Apointments, Calendar } from "@/components/book";
 import { TenantService } from "@/services/tenant/TenantService";
 import { AdviceCard } from "@/components/generic/AdviceCard";

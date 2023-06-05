@@ -1,5 +1,5 @@
 import { Children } from "react";
-import { format, intlFormat } from "date-fns";
+import { format, parseISO } from "date-fns";
 import type { IFlatAppointment } from "@/types/models/appointment";
 
 export const Availability = ({
@@ -10,7 +10,7 @@ export const Availability = ({
     appointments: IFlatAppointment[];
 }) => {
     return (
-        <ol className="w-full mt-4 space-y-1 text-sm leading-6 text-gray-500 border-t border-gray-300 pt-8 text-center">
+        <ul className="w-full mt-4 space-y-4 text-sm leading-6 text-gray-500 border-t border-gray-300 pt-8 text-center">
             {appointments.length > 0 ? (
                 Children.toArray(
                     appointments
@@ -20,25 +20,19 @@ export const Availability = ({
                             )
                         )
                         .map((appointment) => (
-                            <h1>
-                                {intlFormat(
-                                    new Date(appointment.appointmentDay),
-                                    {
-                                        month: "long",
-                                        day: "numeric",
-                                        hour: "numeric",
-                                        minute: "numeric",
-                                    },
-                                    {
-                                        locale: "en-US",
-                                    }
-                                )}
-                            </h1>
+                            <li>
+                                <time dateTime={appointment.appointmentDay}>
+                                    {format(
+                                        parseISO(appointment.appointmentDay),
+                                        "h:mma, EEEE, MMMM d, yyyy"
+                                    )}
+                                </time>
+                            </li>
                         ))
                 )
             ) : (
-                <p>No appointments for today.</p>
+                <li>No appointments for today.</li>
             )}
-        </ol>
+        </ul>
     );
 };

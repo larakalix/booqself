@@ -49,8 +49,11 @@ export const AppointmentForm = ({
                         service,
                         time,
                     } = values;
-                    const hour = timeOptions.find((t) => t.value === time)?.label!;
-                    const appointmentDay = `${formatToISO(mergeTimeWithDate(hour, selectedDay))}`;
+                    const hour = timeOptions.find((t) => t.value === time)
+                        ?.label!;
+                    const appointmentDay = `${formatToISO(
+                        mergeTimeWithDate(hour, selectedDay)
+                    )}`;
                     const appointment: IFormAppointment = {
                         name,
                         email,
@@ -60,6 +63,25 @@ export const AppointmentForm = ({
                         service,
                         appointmentDay,
                     };
+
+                    console.log(appointmentDay);
+                    console.log(appointment);
+                    console.log(
+                        intlFormat(
+                            new Date(appointmentDay),
+                            {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                second: "numeric",
+                            },
+                            {
+                                locale: "en-US",
+                            }
+                        )
+                    );
 
                     const response = await AppointmentService().create(
                         appointment,

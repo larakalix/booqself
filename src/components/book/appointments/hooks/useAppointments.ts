@@ -17,10 +17,26 @@ export const useAppointments = ({
         if (!appointments || !selectedDay) return timeOptions;
 
         const existingTimes = appointments
-            .filter((appointment) =>appointment.appointmentDay.startsWith(format(selectedDay, "yyyy-MM-dd")))
-            .map((appointment) => intlFormat(new Date(appointment.appointmentDay), { hour: "numeric", minute: "numeric" }));
+            .filter(({ appointmentDay }) =>
+                appointmentDay.startsWith(format(selectedDay, "yyyy-MM-dd"))
+            )
+            .map(({ appointmentDay }) =>
+                intlFormat(new Date(appointmentDay), {
+                    hour: "numeric",
+                    minute: "numeric",
+                })
+            );
 
-        return timeOptions.filter((time) => !existingTimes.includes(time.label));
+        const filteredTimes = timeOptions.filter(
+            (option) =>
+                !existingTimes.some(
+                    (time) =>
+                        time.replace(/\s/g, "") ===
+                        option.label.replace(/\s/g, "")
+                )
+        );
+
+        return filteredTimes;
     };
 
     const buildDropdownlists = (tenant: ITenantBooking) => {
