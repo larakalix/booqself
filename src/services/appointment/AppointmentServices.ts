@@ -1,17 +1,12 @@
-import { GET_CONFIG } from "../configurations/generic";
+import { GET_CONFIG, POST_CONFIG } from "../configurations/generic";
+import { appendQueryParams } from "@/utils/utils";
 import type {
     IAppointmentAttributes,
     IAppointment,
     IAppointmentFiltered,
     IFormAppointment,
 } from "@/types/models/appointment";
-import type {
-    IEntity,
-    IIdentifier,
-    IMeta,
-    IPaginable,
-} from "@/types/models/generic";
-import { appendQueryParams } from "@/utils/utils";
+import type { IEntity, IMeta, IPaginable } from "@/types/models/generic";
 
 export const AppointmentService = () => {
     const getAppointments = async ({
@@ -47,10 +42,7 @@ export const AppointmentService = () => {
             const res = await fetch(
                 `${process.env.NEXT_STRAPI_URL}/custom-appointment/create`,
                 {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                    ...POST_CONFIG,
                     body: JSON.stringify({
                         ...appointment,
                         tenant,

@@ -12,14 +12,14 @@ type Props = {
     formFields: IFormField[];
     config: IFormConfig;
     isLoading: boolean;
-    submit: (values: any, actions: any) => void;
+    onSubmit: (values: any, actions: any) => void;
 };
 
 export const DynamicForm = ({
     formFields,
     isLoading,
     config,
-    submit,
+    onSubmit,
 }: Props) => {
     const { initialValues, validationSchema } = useDyForm({ formFields });
 
@@ -30,13 +30,10 @@ export const DynamicForm = ({
                     enableReinitialize
                     validationSchema={yup.object(validationSchema)}
                     initialValues={initialValues}
-                    onSubmit={submit}
+                    onSubmit={onSubmit}
                 >
                     {({ errors, isSubmitting, resetForm }) => (
-                        <Form
-                            // className={`grid grid-cols-1 md:grid-cols-${formFields.length + 1} gap-2 md:gap-4`}
-                            className="flex flex-wrap items-stretch justify-start gap-2 md:gap-4 w-full"
-                        >
+                        <Form className="flex flex-wrap items-stretch justify-start gap-2 md:gap-4 w-full">
                             {Children.toArray(
                                 formFields.map((field) => (
                                     <FormField formField={field} />

@@ -74,7 +74,7 @@ export const AppointmentsWithFilter = () => {
                     areFilters: true,
                 }}
                 isLoading={loading}
-                submit={handleSubtmit}
+                onSubmit={handleSubtmit}
             />
 
             {!appointments || appointments.data.length === 0 ? (

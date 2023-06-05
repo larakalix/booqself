@@ -67,7 +67,7 @@ export const ServicesWithFilter = () => {
                     areFilters: true,
                 }}
                 isLoading={loading}
-                submit={handleSubtmit}
+                onSubmit={handleSubtmit}
             />
 
             {!services || services.data.length === 0 ? (

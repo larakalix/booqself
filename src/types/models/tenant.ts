@@ -22,6 +22,10 @@ export type ITenantAttributes = IIsActive &
         name: string;
         email: string;
         tenantId: string;
+        cloverMerchantId?: string;
+        openingTime: Date;
+        closingTime: Date;
+        minutesInterval: number;
     };
 
 export type ITenantBoilerplate = ITenantAttributes & {

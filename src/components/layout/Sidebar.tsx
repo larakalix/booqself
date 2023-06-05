@@ -20,6 +20,7 @@ const links: NavItems[] = [
     { label: "Employees", route: ROUTES.EMPLOYEES },
     { label: "Services", route: ROUTES.SERVICES },
     { label: "Reports", route: ROUTES.REPORTS },
+    { label: "Settings", route: ROUTES.SETTINGS },
 ];
 
 export const Sidebar = () => {

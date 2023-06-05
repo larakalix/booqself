@@ -73,7 +73,7 @@ export const EmployeesWithFilter = () => {
                     areFilters: true,
                 }}
                 isLoading={loading}
-                submit={handleSubtmit}
+                onSubmit={handleSubtmit}
             />
 
             {!employees || employees.data.length === 0 ? (

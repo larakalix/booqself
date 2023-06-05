@@ -74,7 +74,7 @@ export const ClientsWithFilter = () => {
                     areFilters: true,
                 }}
                 isLoading={loading}
-                submit={handleSubmit}
+                onSubmit={handleSubmit}
             />
 
             {!clients || clients.data.length === 0 ? (

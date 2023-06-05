@@ -3,6 +3,7 @@
 import { Children } from "react";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
+import { intlFormat } from "date-fns";
 import { useRegisterForm } from "../register/hooks/useRegisterForm";
 import { FormField } from "@/kit/form/FormField";
 import { formatToISO, mergeTimeWithDate } from "@/utils/time";
@@ -11,7 +12,6 @@ import { useSuccesBookingStore } from "@/stores/bookingStore";
 import type { IFormField, IFormSelections } from "@/types/forms/form";
 import type { ITenantAttributes } from "@/types/models/tenant";
 import type { IFormAppointment } from "@/types/models/appointment";
-import { intlFormat } from "date-fns";
 
 type Props = {
     selectedDay: Date | null;
@@ -51,9 +51,15 @@ export const AppointmentForm = ({
                     } = values;
                     const hour = timeOptions.find((t) => t.value === time)
                         ?.label!;
-                    const appointmentDay = `${formatToISO(
-                        mergeTimeWithDate(hour, selectedDay)
-                    )}`;
+                    // const appointmentDay = `${formatToISO(
+                    //     mergeTimeWithDate(hour, selectedDay, "America/New_York")
+                    // )}`;
+                    // const appointmentDay = mergeTimeWithDate(hour, selectedDay, "America/New_York");
+                    const appointmentDay = mergeTimeWithDate(
+                        hour,
+                        selectedDay,
+                        "America/New_York"
+                    );
                     const appointment: IFormAppointment = {
                         name,
                         email,
@@ -64,10 +70,10 @@ export const AppointmentForm = ({
                         appointmentDay,
                     };
 
-                    console.log(appointmentDay);
-                    console.log(appointment);
-                    console.log(
-                        intlFormat(
+                    console.log("__DATE_IN with America/New_York", {
+                        appointmentDay,
+                        appointment,
+                        intl: intlFormat(
                             new Date(appointmentDay),
                             {
                                 year: "numeric",
@@ -76,12 +82,13 @@ export const AppointmentForm = ({
                                 hour: "numeric",
                                 minute: "numeric",
                                 second: "numeric",
+                                timeZone: "America/New_York",
                             },
                             {
                                 locale: "en-US",
                             }
-                        )
-                    );
+                        ),
+                    });
 
                     const response = await AppointmentService().create(
                         appointment,

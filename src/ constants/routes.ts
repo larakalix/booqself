@@ -9,6 +9,7 @@ export const ROUTES = {
     EMPLOYEES: "/dashboard/employees",
     SERVICES: "/dashboard/services",
     REPORTS: "/dashboard/reports",
+    SETTINGS: "/dashboard/settings",
     // ----
     PROFILE: "/profile",
     NOT_FOUND: "/not-found",
