@@ -1,4 +1,4 @@
-import { GET_CONFIG, POST_CONFIG } from "../configurations/generic";
+import { GET_CONFIG, PUT_CONFIG } from "../configurations/generic";
 import { appendQueryParams } from "@/utils/utils";
 import type {
     ITenantAttributes,
@@ -41,20 +41,20 @@ export const TenantService = () => {
     };
 
     const update = async (
-        tenant: Omit<ITenantAttributes, "createdAt">,
-        id: number
+        id: number,
+        tenant: Omit<ITenantAttributes, "createdAt">
     ) => {
         const res = await fetch(
             `${process.env.NEXT_STRAPI_URL}/custom-tenant/update/${id}`,
             {
-                ...POST_CONFIG,
-                body: JSON.stringify({ tenant }),
+                ...PUT_CONFIG,
+                body: JSON.stringify(tenant),
             }
         );
 
         if (!res.ok) throw new Error("Failed to create appointment");
 
-        const data = await res.json();
+        const { data } = await res.json();
 
         return data as ITenantAttributes;
     };

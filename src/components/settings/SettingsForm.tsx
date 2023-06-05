@@ -6,6 +6,7 @@ import { FormField } from "@/kit/form/FormField";
 import type { IFormField } from "@/types/forms/form";
 import type { ITenantAttributes } from "@/types/models/tenant";
 import { TenantService } from "@/services/tenant/TenantService";
+import { useTenantStore } from "@/stores/tenantStore";
 
 type Props = {
     loading: boolean;
@@ -15,6 +16,7 @@ type Props = {
 
 export const SettingsForm = ({ loading, tenant, formFields }: Props) => {
     const { initialValues, validationSchema } = useRegisterForm({ formFields });
+    const { setTenant } = useTenantStore((state) => state);
 
     return (
         <div className="flex flex-col w-full p-4 md:p-14 xl:max-w-4xl">
@@ -35,27 +37,22 @@ export const SettingsForm = ({ loading, tenant, formFields }: Props) => {
                         isActive,
                     } = values;
 
-                    console.log(values);
+                    const response = await TenantService().update(tenant?.id, {
+                        id: tenant.id,
+                        tenantId: tenant.tenantId,
+                        name,
+                        email,
+                        cloverMerchantId,
+                        minutesInterval,
+                        openingTime,
+                        closingTime,
+                        isActive,
+                    });
 
-                    // const response = await TenantService().update(
-                    //     {
-                    //         id: tenant.id,
-                    //         tenantId: tenant.tenantId,
-                    //         name,
-                    //         email,
-                    //         cloverMerchantId,
-                    //         minutesInterval,
-                    //         openingTime,
-                    //         closingTime,
-                    //         isActive,
-                    //     },
-                    //     tenant?.id
-                    // );
-
-                    // if (response?.id) {
-                    //     //actions.resetForm();
-                    //     console.log(response);
-                    // }
+                    if (response?.id) {
+                        actions.resetForm();
+                        setTenant(response);
+                    }
 
                     actions.setSubmitting(false);
                 }}

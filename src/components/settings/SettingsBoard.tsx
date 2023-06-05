@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { DynamicForm } from "../generic/form/DynamicForm";
 import { TenantService } from "@/services/tenant/TenantService";
 import { useTenantStore } from "@/stores/tenantStore";
 import { SettingsForm } from "./SettingsForm";
@@ -23,7 +23,6 @@ export const SettingsBoard = () => {
 
     useEffect(() => {
         (async () => {
-            // Retreive Tenant Settings
             const { tenant } = await TenantService().getTenantById({
                 id: process.env.NEXT_APP_CLIENT_ID!,
                 justTenant: true,
@@ -59,20 +58,20 @@ export const SettingsBoard = () => {
                         label: "Minutes Interval",
                         type: "text",
                     },
-                    {
-                        name: "openingTime",
-                        label: "Opening Time",
-                        type: "dropdown",
-                        required: true,
-                        options: timeOptions,
-                    },
-                    {
-                        name: "closingTime",
-                        label: "Closing Time",
-                        type: "dropdown",
-                        required: true,
-                        options: timeOptions,
-                    },
+                    // {
+                    //     name: "openingTime",
+                    //     label: "Opening Time",
+                    //     type: "dropdown",
+                    //     required: false,
+                    //     options: timeOptions,
+                    // },
+                    // {
+                    //     name: "closingTime",
+                    //     label: "Closing Time",
+                    //     type: "dropdown",
+                    //     required: false,
+                    //     options: timeOptions,
+                    // },
                     {
                         name: "isActive",
                         label: "Active/Inactive",

@@ -70,26 +70,6 @@ export const AppointmentForm = ({
                         appointmentDay,
                     };
 
-                    console.log("__DATE_IN with America/New_York", {
-                        appointmentDay,
-                        appointment,
-                        intl: intlFormat(
-                            new Date(appointmentDay),
-                            {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                                hour: "numeric",
-                                minute: "numeric",
-                                second: "numeric",
-                                timeZone: "America/New_York",
-                            },
-                            {
-                                locale: "en-US",
-                            }
-                        ),
-                    });
-
                     const response = await AppointmentService().create(
                         appointment,
                         tenant.id
