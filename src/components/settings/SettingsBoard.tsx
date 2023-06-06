@@ -58,6 +58,11 @@ export const SettingsBoard = () => {
                         label: "Minutes Interval",
                         type: "text",
                     },
+                    {
+                        name: "timeZone",
+                        label: "Time Zone",
+                        type: "text",
+                    },
                     // {
                     //     name: "openingTime",
                     //     label: "Opening Time",

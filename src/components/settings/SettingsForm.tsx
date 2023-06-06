@@ -35,6 +35,7 @@ export const SettingsForm = ({ loading, tenant, formFields }: Props) => {
                         openingTime,
                         closingTime,
                         isActive,
+                        timeZone,
                     } = values;
 
                     const response = await TenantService().update(tenant?.id, {
@@ -47,6 +48,7 @@ export const SettingsForm = ({ loading, tenant, formFields }: Props) => {
                         openingTime,
                         closingTime,
                         isActive,
+                        timeZone,
                     });
 
                     if (response?.id) {
