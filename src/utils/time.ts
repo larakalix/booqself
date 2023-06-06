@@ -56,10 +56,13 @@ export const mergeTimeWithDate = (
 
     if (period.toUpperCase() === "PM" && hours !== 12) {
         date.setHours(hours + 12);
+        date.setMinutes(minutes);
     } else if (period.toUpperCase() === "AM" && hours === 12) {
         date.setHours(0);
+        date.setMinutes(minutes);
     } else {
         date.setHours(hours);
+        date.setMinutes(minutes);
     }
 
     const zonedDate = utcToZonedTime(date, timeZone);

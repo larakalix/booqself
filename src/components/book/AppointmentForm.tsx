@@ -51,14 +51,11 @@ export const AppointmentForm = ({
                     } = values;
                     const hour = timeOptions.find((t) => t.value === time)
                         ?.label!;
-                    // const appointmentDay = `${formatToISO(
-                    //     mergeTimeWithDate(hour, selectedDay, "America/New_York")
-                    // )}`;
-                    // const appointmentDay = mergeTimeWithDate(hour, selectedDay, "America/New_York");
+
                     const appointmentDay = mergeTimeWithDate(
                         hour,
                         selectedDay,
-                        "America/New_York"
+                        tenant.timeZone ?? "America/New_York"
                     );
                     const appointment: IFormAppointment = {
                         name,

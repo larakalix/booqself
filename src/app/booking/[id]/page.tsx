@@ -3,6 +3,8 @@ import { Apointments, Calendar } from "@/components/book";
 import { TenantService } from "@/services/tenant/TenantService";
 import { AdviceCard } from "@/components/generic/AdviceCard";
 
+export const revalidate = 60;
+
 type Props = {
     params: { id: string };
 };
@@ -11,7 +13,7 @@ export default async function BookingById({ params: { id } }: Props) {
     const { tenant } = await TenantService().getTenantById({
         id,
     });
-
+ 
     if (!tenant) {
         return (
             <AdviceCard

@@ -26,6 +26,7 @@ export type ITenantAttributes = IIsActive &
         openingTime: Date;
         closingTime: Date;
         minutesInterval: number;
+        timeZone: string;
     };
 
 export type ITenantBoilerplate = ITenantAttributes & {

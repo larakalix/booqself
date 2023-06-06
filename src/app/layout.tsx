@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "Booqself",
@@ -36,7 +36,7 @@ export default async function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={font.className}>
                 <main className="flex items-start">{children}</main>
             </body>
         </html>
