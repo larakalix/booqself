@@ -21,6 +21,7 @@ export const Landing = () => {
             merchant_id: searchParams.get("merchant_id") ?? undefined,
             employee_id: searchParams.get("employee_id") ?? undefined,
             client_id: searchParams.get("client_id") ?? undefined,
+            client_secret: searchParams.get("client_secret") ?? undefined,
             code: searchParams.get("code") ?? undefined,
         };
 

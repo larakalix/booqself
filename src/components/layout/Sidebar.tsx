@@ -36,6 +36,11 @@ export const Sidebar = () => {
         router.push(route);
     };
 
+    const handleLogout = () => {
+        removeSession();
+        router.push(ROUTES.HOME);
+    };
+
     const handleClickOutside = () => {
         if (toogle) setToogle(false);
     };
@@ -86,7 +91,7 @@ export const Sidebar = () => {
                         <button
                             type="button"
                             className="bg-transparent text-link-gray text-[0.875rem] font-medium leading-[1.25rem] hover:bg-label-gray-active block w-full p-2 rounded-md text-start"
-                            onClick={() => removeSession()}
+                            onClick={handleLogout}
                         >
                             Log out
                         </button>
