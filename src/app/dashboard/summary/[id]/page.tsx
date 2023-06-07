@@ -14,7 +14,7 @@ export default async function SummaryPage({
     if (client) {
         appointments = await AppointmentService().getClientAppointments(
             process.env.NEXT_APP_CLIENT_ID!,
-            client.email
+            client.emailAddressesList[0].emailAddress
         );
     }
 
