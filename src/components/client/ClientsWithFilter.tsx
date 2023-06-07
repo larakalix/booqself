@@ -20,10 +20,6 @@ export const ClientsWithFilter = () => {
             setLoading(true);
             const { name, lastName, email, phone } = values;
 
-            // const filteredClients = await ClientService().getByFilter(
-            //     process.env.NEXT_APP_CLIENT_ID!,
-            //     { name, lastName, email, phone, offset: 0, limit: 50 }
-            // );
             const rows = await ClientService().getCloverClients(
                 params?.merchant_id!,
                 process.env.NEXT_CLOVER_APP_SECRET!
@@ -37,10 +33,6 @@ export const ClientsWithFilter = () => {
 
     useEffect(() => {
         (async () => {
-            // const filteredClients = await ClientService().getByFilter(
-            //     process.env.NEXT_APP_CLIENT_ID!,
-            //     { offset: 0, limit: 50 }
-            // );
             const rows = await ClientService().getCloverClients(
                 params?.merchant_id!,
                 process.env.NEXT_CLOVER_APP_SECRET!

@@ -19,10 +19,6 @@ export const ServicesWithFilter = () => {
             setLoading(true);
             const { name, price, description } = values;
 
-            // const result = await ServiceService().getByFilter(
-            //     process.env.NEXT_APP_CLIENT_ID!,
-            //     { name, price, description, offset: 0, limit: 50 }
-            // );
             const rows = await ServiceService().getCloverServices(
                 params?.merchant_id!,
                 process.env.NEXT_CLOVER_APP_SECRET!
@@ -36,10 +32,6 @@ export const ServicesWithFilter = () => {
 
     useEffect(() => {
         (async () => {
-            // const rows = await ServiceService().getByFilter(
-            //     process.env.NEXT_APP_CLIENT_ID!,
-            //     { offset: 0, limit: 50 }
-            // );
             const rows = await ServiceService().getCloverServices(
                 params?.merchant_id!,
                 process.env.NEXT_CLOVER_APP_SECRET!

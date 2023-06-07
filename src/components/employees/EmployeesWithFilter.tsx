@@ -19,10 +19,6 @@ export const EmployeesWithFilter = () => {
             setLoading(true);
             const { name, email, nickname, pin } = values;
 
-            // const rows = await EmployeeService().getByFilter(
-            //     process.env.NEXT_APP_CLIENT_ID!,
-            //     { name, email, nickname, pin, offset: 0, limit: 50 }
-            // );
             const rows = await EmployeeService().getCloverEmployees(
                 params?.merchant_id!,
                 process.env.NEXT_CLOVER_APP_SECRET!
@@ -36,10 +32,6 @@ export const EmployeesWithFilter = () => {
 
     useEffect(() => {
         (async () => {
-            // const rows = await EmployeeService().getByFilter(
-            //     process.env.NEXT_APP_CLIENT_ID!,
-            //     { offset: 0, limit: 50 }
-            // );
             const rows = await EmployeeService().getCloverEmployees(
                 params?.merchant_id!,
                 process.env.NEXT_CLOVER_APP_SECRET!
