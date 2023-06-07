@@ -7,15 +7,12 @@ import { useEmployeesFilterStore } from "@/stores/filterStore";
 import { EmployeeService } from "@/services/employee/EmployeeService";
 import { DynamicForm } from "../generic/form/DynamicForm";
 import { Employees } from "./Employees";
+import { useAuthStore } from "@/stores/authStore";
 
-export const EmployeesWithFilter = ({
-    merchantId,
-    apiKey,
-}: {
-    merchantId: string;
-    apiKey: string;
-}) => {
-    const { loading, employees, setLoading, setEmployees } = useEmployeesFilterStore((state) => state);
+export const EmployeesWithFilter = () => {
+    const { params } = useAuthStore((state) => state);
+    const { loading, employees, setLoading, setEmployees } =
+        useEmployeesFilterStore((state) => state);
 
     const handleSubtmit = useMemo(
         () => async (values: any, actions: any) => {
@@ -27,8 +24,8 @@ export const EmployeesWithFilter = ({
             //     { name, email, nickname, pin, offset: 0, limit: 50 }
             // );
             const rows = await EmployeeService().getCloverEmployees(
-                merchantId,
-                apiKey
+                params?.merchant_id!,
+                process.env.NEXT_CLOVER_APP_SECRET!
             );
 
             if (rows) setEmployees(rows);
@@ -44,8 +41,8 @@ export const EmployeesWithFilter = ({
             //     { offset: 0, limit: 50 }
             // );
             const rows = await EmployeeService().getCloverEmployees(
-                merchantId,
-                apiKey
+                params?.merchant_id!,
+                process.env.NEXT_CLOVER_APP_SECRET!
             );
 
             if (rows) setEmployees(rows);

@@ -7,14 +7,10 @@ import { useOrdersFilterStore } from "@/stores/filterStore";
 import { OrderService } from "@/services/order/OrderService";
 import { DynamicForm } from "../generic/form/DynamicForm";
 import { Orders } from "./Orders";
+import { useAuthStore } from "@/stores/authStore";
 
-export const OrdersWithFilter = ({
-    merchantId,
-    apiKey,
-}: {
-    merchantId: string;
-    apiKey: string;
-}) => {
+export const OrdersWithFilter = () => {
+    const { params } = useAuthStore((state) => state);
     const { loading, orders, setLoading, setOrders } = useOrdersFilterStore(
         (state) => state
     );
@@ -25,8 +21,8 @@ export const OrdersWithFilter = ({
             const { currency, total, nickname, pin } = values;
 
             const rows = await OrderService().getCloverOrders(
-                merchantId,
-                apiKey
+                params?.merchant_id!,
+                process.env.NEXT_CLOVER_APP_SECRET!
             );
 
             if (rows) setOrders(rows);
@@ -38,8 +34,8 @@ export const OrdersWithFilter = ({
     useEffect(() => {
         (async () => {
             const rows = await OrderService().getCloverOrders(
-                merchantId,
-                apiKey
+                params?.merchant_id!,
+                process.env.NEXT_CLOVER_APP_SECRET!
             );
 
             if (rows) setOrders(rows);

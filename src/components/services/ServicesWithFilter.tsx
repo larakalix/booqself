@@ -7,14 +7,10 @@ import { useServicesFilterStore } from "@/stores/filterStore";
 import { ServiceService } from "@/services/service/ServiceService";
 import { DynamicForm } from "../generic/form/DynamicForm";
 import { Services } from "./Services";
+import { useAuthStore } from "@/stores/authStore";
 
-export const ServicesWithFilter = ({
-    merchantId,
-    apiKey,
-}: {
-    merchantId: string;
-    apiKey: string;
-}) => {
+export const ServicesWithFilter = () => {
+    const { params } = useAuthStore((state) => state);
     const { loading, services, setLoading, setServices } =
         useServicesFilterStore((state) => state);
 
@@ -28,8 +24,8 @@ export const ServicesWithFilter = ({
             //     { name, price, description, offset: 0, limit: 50 }
             // );
             const rows = await ServiceService().getCloverServices(
-                merchantId,
-                apiKey
+                params?.merchant_id!,
+                process.env.NEXT_CLOVER_APP_SECRET!
             );
 
             if (rows) setServices(rows);
@@ -45,8 +41,8 @@ export const ServicesWithFilter = ({
             //     { offset: 0, limit: 50 }
             // );
             const rows = await ServiceService().getCloverServices(
-                merchantId,
-                apiKey
+                params?.merchant_id!,
+                process.env.NEXT_CLOVER_APP_SECRET!
             );
 
             if (rows) setServices(rows);

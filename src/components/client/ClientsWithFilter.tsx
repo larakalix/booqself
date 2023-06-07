@@ -7,14 +7,10 @@ import { Clients } from "../home";
 import { useClientsFilterStore } from "@/stores/filterStore";
 import { ClientService } from "@/services/client/ClientService";
 import { EmptyResults } from "../generic/EmptyResults";
+import { useAuthStore } from "@/stores/authStore";
 
-export const ClientsWithFilter = ({
-    merchantId,
-    apiKey,
-}: {
-    merchantId: string;
-    apiKey: string;
-}) => {
+export const ClientsWithFilter = () => {
+    const { params } = useAuthStore((state) => state);
     const { loading, clients, setLoading, setClients } = useClientsFilterStore(
         (state) => state
     );
@@ -29,8 +25,8 @@ export const ClientsWithFilter = ({
             //     { name, lastName, email, phone, offset: 0, limit: 50 }
             // );
             const rows = await ClientService().getCloverClients(
-                merchantId,
-                apiKey
+                params?.merchant_id!,
+                process.env.NEXT_CLOVER_APP_SECRET!
             );
 
             if (rows) setClients(rows);
@@ -46,8 +42,8 @@ export const ClientsWithFilter = ({
             //     { offset: 0, limit: 50 }
             // );
             const rows = await ClientService().getCloverClients(
-                merchantId,
-                apiKey
+                params?.merchant_id!,
+                process.env.NEXT_CLOVER_APP_SECRET!
             );
 
             if (rows) setClients(rows);
