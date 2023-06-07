@@ -1,7 +1,7 @@
 import { GET_CONFIG } from "../configurations/generic";
 import { appendQueryParams } from "@/utils/utils";
 import type { IPaginable } from "@/types/models/generic";
-import type { IEmployeeFiltered } from "@/types/models/employee";
+import type { IEmployee, IEmployeeFiltered } from "@/types/models/employee";
 
 export const EmployeeService = () => {
     const getByFilter = async (
@@ -24,7 +24,7 @@ export const EmployeeService = () => {
                 { ...params }
             );
             const res = await fetch(URI, GET_CONFIG);
-            if (!res.ok) throw new Error("Failed to create appointment");
+            if (!res.ok) throw new Error("Failed to get employees");
 
             const { data, meta } = await res.json();
 
@@ -34,7 +34,29 @@ export const EmployeeService = () => {
         }
     };
 
+    const getCloverEmployees = async (merchantId: string, apiKey: string) => {
+        try {
+            const URI = `${process.env.NEXT_CLOVER_API_URL}/employees`;
+            const res = await fetch(URI, {
+                ...GET_CONFIG,
+                headers: {
+                    ...GET_CONFIG.headers,
+                    authorization: `Bearer ${apiKey}`,
+                    merchantid: merchantId,
+                },
+            });
+            if (!res.ok) throw new Error("Failed to get employees");
+
+            const { elements } = await res.json();
+
+            return elements as IEmployee[];
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
     return {
         getByFilter,
+        getCloverEmployees,
     };
 };

@@ -1,12 +1,23 @@
 import type { ICreatedAt, IMeta } from "./generic";
 
 export type IServiceAttributes = {
+    hidden: boolean;
+    available: boolean;
+    autoManage: boolean;
     name: string;
-    description: string;
-    duration: string;
-    price: string;
-    isActive: boolean;
+    price: number;
+    parsedPrice: string;
+    priceType: string;
+    defaultTaxRates: boolean;
+    cost: number;
+    isRevenue: boolean;
+    modifiedTime: number;
 };
+
+export enum InventoryPriceType {
+    FIXED = "FIXED",
+    VARIABLE = "VARIABLE",
+}
 
 export interface IService extends IServiceAttributes, ICreatedAt {
     id: number;

@@ -8,6 +8,7 @@ export const ROUTES = {
     APPOINTMENTS: "/dashboard/appointments",
     EMPLOYEES: "/dashboard/employees",
     SERVICES: "/dashboard/services",
+    ORDERS: "/dashboard/orders",
     REPORTS: "/dashboard/reports",
     SETTINGS: "/dashboard/settings",
     // ----

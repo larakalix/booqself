@@ -8,7 +8,13 @@ import { ServiceService } from "@/services/service/ServiceService";
 import { DynamicForm } from "../generic/form/DynamicForm";
 import { Services } from "../home/Services";
 
-export const ServicesWithFilter = () => {
+export const ServicesWithFilter = ({
+    merchantId,
+    apiKey,
+}: {
+    merchantId: string;
+    apiKey: string;
+}) => {
     const { loading, services, setLoading, setServices } =
         useServicesFilterStore((state) => state);
 
@@ -17,12 +23,16 @@ export const ServicesWithFilter = () => {
             setLoading(true);
             const { name, price, description } = values;
 
-            const result = await ServiceService().getByFilter(
-                process.env.NEXT_APP_CLIENT_ID!,
-                { name, price, description, offset: 0, limit: 50 }
+            // const result = await ServiceService().getByFilter(
+            //     process.env.NEXT_APP_CLIENT_ID!,
+            //     { name, price, description, offset: 0, limit: 50 }
+            // );
+            const rows = await ServiceService().getCloverServices(
+                merchantId,
+                apiKey
             );
 
-            if (result) setServices(result);
+            if (rows) setServices(rows);
             actions.setSubmitting(false);
         },
         []
@@ -30,12 +40,16 @@ export const ServicesWithFilter = () => {
 
     useEffect(() => {
         (async () => {
-            const result = await ServiceService().getByFilter(
-                process.env.NEXT_APP_CLIENT_ID!,
-                { offset: 0, limit: 50 }
+            // const rows = await ServiceService().getByFilter(
+            //     process.env.NEXT_APP_CLIENT_ID!,
+            //     { offset: 0, limit: 50 }
+            // );
+            const rows = await ServiceService().getCloverServices(
+                merchantId,
+                apiKey
             );
 
-            if (result) setServices(result);
+            if (rows) setServices(rows);
         })();
     }, []);
 
@@ -70,10 +84,10 @@ export const ServicesWithFilter = () => {
                 onSubmit={handleSubtmit}
             />
 
-            {!services || services.data.length === 0 ? (
+            {!services || services.length === 0 ? (
                 <EmptyResults text="No services found" />
             ) : (
-                <Services data={services.data} meta={services.meta} />
+                <Services data={services} />
             )}
         </div>
     );

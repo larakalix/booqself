@@ -8,7 +8,13 @@ import { useClientsFilterStore } from "@/stores/filterStore";
 import { ClientService } from "@/services/client/ClientService";
 import { EmptyResults } from "../generic/EmptyResults";
 
-export const ClientsWithFilter = () => {
+export const ClientsWithFilter = ({
+    merchantId,
+    apiKey,
+}: {
+    merchantId: string;
+    apiKey: string;
+}) => {
     const { loading, clients, setLoading, setClients } = useClientsFilterStore(
         (state) => state
     );
@@ -18,12 +24,16 @@ export const ClientsWithFilter = () => {
             setLoading(true);
             const { name, lastName, email, phone } = values;
 
-            const filteredClients = await ClientService().getByFilter(
-                process.env.NEXT_APP_CLIENT_ID!,
-                { name, lastName, email, phone, offset: 0, limit: 50 }
+            // const filteredClients = await ClientService().getByFilter(
+            //     process.env.NEXT_APP_CLIENT_ID!,
+            //     { name, lastName, email, phone, offset: 0, limit: 50 }
+            // );
+            const rows = await ClientService().getCloverClients(
+                merchantId,
+                apiKey
             );
 
-            if (filteredClients) setClients(filteredClients);
+            if (rows) setClients(rows);
             actions.setSubmitting(false);
         },
         []
@@ -31,12 +41,16 @@ export const ClientsWithFilter = () => {
 
     useEffect(() => {
         (async () => {
-            const filteredClients = await ClientService().getByFilter(
-                process.env.NEXT_APP_CLIENT_ID!,
-                { offset: 0, limit: 50 }
+            // const filteredClients = await ClientService().getByFilter(
+            //     process.env.NEXT_APP_CLIENT_ID!,
+            //     { offset: 0, limit: 50 }
+            // );
+            const rows = await ClientService().getCloverClients(
+                merchantId,
+                apiKey
             );
 
-            if (filteredClients) setClients(filteredClients);
+            if (rows) setClients(rows);
         })();
     }, []);
 
@@ -77,10 +91,10 @@ export const ClientsWithFilter = () => {
                 onSubmit={handleSubmit}
             />
 
-            {!clients || clients.data.length === 0 ? (
+            {!clients || clients.length === 0 ? (
                 <EmptyResults text="No appointments found" />
             ) : (
-                <Clients data={clients.data} meta={clients.meta} />
+                <Clients data={clients} />
             )}
         </div>
     );

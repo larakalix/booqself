@@ -12,7 +12,10 @@ export default function ServicesPage() {
                 </div>
             </header>
 
-            <ServicesWithFilter />
+            <ServicesWithFilter
+                merchantId="S4SA1MP87BQQ1"
+                apiKey="f76b3aa6-aa0a-d159-6426-7bd38453d5c4"
+            />
         </PageWrapper>
     );
 }

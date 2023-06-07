@@ -1,11 +1,22 @@
-import type { ICreatedAt, IMeta } from "./generic";
+import type { ICreatedAt, IElement, IMeta } from "./generic";
 
 export type IClientAttributes = {
-    name: string;
+    firstName: string;
     lastName: string;
-    email: string;
-    phone: string;
+    marketingAllowed: boolean;
+    customerSince: number;
+    emailAddressesList: EmailAddressesElement[];
+    phoneNumbersList: PhoneNumbersElement[];
 };
+
+export interface EmailAddressesElement {
+    emailAddress: string;
+    primaryEmail: boolean;
+}
+
+export interface PhoneNumbersElement {
+    phoneNumber: string;
+}
 
 export interface IClient extends IClientAttributes, ICreatedAt {
     id: number;

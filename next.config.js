@@ -12,6 +12,7 @@ const nextConfig = {
         NEXT_API_URL: process.env.NEXT_API_URL,
         NEXT_APP_CLIENT_ID: process.env.NEXT_APP_CLIENT_ID,
         NEXT_STRAPI_URL: process.env.NEXT_STRAPI_URL,
+        NEXT_CLOVER_API_URL: process.env.NEXT_CLOVER_API_URL,
         NEXT_INTEGRATION_KEY: process.env.NEXT_INTEGRATION_KEY,
         NEXT_DOCUSIGN_API: process.env.NEXT_DOCUSIGN_API,
         NEXT_EMAIL: process.env.NEXT_EMAIL,

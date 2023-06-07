@@ -75,9 +75,31 @@ export const ClientService = () => {
         }
     };
 
+    const getCloverClients = async (merchantId: string, apiKey: string) => {
+        try {
+            const URI = `${process.env.NEXT_CLOVER_API_URL}/customers`;
+            const res = await fetch(URI, {
+                ...GET_CONFIG,
+                headers: {
+                    ...GET_CONFIG.headers,
+                    authorization: `Bearer ${apiKey}`,
+                    merchantid: merchantId,
+                },
+            });
+            if (!res.ok) throw new Error("Failed to create appointment");
+
+            const { elements } = await res.json();
+
+            return elements as IClient[];
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
     return {
         getClientById,
         getClients,
         getByFilter,
+        getCloverClients,
     };
 };

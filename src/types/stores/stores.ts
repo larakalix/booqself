@@ -1,7 +1,8 @@
 import type { IAppointmentFiltered } from "../models/appointment";
-import type { IClientFiltered } from "../models/client";
-import type { IEmployeeFiltered } from "../models/employee";
-import type { IServiceFiltered } from "../models/service";
+import type { IClient } from "../models/client";
+import type { IEmployee } from "../models/employee";
+import type { IOrder } from "../models/order";
+import type { IService } from "../models/service";
 
 type IGenericStore = {
     loading: boolean;
@@ -14,16 +15,21 @@ export type AppointmentsFilterStoreProps = IGenericStore & {
 };
 
 export type ClientsFilterStoreProps = IGenericStore & {
-    clients: IClientFiltered | null;
-    setClients: (clients: IClientFiltered) => void;
+    clients: IClient[];
+    setClients: (clients: IClient[]) => void;
 };
 
 export type EmployeesFilterStoreProps = IGenericStore & {
-    employees: IEmployeeFiltered | null;
-    setEmployees: (employees: IEmployeeFiltered) => void;
+    employees: IEmployee[];
+    setEmployees: (employees: IEmployee[]) => void;
 };
 
 export type ServicesFilterStoreProps = IGenericStore & {
-    services: IServiceFiltered | null;
-    setServices: (services: IServiceFiltered) => void;
+    services: IService[];
+    setServices: (services: IService[]) => void;
+};
+
+export type OrdersFilterStoreProps = IGenericStore & {
+    orders: IOrder[];
+    setOrders: (orders: IOrder[]) => void;
 };

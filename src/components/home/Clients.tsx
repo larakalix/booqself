@@ -12,15 +12,19 @@ import {
 import {
     AiOutlineCheckCircle,
     AiOutlineExclamationCircle,
+    AiOutlinePhone,
 } from "react-icons/ai";
 import { GenericTableHead } from "../generic/GenericTableHead";
-import type { ITenantBoilerplateChunk } from "@/types/models/tenant";
-import { IClient } from "@/types/models/client";
+import type { IClient } from "@/types/models/client";
+import type { IMeta } from "@/types/models/generic";
 
 export const Clients = ({
     data: clients,
     meta,
-}: ITenantBoilerplateChunk<IClient>) => {
+}: {
+    data: IClient[];
+    meta?: IMeta;
+}) => {
     if (!clients || clients?.length === 0) return null;
 
     return (
@@ -31,11 +35,10 @@ export const Clients = ({
             <Table className="mt-5">
                 <GenericTableHead
                     headers={[
-                        "Name",
+                        "First Name",
                         "Last Name",
                         "Email",
                         "Phone",
-                        "Contract",
                         "Actions",
                     ]}
                 />
@@ -44,28 +47,40 @@ export const Clients = ({
                         clients.map((client) => (
                             <TableRow>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Text>{client.name}</Text>
+                                    <Text>{client.firstName}</Text>
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
                                     <Text>{client.lastName}</Text>
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Text>{client.email}</Text>
+                                    {Children.toArray(
+                                        client.emailAddressesList.map(
+                                            ({
+                                                emailAddress,
+                                                primaryEmail,
+                                            }) => (
+                                                <Text className="flex items-center gap-2">
+                                                    {primaryEmail ? (
+                                                        <AiOutlineCheckCircle className="inline-block text-green-500" />
+                                                    ) : (
+                                                        <AiOutlineCheckCircle className="inline-block text-gray-300" />
+                                                    )}
+                                                    {emailAddress}
+                                                </Text>
+                                            )
+                                        )
+                                    )}
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Text>{client.phone}</Text>
-                                </TableCell>
-                                <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    {client.id === 1 ? (
-                                        <span className="flex items-center gap-2 text-sm whitespace-nowrap">
-                                            <AiOutlineCheckCircle className="text-green-500" />{" "}
-                                            Contract uploaded
-                                        </span>
-                                    ) : (
-                                        <span className="flex items-center gap-2 text-sm whitespace-nowrap">
-                                            <AiOutlineExclamationCircle className="text-yellow-500" />{" "}
-                                            No contract yet
-                                        </span>
+                                    {Children.toArray(
+                                        client.phoneNumbersList.map(
+                                            ({ phoneNumber }) => (
+                                                <Text className="flex items-center gap-2">
+                                                    <AiOutlinePhone className="inline-block" />
+                                                    {phoneNumber}
+                                                </Text>
+                                            )
+                                        )
                                     )}
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">

@@ -1,7 +1,7 @@
 import { GET_CONFIG } from "../configurations/generic";
 import { appendQueryParams } from "@/utils/utils";
 import type { IPaginable } from "@/types/models/generic";
-import type { IServiceFiltered } from "@/types/models/service";
+import type { IService, IServiceFiltered } from "@/types/models/service";
 
 export const ServiceService = () => {
     const getByFilter = async (
@@ -33,7 +33,29 @@ export const ServiceService = () => {
         }
     };
 
+    const getCloverServices = async (merchantId: string, apiKey: string) => {
+        try {
+            const URI = `${process.env.NEXT_CLOVER_API_URL}/inventory`;
+            const res = await fetch(URI, {
+                ...GET_CONFIG,
+                headers: {
+                    ...GET_CONFIG.headers,
+                    authorization: `Bearer ${apiKey}`,
+                    merchantid: merchantId,
+                },
+            });
+            if (!res.ok) throw new Error("Failed to create appointment");
+
+            const { elements } = await res.json();
+
+            return elements as IService[];
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
     return {
         getByFilter,
+        getCloverServices,
     };
 };

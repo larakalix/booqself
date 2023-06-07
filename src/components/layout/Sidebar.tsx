@@ -19,6 +19,7 @@ const links: NavItems[] = [
     { label: "Appointments", route: ROUTES.APPOINTMENTS },
     { label: "Employees", route: ROUTES.EMPLOYEES },
     { label: "Services", route: ROUTES.SERVICES },
+    { label: "Orders", route: ROUTES.ORDERS },
     { label: "Reports", route: ROUTES.REPORTS },
     { label: "Settings", route: ROUTES.SETTINGS },
 ];

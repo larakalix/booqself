@@ -1,7 +1,10 @@
+// import { useEffect } from "react";
 import { PageWrapper } from "@/components/wrapper/PageWrapper";
 import { EmployeesWithFilter } from "@/components/employees/EmployeesWithFilter";
 
 export default function EmployeesPage() {
+    // useEffect(() => {}, []);
+
     return (
         <PageWrapper>
             <header className="w-full lg:flex lg:items-center lg:justify-between p-6">
@@ -12,7 +15,10 @@ export default function EmployeesPage() {
                 </div>
             </header>
 
-            <EmployeesWithFilter />
+            <EmployeesWithFilter
+                merchantId="S4SA1MP87BQQ1"
+                apiKey="f76b3aa6-aa0a-d159-6426-7bd38453d5c4"
+            />
         </PageWrapper>
     );
 }

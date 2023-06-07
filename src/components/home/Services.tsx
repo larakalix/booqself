@@ -10,13 +10,16 @@ import {
 } from "@tremor/react";
 import { HiOutlineMail, HiOutlineUser } from "react-icons/hi";
 import { GenericTableHead } from "../generic/GenericTableHead";
-import type { ITenantBoilerplateChunk } from "@/types/models/tenant";
 import type { IService } from "@/types/models/service";
+import type { IMeta } from "@/types/models/generic";
 
 export const Services = ({
     data: services,
     meta,
-}: ITenantBoilerplateChunk<IService>) => {
+}: {
+    data: IService[];
+    meta?: IMeta;
+}) => {
     return (
         <Card className="relative w-full text-left ring-1 bg-white shadow border-blue-500 ring-gray-200 p-6 rounded-md">
             <Title className="text-gray-700 text-lg font-medium">
@@ -25,13 +28,7 @@ export const Services = ({
 
             <Table className="mt-5">
                 <GenericTableHead
-                    headers={[
-                        "Name",
-                        "Price",
-                        "Duration",
-                        "Description",
-                        "Status",
-                    ]}
+                    headers={["Name", "Price", "Cost", "Price Type", "Status"]}
                 />
 
                 <TableBody className="align-top overflow-x-auto divide-y divide-gray-200">
@@ -42,22 +39,22 @@ export const Services = ({
                                     <Text>{service.name}</Text>
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Text>${service.price}</Text>
+                                    <Text>${service.parsedPrice}</Text>
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Text>{service.duration}</Text>
+                                    <Text>{service.cost}</Text>
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    <Text>{service.description}</Text>
+                                    <Text>{service.priceType}</Text>
                                 </TableCell>
                                 <TableCell className="align-middle whitespace-nowrap tabular-nums text-left p-4">
-                                    {service.isActive ? (
+                                    {service.available ? (
                                         <Text className="text-green-500">
-                                            Active
+                                            Available
                                         </Text>
                                     ) : (
                                         <Text className="text-gray-300">
-                                            Inactive
+                                            Unavailable
                                         </Text>
                                     )}
                                 </TableCell>
