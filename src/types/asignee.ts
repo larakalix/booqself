@@ -1,5 +1,5 @@
 export type IAssignee = {
-    name: string;
+    firstName: string;
     lastName: string;
     email: string;
 };

@@ -23,14 +23,12 @@ export const RegisterForm = ({ formFields, close }: Props) => {
                 initialValues={initialValues}
                 onSubmit={(values: typeof initialValues, actions) => {
                     const { name, email, phone, lastName } = values;
-                    const client: IClientAttributes = {
-                        name,
-                        email,
-                        phone,
-                        lastName,
-                    };
+                    // const client: IClientAttributes = {
+                    //     firstName: name,
+                    //     lastName,
+                    // };
 
-                    assign(client);
+                    // assign(client);
                     close();
                     actions.setSubmitting(false);
                 }}

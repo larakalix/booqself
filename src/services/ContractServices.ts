@@ -1,11 +1,11 @@
-import type { IAssignee } from "@/types/asignee";
+import type { IClientAttributes } from "@/types/models/client";
 
 export const ContractService = () => {
     const sendContract = async ({
         assignee,
         contract,
     }: {
-        assignee: IAssignee;
+        assignee: IClientAttributes;
         contract: string;
     }) => {
         const res = await fetch(`${process.env.NEXT_API_URL}/contract`, {

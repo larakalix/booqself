@@ -9,11 +9,8 @@ import {
     Text,
     Title,
 } from "@tremor/react";
-import {
-    AiOutlineCheckCircle,
-    AiOutlineExclamationCircle,
-    AiOutlinePhone,
-} from "react-icons/ai";
+import { HiOutlinePhone } from "react-icons/hi";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 import { GenericTableHead } from "../generic/GenericTableHead";
 import type { IClient } from "@/types/models/client";
 import type { IMeta } from "@/types/models/generic";
@@ -76,7 +73,7 @@ export const Clients = ({
                                         client.phoneNumbersList.map(
                                             ({ phoneNumber }) => (
                                                 <Text className="flex items-center gap-2">
-                                                    <AiOutlinePhone className="inline-block" />
+                                                    <HiOutlinePhone className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
                                                     {phoneNumber}
                                                 </Text>
                                             )

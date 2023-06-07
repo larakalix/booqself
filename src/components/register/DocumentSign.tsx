@@ -33,7 +33,7 @@ export const DocumentSign = ({
         const base64String = pdf.output("datauristring");
 
         if (downloadDocument) {
-            const documentName = `${assignee?.name} ${assignee?.lastName} - Contract.pdf`;
+            const documentName = `${assignee?.firstName} ${assignee?.lastName} - Contract.pdf`;
             downloadImage(contract, documentName);
         }
 
@@ -155,7 +155,7 @@ export const DocumentSign = ({
                         </div>
 
                         <p className="w-full text-xl font-bold text-center py-4 text-black uppercase">
-                            {assignee?.name} {assignee?.lastName}
+                            {assignee?.firstName} {assignee?.lastName}
                         </p>
                     </div>
 
