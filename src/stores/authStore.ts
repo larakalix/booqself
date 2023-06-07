@@ -5,6 +5,7 @@ import type { AuthParamProps } from "@/types/auth/auth";
 type AuthStoreProps = {
     params: AuthParamProps | null;
     setParams(params: AuthParamProps): void;
+    removeSession(): void;
 };
 
 export const useAuthStore = create(
@@ -12,6 +13,7 @@ export const useAuthStore = create(
         (set, get) => ({
             params: null,
             setParams: (params) => set({ params }),
+            removeSession: () => set({ params: null }),
         }),
         {
             name: "authStore",

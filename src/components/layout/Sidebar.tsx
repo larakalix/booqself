@@ -11,6 +11,7 @@ import { ROUTES } from "@/ constants/routes";
 import { Logo } from "./Logo";
 
 import type { NavItems } from "@/types/layout";
+import { useAuthStore } from "@/stores/authStore";
 
 const links: NavItems[] = [
     { label: "Home", route: ROUTES.DASHBOARD },
@@ -27,7 +28,7 @@ const links: NavItems[] = [
 export const Sidebar = () => {
     const [toogle, setToogle] = useState(false);
     const router = useRouter();
-    // const { user } = useUserStore((state) => state);
+    const { removeSession } = useAuthStore((state) => state);
     const ref = useRef(null);
 
     const handleClick = (route: string) => {
@@ -81,15 +82,15 @@ export const Sidebar = () => {
                             </button>
                         </li>
                     ))}
-                    {/* <li key={`logout-nav-item`}>
-                        <Link
-                            href="/api/auth/logout"
-                            passHref
+                    <li key={`logout-nav-item`}>
+                        <button
+                            type="button"
                             className="bg-transparent text-link-gray text-[0.875rem] font-medium leading-[1.25rem] hover:bg-label-gray-active block w-full p-2 rounded-md text-start"
+                            onClick={() => removeSession()}
                         >
                             Log out
-                        </Link>
-                    </li> */}
+                        </button>
+                    </li>
                 </ol>
             </nav>
 
