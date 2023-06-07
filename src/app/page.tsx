@@ -1,24 +1,22 @@
-import Link from "next/link";
-import { PageWrapper } from "@/components/wrapper/PageWrapper";
+import { Card } from "@/kit/card/Card";
+import { Landing } from "@/components/home/Landing";
 
 export default async function Home() {
     return (
-        <PageWrapper className="flex flex-col gap-8 items-center justify-center">
-            <div className="flex flex-col gap-4">
-                <small>
-                    <div className="text-main-blue text-[1.5rem] font-semibold">
-                        <h1 className="w-10 h-10">
-                            <span>Booqself</span>
-                        </h1>
-                    </div>
-                </small>
-                <Link
-                    href="/api/auth/login"
-                    className="text-base font-light bg-blue-400 text-white rounded-sm py-2 px-8 hover:ring-gray-200 hover:ring-2"
-                >
-                    Dashboard
-                </Link>
-            </div>
-        </PageWrapper>
+        <section className="min-h-screen w-full p-5">
+            <Card className="flex items-center justify-between flex-col gap-4 min-h-[calc(100vh-2.5rem)] p-0">
+                <div className="flex items-center justify-center flex-col gap-4 flex-1">
+                    <h1 className="text-main-blue text-[1.5rem] font-semibold">
+                        Pura Vida
+                    </h1>
+                    <Landing />
+                </div>
+                <footer className="py-6">
+                    <p className="text-gray-400 text-sm">
+                        Copyright © 2023 Pura Vida. All rights reserved.
+                    </p>
+                </footer>
+            </Card>
+        </section>
     );
 }

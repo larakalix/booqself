@@ -6,7 +6,7 @@ import { EmptyResults } from "../generic/EmptyResults";
 import { useServicesFilterStore } from "@/stores/filterStore";
 import { ServiceService } from "@/services/service/ServiceService";
 import { DynamicForm } from "../generic/form/DynamicForm";
-import { Services } from "../home/Services";
+import { Services } from "./Services";
 
 export const ServicesWithFilter = ({
     merchantId,

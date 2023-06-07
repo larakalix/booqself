@@ -6,7 +6,7 @@ import { EmptyResults } from "../generic/EmptyResults";
 import { useEmployeesFilterStore } from "@/stores/filterStore";
 import { EmployeeService } from "@/services/employee/EmployeeService";
 import { DynamicForm } from "../generic/form/DynamicForm";
-import { Employees } from "../home/Employees";
+import { Employees } from "./Employees";
 
 export const EmployeesWithFilter = ({
     merchantId,

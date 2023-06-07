@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Children } from "react";
 import { Card, CardTitle } from "@/kit/card/Card";
 import { Header } from "@/components/home";
 import { PageWrapper } from "@/components/wrapper/PageWrapper";
@@ -7,13 +8,11 @@ import { Charts } from "@/components/home/Charts";
 import { TenantService } from "@/services/tenant/TenantService";
 import { ROUTES } from "@/ constants/routes";
 import type { ITenantAttributes } from "@/types/models/tenant";
-import { Children } from "react";
 
 export default async function Dashboard() {
-    const { clients, appointments, ...props } =
-        await TenantService().getTenantBoilerplate(
-            process.env.NEXT_APP_CLIENT_ID!
-        );
+    // const { tenant } = await TenantService().getTenantBoilerplate(
+    //     process.env.NEXT_APP_CLIENT_ID!
+    // );
 
     const tiles = [
         {
@@ -36,7 +35,7 @@ export default async function Dashboard() {
 
     return (
         <PageWrapper className="flex flex-col gap-8">
-            <Header tenant={props as ITenantAttributes} />
+            {/* <Header tenant={props as ITenantAttributes} /> */}
 
             <Card>
                 <Charts />

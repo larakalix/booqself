@@ -9,7 +9,7 @@ export const Logo = () => {
                 className="text-main-blue text-[1.5rem] font-semibold"
             >
                 <div className="w-10 h-10">
-                    <span>Booqself</span>
+                    <span>Pura Vida</span>
                 </div>
             </Link>
         </small>

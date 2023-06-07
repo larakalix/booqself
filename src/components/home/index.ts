@@ -1,3 +1,3 @@
-export { Appointments } from "./Appointments";
-export { Clients } from "./Clients";
+export { Appointments } from "../appointments/Appointments";
+export { Clients } from "../client/Clients";
 export { Header } from "./Header";
