@@ -23,7 +23,7 @@ export const SettingsBoard = () => {
 
     useEffect(() => {
         (async () => {
-            const { tenant } = await TenantService().getTenantById({
+            const tenant = await TenantService().getTenantById({
                 id: process.env.NEXT_APP_CLIENT_ID!,
                 justTenant: true,
             });

@@ -22,9 +22,9 @@ export const TenantService = () => {
         const res = await fetch(URI, GET_CONFIG);
         if (!res.ok) throw new Error("Failed to fetch data");
 
-        const tenant: ITenant = await res.json();
+        const tenant: { data: ITenantAttributes } = await res.json();
 
-        return tenant;
+        return tenant.data;
     };
 
     const getTenantBookBoilerplate = async (
@@ -64,7 +64,7 @@ export const TenantService = () => {
 
     const update = async (
         id: number,
-        tenant: Omit<ITenantAttributes, "createdAt">
+        tenant: Omit<ITenantAttributes, "createdA" | "timeOptions">
     ) => {
         const res = await fetch(
             `${process.env.NEXT_STRAPI_URL}/custom-tenant/update/${id}`,

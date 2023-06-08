@@ -27,28 +27,13 @@ export const SettingsForm = ({ loading, tenant, formFields }: Props) => {
                 onSubmit={async (values, actions) => {
                     if (!tenant) return;
 
-                    const {
-                        name,
-                        email,
-                        cloverMerchantId,
-                        minutesInterval,
-                        openingTime,
-                        closingTime,
-                        isActive,
-                        timeZone,
-                    } = values;
-
                     const response = await TenantService().update(tenant?.id, {
                         id: tenant.id,
                         tenantId: tenant.tenantId,
-                        name,
-                        email,
-                        cloverMerchantId,
-                        minutesInterval,
-                        openingTime,
-                        closingTime,
-                        isActive,
-                        timeZone,
+                        ...(values! as Omit<
+                            ITenantAttributes,
+                            "id" | "tenantId"
+                        >),
                     });
 
                     if (response?.id) {
