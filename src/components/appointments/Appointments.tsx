@@ -10,7 +10,7 @@ import {
 } from "@tremor/react";
 import { HiOutlineMail, HiOutlineUser } from "react-icons/hi";
 import { AiOutlineCheckCircle, AiOutlineFieldTime } from "react-icons/ai";
-import { format, isPast } from "date-fns";
+import { format, isPast, parseISO } from "date-fns";
 import { GenericTableHead } from "../generic/GenericTableHead";
 import type { ITenantBoilerplateChunk } from "@/types/models/tenant";
 import type { IAppointment } from "@/types/models/appointment";
@@ -27,12 +27,7 @@ export const Appointments = ({
 
             <Table className="mt-5">
                 <GenericTableHead
-                    headers={[
-                        "Client",
-                        "Employee",
-                        "Service",
-                        "Status",
-                    ]}
+                    headers={["Client", "Employee", "Service", "Status"]}
                 />
                 <TableBody className="align-top overflow-x-auto divide-y divide-gray-200">
                     {Children.toArray(
@@ -98,12 +93,18 @@ export const Appointments = ({
                                         <span className="flex items-center gap-2 text-sm whitespace-nowrap">
                                             <AiOutlineFieldTime className="text-blue-500" />{" "}
                                             Upcoming at{" "}
-                                            {format(
-                                                new Date(
+                                            <time
+                                                dateTime={
                                                     appointment.appointmentDay
-                                                ),
-                                                "dd/MM/yyyy"
-                                            )}
+                                                }
+                                            >
+                                                {format(
+                                                    parseISO(
+                                                        appointment.appointmentDay
+                                                    ),
+                                                    "h:mma, EEEE, MMMM d, yyyy"
+                                                )}
+                                            </time>
                                         </span>
                                     )}
                                 </TableCell>
