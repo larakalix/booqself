@@ -8,9 +8,7 @@ export const Logo = () => {
                 passHref
                 className="text-main-blue text-[1.5rem] font-semibold"
             >
-                <div className="w-10 h-10">
-                    <span>Pura Vida</span>
-                </div>
+                Pura Vida
             </Link>
         </small>
     );

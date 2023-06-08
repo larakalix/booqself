@@ -12,12 +12,14 @@ import {
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Day } from "@/components/book/Day";
 import { useBookingStore } from "@/stores/bookingStore";
-import type { ITenantBooking } from "@/types/models/tenant";
+import type { ITenantAttributes } from "@/types/models/tenant";
 
-type Props = { tenant: ITenantBooking };
+type Props = { tenant: ITenantAttributes };
 
 export const Calendar = ({ tenant }: Props) => {
-    const { loading, currentMonth, setCurrentMonth } = useBookingStore((state) => state);
+    const { loading, currentMonth, setCurrentMonth } = useBookingStore(
+        (state) => state
+    );
     const firstDayOfCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
     let days = eachDayOfInterval({

@@ -1,12 +1,11 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-
 import clsx from "clsx";
 import { useOnClickOutside } from "usehooks-ts";
 import { CgMenuLeft, CgClose } from "react-icons/cg";
+import { HiLogout } from "react-icons/hi";
 import { ROUTES } from "@/ constants/routes";
 import { Logo } from "./Logo";
 
@@ -15,9 +14,9 @@ import { useAuthStore } from "@/stores/authStore";
 
 const links: NavItems[] = [
     { label: "Home", route: ROUTES.DASHBOARD },
-    { label: "Register client", route: ROUTES.REGISTER },
-    { label: "Clients", route: ROUTES.CLIENTS },
+    // { label: "Register client", route: ROUTES.REGISTER },
     { label: "Appointments", route: ROUTES.APPOINTMENTS },
+    { label: "Clients", route: ROUTES.CLIENTS },
     { label: "Employees", route: ROUTES.EMPLOYEES },
     { label: "Services", route: ROUTES.SERVICES },
     { label: "Orders", route: ROUTES.ORDERS },
@@ -90,10 +89,11 @@ export const Sidebar = () => {
                     <li key={`logout-nav-item`}>
                         <button
                             type="button"
-                            className="bg-transparent text-link-gray text-[0.875rem] font-medium leading-[1.25rem] hover:bg-label-gray-active block w-full p-2 rounded-md text-start"
+                            className="flex items-center justify-between text-start bg-transparent text-link-gray text-[0.875rem] font-medium leading-[1.25rem] hover:bg-white hover:text-gray-800 w-full p-2 rounded-md"
                             onClick={handleLogout}
                         >
                             Log out
+                            <HiLogout className="rotate-180" />
                         </button>
                     </li>
                 </ol>

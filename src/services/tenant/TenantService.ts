@@ -1,6 +1,7 @@
 import { GET_CONFIG, PUT_CONFIG } from "../configurations/generic";
 import { appendQueryParams } from "@/utils/utils";
 import type {
+    ITenant,
     ITenantAttributes,
     ITenantBoilerplate,
     ITenantBooking,
@@ -15,29 +16,50 @@ export const TenantService = () => {
         justTenant?: boolean;
     }) => {
         const URI = appendQueryParams(
-            `${process.env.NEXT_STRAPI_URL}/custom-tenant/${id}`,
+            `${process.env.NEXT_CLOVER_API_URL}/custom-tenant/${id}`,
             { ...params }
         );
         const res = await fetch(URI, GET_CONFIG);
         if (!res.ok) throw new Error("Failed to fetch data");
 
-        const data = await res.json();
+        const tenant: ITenant = await res.json();
 
-        const tenant: ITenantBooking = data.data;
-
-        return { tenant };
+        return tenant;
     };
 
-    const getTenantBoilerplate = async (id: string) => {
-        const res = await fetch(
-            `${process.env.NEXT_STRAPI_URL}/custom-tenant/boilerplate/${id}`,
-            GET_CONFIG
+    const getTenantBookBoilerplate = async (
+        {
+            id,
+            ...params
+        }: {
+            id: string;
+            justTenant?: boolean;
+        },
+        apiKey: string
+    ) => {
+        const URI = appendQueryParams(
+            `${process.env.NEXT_CLOVER_API_URL}/book`,
+            { ...params }
         );
+
+        const res = await fetch(URI, {
+            ...GET_CONFIG,
+            headers: {
+                ...GET_CONFIG.headers,
+                authorization: `Bearer ${apiKey}`,
+                merchantid: id,
+            },
+        });
         if (!res.ok) throw new Error("Failed to fetch data");
 
-        const { data } = await res.json();
+        const { tenant, services, employees, appointments } = await res.json();
 
-        return data as ITenantBoilerplate;
+        return {
+            tenant,
+            services,
+            employees,
+            appointments,
+        } as ITenantBooking;
     };
 
     const update = async (
@@ -62,6 +84,6 @@ export const TenantService = () => {
     return {
         update,
         getTenantById,
-        getTenantBoilerplate,
+        getTenantBookBoilerplate,
     };
 };

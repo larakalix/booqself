@@ -1,6 +1,7 @@
 import type {
     ICreatedAt,
     IData,
+    IElement,
     IIdentifier,
     IIsActive,
     IMeta,
@@ -27,6 +28,7 @@ export type ITenantAttributes = IIsActive &
         closingTime: Date;
         minutesInterval: number;
         timeZone: string;
+        timeOptions: IOptionable[];
     };
 
 export type ITenantBoilerplate = ITenantAttributes & {
@@ -35,11 +37,11 @@ export type ITenantBoilerplate = ITenantAttributes & {
     employees: ITenantBoilerplateChunk<IEmployee>;
 };
 
-export type ITenantBooking = ITenantAttributes & {
-    employees: IEmployee[];
-    services: IService[];
+export type ITenantBooking = {
+    tenant: { data: ITenantAttributes };
+    employees: IElement<IEmployee>;
+    services: IElement<IService>;
     appointments: IIdentifier & { appointmentDay: string }[];
-    timeOptions: IOptionable[];
 };
 
 export type ITenantClientBoilerplate = ITenantBoilerplateChunk<IClient>;

@@ -1,8 +1,8 @@
+import { format, intlFormat } from "date-fns";
 import type { IFormField } from "@/types/forms/form";
 import type { IFlatAppointment } from "@/types/models/appointment";
 import type { IOptionable } from "@/types/models/generic";
 import type { ITenantBooking } from "@/types/models/tenant";
-import { format, intlFormat } from "date-fns";
 
 export const useAppointments = ({
     timeOptions,
@@ -39,13 +39,13 @@ export const useAppointments = ({
         return filteredTimes;
     };
 
-    const buildDropdownlists = (tenant: ITenantBooking) => {
+    const buildDropdownlists = (boilerplate: ITenantBooking) => {
         const employeeDp: IFormField = {
             type: "dropdown",
             label: "Service Technician",
             name: "employee",
             required: true,
-            options: tenant.employees.map((employee) => ({
+            options: boilerplate.employees.elements.map((employee) => ({
                 label: employee.name,
                 value: `${employee.id}`,
             })),
@@ -56,7 +56,7 @@ export const useAppointments = ({
             label: "Service",
             name: "service",
             required: true,
-            options: tenant.services.map((service) => ({
+            options: boilerplate.services.elements.map((service) => ({
                 label: service.name,
                 value: `${service.id}`,
             })),

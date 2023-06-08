@@ -3,26 +3,32 @@
 import { Children } from "react";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
-import { intlFormat } from "date-fns";
 import { useRegisterForm } from "../register/hooks/useRegisterForm";
 import { FormField } from "@/kit/form/FormField";
-import { formatToISO, mergeTimeWithDate } from "@/utils/time";
+import { mergeTimeWithDate } from "@/utils/time";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
 import { useSuccesBookingStore } from "@/stores/bookingStore";
+import { findAndReturn } from "@/utils/utils";
 import type { IFormField, IFormSelections } from "@/types/forms/form";
-import type { ITenantAttributes } from "@/types/models/tenant";
-import type { IFormAppointment } from "@/types/models/appointment";
+import type { ITenantBooking } from "@/types/models/tenant";
+import type {
+    IAppointmentEmployee,
+    IAppointmentService,
+    IFormAppointment,
+} from "@/types/models/appointment";
+import type { IEmployee } from "@/types/models/employee";
+import type { IService } from "@/types/models/service";
 
 type Props = {
     selectedDay: Date | null;
     timeOptions: IFormSelections[];
     formFields: IFormField[];
-    tenant: ITenantAttributes;
+    boilerplate: ITenantBooking;
     loading: boolean;
 };
 
 export const AppointmentForm = ({
-    tenant,
+    boilerplate,
     selectedDay,
     timeOptions,
     formFields,
@@ -45,8 +51,8 @@ export const AppointmentForm = ({
                         email,
                         phone,
                         comment,
-                        employee,
-                        service,
+                        employee: cloverEmployeeId,
+                        service: cloverServiceId,
                         time,
                     } = values;
                     const hour = timeOptions.find((t) => t.value === time)
@@ -55,29 +61,49 @@ export const AppointmentForm = ({
                     const appointmentDay = mergeTimeWithDate(
                         hour,
                         selectedDay,
-                        tenant.timeZone ?? "America/New_York"
+                        boilerplate.tenant.data.timeZone ?? "America/New_York"
                     );
                     const appointment: IFormAppointment = {
                         name,
                         email,
                         phone,
                         comment,
-                        employee,
-                        service,
+                        cloverEmployeeId,
+                        cloverServiceId,
                         appointmentDay,
+                        employee: findAndReturn<
+                            IEmployee,
+                            IAppointmentEmployee
+                        >(
+                            boilerplate.employees.elements,
+                            (obj) => obj.id === cloverEmployeeId,
+                            ({ id, name, pin, email }) => ({
+                                name,
+                                pin,
+                                email,
+                                cloverId: `${id}`,
+                            })
+                        )!,
+                        service: findAndReturn<IService, IAppointmentService>(
+                            boilerplate.services.elements,
+                            (obj) => obj.id === cloverServiceId,
+                            ({ id, name, price }) => ({
+                                name,
+                                price: `${price}`,
+                                cloverId: `${id}`,
+                            })
+                        )!,
                     };
 
                     const response = await AppointmentService().create(
                         appointment,
-                        tenant.id
+                        boilerplate.tenant.data.id
                     );
 
                     if (response?.id) {
                         actions.resetForm();
                         setAppointment({
                             ...response,
-                            employee,
-                            service,
                         });
                     }
 

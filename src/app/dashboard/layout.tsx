@@ -1,4 +1,5 @@
 import { Sidebar } from "@/components/layout/Sidebar";
+import { PageWrapper } from "@/components/wrapper/PageWrapper";
 
 export default async function Layout(props: {
     children: React.ReactNode;

@@ -15,15 +15,17 @@ export const Landing = () => {
     const URI = `${process.env.NEXT_CLOVER_ROOT_URL}/oauth/authorize?client_id=${process.env.NEXT_CLOVER_APP_ID}`;
 
     useEffect(() => {
+        console.log(params);
         if (params) push("dashboard");
 
         const queryParams: AuthParamProps = {
             merchant_id: searchParams.get("merchant_id") ?? undefined,
             employee_id: searchParams.get("employee_id") ?? undefined,
             client_id: searchParams.get("client_id") ?? undefined,
-            client_secret: searchParams.get("client_secret") ?? undefined,
             code: searchParams.get("code") ?? undefined,
         };
+
+        console.log(queryParams);
 
         if (
             Object.values(queryParams).every(

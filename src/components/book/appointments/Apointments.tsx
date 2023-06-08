@@ -10,7 +10,11 @@ import { useAppointments } from "./hooks/useAppointments";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
 import type { ITenantBooking } from "@/types/models/tenant";
 
-export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
+export const Apointments = ({
+    boilerplate,
+}: {
+    boilerplate: ITenantBooking;
+}) => {
     const {
         loading,
         appointments,
@@ -21,12 +25,13 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
     } = useBookingStore((state) => state);
     const { appointment } = useSuccesBookingStore((state) => state);
     const { buildDropdownlists } = useAppointments({
-        timeOptions: tenant.timeOptions,
+        timeOptions: boilerplate.tenant.data.timeOptions,
         appointments,
         selectedDay,
     });
 
-    const { timeOptions, employeeDp, serviceDp } = buildDropdownlists(tenant);
+    const { timeOptions, employeeDp, serviceDp } =
+        buildDropdownlists(boilerplate);
 
     useEffect(() => {
         (async () => {
@@ -36,7 +41,7 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
             if (currentMonth) {
                 const appointments =
                     await AppointmentService().getBookAppointments(
-                        tenant.tenantId,
+                        boilerplate.tenant.data.tenantId,
                         `${getMonth(date)}`,
                         `${getYear(date)}`
                     );
@@ -47,9 +52,7 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
         return () => {};
     }, [currentMonth]);
 
-    if (appointment && selectedDay)
-        return <Success appointment={appointment} tenant={tenant} />;
-
+    if (appointment && selectedDay) return <Success appointment={appointment} boilerplate={boilerplate} />;
     if (!selectedDay) return <NoSelectedDay />;
 
     return (
@@ -63,7 +66,7 @@ export const Apointments = ({ tenant }: { tenant: ITenantBooking }) => {
 
             <AppointmentForm
                 loading={loading}
-                tenant={tenant}
+                boilerplate={boilerplate}
                 selectedDay={selectedDay!}
                 timeOptions={timeOptions}
                 formFields={[

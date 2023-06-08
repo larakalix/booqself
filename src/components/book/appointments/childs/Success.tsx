@@ -5,15 +5,15 @@ import type { ITenantBooking } from "@/types/models/tenant";
 
 type Props = {
     appointment: IFormAppointment;
-    tenant: ITenantBooking;
+    boilerplate: ITenantBooking;
 };
 
-export const Success = ({ appointment, tenant }: Props) => {
-    const employee = tenant.employees.find(
-        (employee) => `${employee.id}` === appointment.employee!
+export const Success = ({ appointment, boilerplate }: Props) => {
+    const employee = boilerplate.employees.elements.find(
+        (employee) => `${employee.id}` === appointment.cloverEmployeeId!
     );
-    const service = tenant.services.find(
-        (service) => `${service.id}` === appointment.service!
+    const service = boilerplate.services.elements.find(
+        (service) => `${service.id}` === appointment.cloverServiceId!
     );
 
     return (

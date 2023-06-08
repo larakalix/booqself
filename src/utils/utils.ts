@@ -25,3 +25,12 @@ export const appendQueryParams = (
 
     return urlObj.toString();
 };
+
+export const findAndReturn = <T, K>(
+    array: T[],
+    condition: (item: T) => boolean,
+    propertySelector: (item: T) => K
+): K | undefined => {
+    const foundObject = array.find(condition);
+    return foundObject ? propertySelector(foundObject) : undefined;
+};

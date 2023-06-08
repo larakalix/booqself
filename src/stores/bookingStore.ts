@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import { format, startOfToday } from "date-fns";
-import type { IFlatAppointment, IFormAppointment } from "@/types/models/appointment";
+import type {
+    IFlatAppointment,
+    IFormAppointment,
+} from "@/types/models/appointment";
 
 type BookingStoreProps = {
     loading: boolean;
@@ -28,7 +31,8 @@ export const useBookingStore = create<BookingStoreProps>((set, get) => ({
     setLoading: (loading) => set({ loading }),
     selectDay: (selectedDay) => set({ selectedDay }),
     setCurrentMonth: (currentMonth) => set({ currentMonth }),
-    setFlatAppointments: (appointments) => set({ appointments, loading: false }),
+    setFlatAppointments: (appointments) =>
+        set({ appointments, loading: false }),
 }));
 
 export const useSuccesBookingStore = create<SuccessBookingStoreProps>(

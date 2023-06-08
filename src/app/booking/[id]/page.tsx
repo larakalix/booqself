@@ -8,11 +8,15 @@ type Props = {
 };
 
 export default async function BookingById({ params: { id } }: Props) {
-    const { tenant } = await TenantService().getTenantById({
-        id,
-    });
+    const boilerplate = await TenantService().getTenantBookBoilerplate(
+        {
+            id,
+            justTenant: false,
+        },
+        process.env.NEXT_CLOVER_APP_SECRET!
+    );
 
-    if (!tenant) {
+    if (!boilerplate.tenant) {
         return (
             <AdviceCard
                 title="No tenant found."
@@ -22,7 +26,7 @@ export default async function BookingById({ params: { id } }: Props) {
         );
     }
 
-    if (tenant && !tenant.isActive) {
+    if (boilerplate.tenant && !boilerplate.tenant.data.isActive) {
         return (
             <AdviceCard
                 title="Your tenant is not active."
@@ -34,8 +38,8 @@ export default async function BookingById({ params: { id } }: Props) {
     return (
         <section className="min-h-screen w-full p-5">
             <Card className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[calc(100vh-2.5rem)] p-0">
-                <Calendar tenant={tenant} />
-                <Apointments tenant={tenant} />
+                <Calendar tenant={boilerplate.tenant.data} />
+                <Apointments boilerplate={boilerplate} />
             </Card>
         </section>
     );

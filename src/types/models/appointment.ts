@@ -23,8 +23,23 @@ export type IAppointmentFiltered = {
 
 export type IFormAppointment = Partial<IIdentifier> &
     Omit<IAppointmentAttributes, "createdAt" | "employee" | "service"> & {
-        employee?: string;
-        service?: string;
+        cloverEmployeeId?: string;
+        cloverServiceId?: string;
+        employee: IAppointmentEmployee;
+        service: IAppointmentService;
     };
+
+export type IAppointmentEmployee = {
+    name: string;
+    cloverId: string;
+    pin: string;
+    email: string;
+};
+
+export type IAppointmentService = {
+    name: string;
+    cloverId: string;
+    price: string;
+};
 
 export type IFlatAppointment = IIdentifier & { appointmentDay: string };
