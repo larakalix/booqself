@@ -4,15 +4,24 @@ import type {
     IFlatAppointment,
     IFormAppointment,
 } from "@/types/models/appointment";
+import { CalendarStyle } from "@/types/forms/calendar";
 
-type BookingStoreProps = {
+type GenericStoreProps = {
     loading: boolean;
     selectedDay: Date | null;
     currentMonth: string;
-    appointments: IFlatAppointment[];
     setLoading: (loading: boolean) => void;
     selectDay: (day: Date) => void;
     setCurrentMonth: (month: string) => void;
+};
+
+type CalendarStoreProps = GenericStoreProps & {
+    style: CalendarStyle;
+    switchStyle: () => void;
+};
+
+type BookingStoreProps = GenericStoreProps & {
+    appointments: IFlatAppointment[];
     setFlatAppointments: (appointments: IFlatAppointment[]) => void;
 };
 
@@ -41,3 +50,21 @@ export const useSuccesBookingStore = create<SuccessBookingStoreProps>(
         setAppointment: (appointment) => set({ appointment }),
     })
 );
+
+export const useCalendarStore = create<CalendarStoreProps>((set, get) => ({
+    style: CalendarStyle.Grid,
+    loading: false,
+    selectedDay: null,
+    currentMonth: format(today, "MMM-yyyy"),
+    appointments: [],
+    setLoading: (loading) => set({ loading }),
+    selectDay: (selectedDay) => set({ selectedDay }),
+    setCurrentMonth: (currentMonth) => set({ currentMonth }),
+    switchStyle: () =>
+        set({
+            style:
+                get().style === CalendarStyle.Grid
+                    ? CalendarStyle.List
+                    : CalendarStyle.Grid,
+        }),
+}));
