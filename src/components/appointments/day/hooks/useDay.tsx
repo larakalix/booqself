@@ -11,26 +11,25 @@ type Props = {
 export const useDay = ({ day, selectedDay, style }: Props) => {
     const colStartClasses = [
         "",
-        "col-start-2",
-        "col-start-3",
-        "col-start-4",
-        "col-start-5",
-        "col-start-6",
-        "col-start-7",
+        "md:col-start-2",
+        "md:col-start-3",
+        "md:col-start-4",
+        "md:col-start-5",
+        "md:col-start-6",
+        "md:col-start-7",
     ];
 
     const styles = clsx({
-        "border-blue-500 text-white":
-            isEqual(day, selectedDay!) && !isToday(day),
-        "text-gray-500 bg-gray-200 cursor-not-allowed opacity-50":
-            isPast(day) && isSameMonth(day, new Date()),
+        "border-blue-500 text-white": isEqual(day, selectedDay!) && !isToday(day),
+        "hidden md:flex text-gray-500 bg-gray-200 cursor-not-allowed opacity-50": isPast(day) && isSameMonth(day, new Date()),
         hidden:
             isPast(day) &&
             isSameMonth(day, new Date()) &&
             style === CalendarStyle.List,
+        "h-20 md:h-36 xl:h-48": style === CalendarStyle.Grid,
+        "h-auto pb-2": style === CalendarStyle.List,
         "text-blue-600 font-bold": isToday(day),
-        "hover:transition-all font-bold hover:border-green-500":
-            !isToday(day) && !isPast(day),
+        "hover:transition-all font-bold hover:border-green-500": !isToday(day) && !isPast(day),
     });
 
     return {

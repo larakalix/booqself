@@ -6,6 +6,7 @@ import type {
     OrdersFilterStoreProps,
     ServicesFilterStoreProps,
 } from "@/types/stores/stores";
+import { AppointmentService } from "@/services/appointment/AppointmentServices";
 
 export const useAppoinmentsFilterStore = create<AppointmentsFilterStoreProps>(
     (set, get) => ({
@@ -14,6 +15,12 @@ export const useAppoinmentsFilterStore = create<AppointmentsFilterStoreProps>(
         setAppointments: (appointments) =>
             set({ appointments, loading: false }),
         setLoading: (loading) => set({ loading }),
+        getByDay: async (day) => {
+            const rows = get().appointments;
+            if (!rows) return [];
+
+            return rows?.data.filter((appointment) => appointment.appointmentDay === day);
+        },
     })
 );
 

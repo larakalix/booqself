@@ -9,8 +9,6 @@ import { mergeTimeWithDate } from "@/utils/time";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
 import { useSuccesBookingStore } from "@/stores/bookingStore";
 import { findAndReturn } from "@/utils/utils";
-import type { IFormField, IFormSelections } from "@/types/forms/form";
-import type { ITenantBooking } from "@/types/models/tenant";
 import type {
     IAppointmentEmployee,
     IAppointmentService,
@@ -18,14 +16,7 @@ import type {
 } from "@/types/models/appointment";
 import type { IEmployee } from "@/types/models/employee";
 import type { IService } from "@/types/models/service";
-
-type Props = {
-    selectedDay: Date | null;
-    timeOptions: IFormSelections[];
-    formFields: IFormField[];
-    boilerplate: ITenantBooking;
-    loading: boolean;
-};
+import type { AppointmentFormProps } from "@/types/forms/appointment.form";
 
 export const AppointmentForm = ({
     boilerplate,
@@ -33,8 +24,9 @@ export const AppointmentForm = ({
     timeOptions,
     formFields,
     loading,
-}: Props) => {
-    const { initialValues, validationSchema } = useRegisterForm({ formFields });
+}: AppointmentFormProps) => {
+    const { initialValues, validationSchema, buildAppointment } =
+        useRegisterForm({ formFields });
     const { setAppointment } = useSuccesBookingStore((state) => state);
 
     return (
@@ -42,69 +34,44 @@ export const AppointmentForm = ({
             <Formik
                 enableReinitialize
                 validationSchema={yup.object(validationSchema)}
-                initialValues={initialValues}
+                initialValues={
+                    !boilerplate?.appointment
+                        ? initialValues
+                        : {
+                              time: null,
+                              ...boilerplate?.appointment.attributes,
+                              employee:
+                                  boilerplate?.appointment.attributes.employee
+                                      .cloverId,
+                              service:
+                                  boilerplate?.appointment.attributes.service
+                                      .cloverId,
+                          }
+                }
                 onSubmit={async (values, actions) => {
                     if (!selectedDay) return;
 
-                    const {
-                        name,
-                        email,
-                        phone,
-                        comment,
-                        employee: cloverEmployeeId,
-                        service: cloverServiceId,
-                        time,
-                    } = values;
-                    const hour = timeOptions.find((t) => t.value === time)
-                        ?.label!;
-
-                    const appointmentDay = mergeTimeWithDate(
-                        hour,
-                        selectedDay,
-                        boilerplate.tenant.data.timeZone ?? "America/New_York"
+                    const appointment = buildAppointment(
+                        selectedDay!,
+                        timeOptions,
+                        values,
+                        boilerplate
                     );
-                    const appointment: IFormAppointment = {
-                        name,
-                        email,
-                        phone,
-                        comment,
-                        cloverEmployeeId,
-                        cloverServiceId,
-                        appointmentDay,
-                        employee: findAndReturn<
-                            IEmployee,
-                            IAppointmentEmployee
-                        >(
-                            boilerplate.employees.elements,
-                            (obj) => obj.id === cloverEmployeeId,
-                            ({ id, name, pin, email }) => ({
-                                name,
-                                pin,
-                                email,
-                                cloverId: `${id}`,
-                            })
-                        )!,
-                        service: findAndReturn<IService, IAppointmentService>(
-                            boilerplate.services.elements,
-                            (obj) => obj.id === cloverServiceId,
-                            ({ id, name, price }) => ({
-                                name,
-                                price: `${price}`,
-                                cloverId: `${id}`,
-                            })
-                        )!,
-                    };
 
-                    const response = await AppointmentService().create(
-                        appointment,
-                        boilerplate.tenant.data.id
-                    );
+                    const response = boilerplate?.appointment
+                        ? await AppointmentService().update(
+                              boilerplate?.appointment.id,
+                              appointment,
+                              boilerplate.tenant.data.id
+                          )
+                        : await AppointmentService().create(
+                              appointment,
+                              boilerplate.tenant.data.id
+                          );
 
                     if (response?.id) {
                         actions.resetForm();
-                        setAppointment({
-                            ...response,
-                        });
+                        setAppointment({ ...response });
                     }
 
                     actions.setSubmitting(false);
@@ -123,7 +90,9 @@ export const AppointmentForm = ({
                             className="col-span-1 lg:col-span-2 bg-blue-400 text-white rounded-md py-4 px-8"
                             type="submit"
                         >
-                            Book now
+                            {boilerplate?.appointment
+                                ? "Reschedule"
+                                : "Book now"}
                         </button>
                     </Form>
                 )}

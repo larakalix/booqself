@@ -12,7 +12,7 @@ import {
 import { CiGrid41, CiGrid2H } from "react-icons/ci";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useCalendarStore } from "@/stores/bookingStore";
-import { Day } from "./day/hooks/Day";
+import { Day } from "./day/Day";
 import { Card } from "@/kit/card/Card";
 import type { IAppointmentFiltered } from "@/types/models/appointment";
 import clsx from "clsx";
@@ -45,13 +45,13 @@ export const AppointmentsCalendar = ({
     };
 
     const calendarStyles = clsx({
-        "grid grid-cols-3 md:grid-cols-7": style === CalendarStyle.Grid,
+        "grid grid-cols-1 md:grid-cols-3 md:grid-cols-7": style === CalendarStyle.Grid,
         "grid grid-cols-1": style === CalendarStyle.List,
     });
 
     return (
         <>
-            <header className="w-full lg:flex lg:items-center lg:justify-between p-6">
+            <header className="w-full flex items-center justify-between p-6">
                 <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
                     Appointments
                 </h2>
@@ -79,7 +79,7 @@ export const AppointmentsCalendar = ({
                     </ul>
                 </header>
                 {style === CalendarStyle.Grid && (
-                    <div className="w-full grid grid-cols-3 md:grid-cols-7 gap-1 overflow-hidden p-1">
+                    <div className="w-full hidden md:grid grid-cols-3 md:grid-cols-7 gap-1 overflow-hidden p-1">
                         {Children.toArray(
                             ["S", "M", "T", "W", "T", "F", "S"].map((day) => (
                                 <h6 className="flex flex-col items-center justify-center p-5 rounded-full text-gray-400 font-semibold text-sm">

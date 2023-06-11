@@ -21,7 +21,9 @@ export const Success = ({ appointment, boilerplate }: Props) => {
             <header className="w-full max-w-[70%] text-center border-b border-gray-100 pb-4 px-8">
                 <h1 className="font-bold text-black">Confirmed</h1>
                 <h2 className="font-normal text-gray-900">
-                    Your appointment has been booked.
+                    {boilerplate?.appointment
+                        ? "Your appointment has been rescheduled."
+                        : "Your appointment has been booked."}
                 </h2>
             </header>
 
@@ -38,7 +40,8 @@ export const Success = ({ appointment, boilerplate }: Props) => {
                 <li>
                     <p>
                         Thank you for booking an appointment with us. We have
-                        scheduled {employee && ` with ${employee?.name}`}, for{" "}
+                        {boilerplate?.appointment ? "rescheduled" : "scheduled"}
+                        {employee && ` with ${employee?.name}`}, for{" "}
                         {service?.name}. An email confirmation will be sent to
                         you shortly.
                     </p>

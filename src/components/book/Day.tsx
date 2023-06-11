@@ -7,6 +7,7 @@ import {
     isEqual,
     isPast,
     isSameMonth,
+    isSameDay,
 } from "date-fns";
 import clsx from "clsx";
 import { useBookingStore } from "@/stores/bookingStore";
@@ -27,10 +28,12 @@ export const Day = ({ day, index }: Props) => {
     const { selectedDay, selectDay } = useBookingStore((state) => state);
 
     const styles = clsx({
-        "bg-green-500 text-white": isEqual(day, selectedDay!) && !isToday(day),
-        "text-gray-500 cursor-not-allowed" :isPast(day) && isSameMonth(day, new Date()),
+        "bg-green-500 text-white": isEqual(day, selectedDay!) && !isToday(day) || (selectedDay && isSameDay(day, selectedDay)),
+        "text-gray-500 cursor-not-allowed":
+            isPast(day) && isSameMonth(day, new Date()),
         "text-blue-600 font-bold": isToday(day),
-        "hover:transition-all font-bold hover:border-green-500": !isToday(day) && !isPast(day),
+        "hover:transition-all font-bold hover:border-green-500":
+            !isToday(day) && !isPast(day),
     });
 
     return (

@@ -12,6 +12,7 @@ type IGenericStore = {
 export type AppointmentsFilterStoreProps = IGenericStore & {
     appointments: IAppointmentFiltered | null;
     setAppointments: (appointments: IAppointmentFiltered) => void;
+    getByDay: (day: string) => void;
 };
 
 export type ClientsFilterStoreProps = IGenericStore & {

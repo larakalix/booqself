@@ -1,4 +1,5 @@
 import { Children } from "react";
+import Link from "next/link";
 import {
     Card,
     Table,
@@ -8,10 +9,16 @@ import {
     Text,
     Title,
 } from "@tremor/react";
-import { HiOutlineMail, HiOutlineUser } from "react-icons/hi";
+import {
+    HiOutlineMail,
+    HiOutlineUser,
+    HiPencil,
+    HiTrash,
+} from "react-icons/hi";
 import { AiOutlineCheckCircle, AiOutlineFieldTime } from "react-icons/ai";
 import { format, isPast, parseISO } from "date-fns";
 import { GenericTableHead } from "../generic/GenericTableHead";
+import { useAuthStore } from "@/stores/authStore";
 import type { ITenantBoilerplateChunk } from "@/types/models/tenant";
 import type { IAppointment } from "@/types/models/appointment";
 
@@ -19,6 +26,7 @@ export const Appointments = ({
     data: appointments,
     meta,
 }: ITenantBoilerplateChunk<IAppointment>) => {
+    const { params } = useAuthStore((state) => state);
     return (
         <Card className="relative w-full text-left ring-1 bg-white shadow border-blue-500 ring-gray-200 p-6 rounded-md">
             <Title className="text-gray-700 text-lg font-medium">
@@ -27,7 +35,13 @@ export const Appointments = ({
 
             <Table className="mt-5">
                 <GenericTableHead
-                    headers={["Client", "Employee", "Service", "Status"]}
+                    headers={[
+                        "Client",
+                        "Employee",
+                        "Service",
+                        "Status",
+                        "Actions",
+                    ]}
                 />
                 <TableBody className="align-top overflow-x-auto divide-y divide-gray-200">
                     {Children.toArray(
@@ -106,6 +120,29 @@ export const Appointments = ({
                                                 )}
                                             </time>
                                         </span>
+                                    )}
+                                </TableCell>
+                                <TableCell>
+                                    {!isPast(
+                                        new Date(appointment.appointmentDay)
+                                    ) ? (
+                                        <div className="flex items-center gap-4">
+                                            <Link
+                                                href={`/booking/${params?.merchant_id}/${appointment.id}`}
+                                                target="_blank"
+                                                className="text-blue-500 hover:text-blue-600"
+                                            >
+                                                <HiPencil />
+                                            </Link>
+                                            <button
+                                                type="button"
+                                                className="text-red-500 hover:text-red-600"
+                                            >
+                                                <HiTrash />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <span></span>
                                     )}
                                 </TableCell>
                             </TableRow>

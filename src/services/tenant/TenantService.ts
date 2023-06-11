@@ -34,6 +34,7 @@ export const TenantService = () => {
         }: {
             id: string;
             justTenant?: boolean;
+            appointmentId?: string;
         },
         apiKey: string
     ) => {
@@ -52,19 +53,21 @@ export const TenantService = () => {
         });
         if (!res.ok) throw new Error("Failed to fetch data");
 
-        const { tenant, services, employees, appointments } = await res.json();
+        const { tenant, services, employees, appointments, appointment } =
+            await res.json();
 
         return {
             tenant,
             services,
             employees,
             appointments,
+            appointment,
         } as ITenantBooking;
     };
 
     const update = async (
         id: number,
-        tenant: Omit<ITenantAttributes, "createdA" | "timeOptions">
+        tenant: Omit<ITenantAttributes, "createdAt" | "timeOptions">
     ) => {
         const res = await fetch(
             `${process.env.NEXT_STRAPI_URL}/custom-tenant/update/${id}`,

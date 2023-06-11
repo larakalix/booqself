@@ -9,7 +9,12 @@ import { Calendar } from "./Calendar";
 import { Apointments } from "./appointments/Apointments";
 import type { ITenantBooking } from "@/types/models/tenant";
 
-export const BookingBoard = ({ id }: { id: string }) => {
+type Props = {
+    id: string;
+    appointmentId?: string;
+};
+
+export const BookingBoard = ({ id, appointmentId }: Props) => {
     const [boilerplate, setBoilerplate] = useState<ITenantBooking | null>(null);
 
     useEffect(() => {
@@ -18,6 +23,7 @@ export const BookingBoard = ({ id }: { id: string }) => {
                 {
                     id,
                     justTenant: false,
+                    appointmentId,
                 },
                 process.env.NEXT_CLOVER_APP_SECRET!
             );
@@ -47,7 +53,7 @@ export const BookingBoard = ({ id }: { id: string }) => {
 
     return (
         <Card className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[calc(100vh-2.5rem)] p-0">
-            <Calendar tenant={boilerplate.tenant.data} />
+            <Calendar boilerplate={boilerplate} />
             <Apointments boilerplate={boilerplate} />
         </Card>
     );

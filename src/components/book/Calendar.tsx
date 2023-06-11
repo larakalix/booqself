@@ -1,6 +1,6 @@
 "use client";
 
-import { Children } from "react";
+import { Children, useEffect } from "react";
 import {
     eachDayOfInterval,
     endOfMonth,
@@ -8,16 +8,18 @@ import {
     parse,
     add,
     isPast,
+    parseISO,
 } from "date-fns";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Day } from "@/components/book/Day";
 import { useBookingStore } from "@/stores/bookingStore";
-import type { ITenantAttributes } from "@/types/models/tenant";
+import type { ITenantBooking } from "@/types/models/tenant";
 
-type Props = { tenant: ITenantAttributes };
+type Props = { boilerplate: ITenantBooking };
 
-export const Calendar = ({ tenant }: Props) => {
-    const { loading, currentMonth, setCurrentMonth } = useBookingStore((state) => state);
+export const Calendar = ({ boilerplate }: Props) => {
+    const { loading, currentMonth, setCurrentMonth, selectDay } =
+        useBookingStore((state) => state);
     const firstDayOfCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
     let days = eachDayOfInterval({
@@ -36,11 +38,22 @@ export const Calendar = ({ tenant }: Props) => {
         setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
     };
 
+    useEffect(() => {
+        if (boilerplate.appointment) {
+            const appointmentDay = new Date(
+                boilerplate.appointment.attributes.appointmentDay
+            );
+            selectDay(appointmentDay);
+            setCurrentMonth(format(appointmentDay, "MMM-yyyy"));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <div className="flex flex-col items-center justify-between p-5">
             <header>
                 <h1 className="text-2xl font-semibold text-black mb-6">
-                    {tenant.name}
+                    {boilerplate.tenant.data.name}
                 </h1>
             </header>
             <div className="grid grid-cols-7 gap-4">
@@ -78,10 +91,10 @@ export const Calendar = ({ tenant }: Props) => {
                 <p className="text-gray-400 text-sm mt-6">
                     For some support, contact us at{" "}
                     <a
-                        href={`mailto:${tenant.email}`}
+                        href={`mailto:${boilerplate.tenant.data.email}`}
                         className="text-blue-500"
                     >
-                        {tenant.email}
+                        {boilerplate.tenant.data.email}
                     </a>
                 </p>
             </footer>

@@ -1,4 +1,4 @@
-import { GET_CONFIG, POST_CONFIG } from "../configurations/generic";
+import { GET_CONFIG, POST_CONFIG, PUT_CONFIG } from "../configurations/generic";
 import { appendQueryParams } from "@/utils/utils";
 import type {
     IAppointmentAttributes,
@@ -51,7 +51,30 @@ export const AppointmentService = () => {
             );
             if (!res.ok) throw new Error("Failed to create appointment");
 
-            const data = await res.json();
+            const { data } = await res.json();
+
+            return data as IFormAppointment;
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
+    const update = async (
+        id: number,
+        appointment: IFormAppointment,
+        tenant: number
+    ) => {
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_STRAPI_URL}/custom-appointment/update/${id}`,
+                {
+                    ...PUT_CONFIG,
+                    body: JSON.stringify(appointment),
+                }
+            );
+            if (!res.ok) throw new Error("Failed to create appointment");
+
+            const { data } = await res.json();
 
             return data as IFormAppointment;
         } catch (error) {
@@ -121,6 +144,7 @@ export const AppointmentService = () => {
 
     return {
         create,
+        update,
         getByFilter,
         getAppointments,
         getBookAppointments,

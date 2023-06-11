@@ -2,12 +2,13 @@ import type {
     ICreatedAt,
     IData,
     IElement,
+    IEntity,
     IIdentifier,
     IIsActive,
     IMeta,
     IOptionable,
 } from "./generic";
-import type { IAppointment } from "./appointment";
+import type { IAppointment, IFormAppointment } from "./appointment";
 import type { IClient } from "./client";
 import type { IService } from "./service";
 import type { IEmployee } from "./employee";
@@ -42,6 +43,7 @@ export type ITenantBooking = {
     employees: IElement<IEmployee>;
     services: IElement<IService>;
     appointments: IIdentifier & { appointmentDay: string }[];
+    appointment: IEntity<IFormAppointment> | null;
 };
 
 export type ITenantClientBoilerplate = ITenantBoilerplateChunk<IClient>;
