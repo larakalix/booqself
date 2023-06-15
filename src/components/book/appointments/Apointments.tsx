@@ -15,6 +15,7 @@ export const Apointments = ({
 }: {
     boilerplate: ITenantBooking;
 }) => {
+    
     const { loading, appointments, currentMonth, selectedDay, setLoading, setFlatAppointments } = useBookingStore((state) => state);
     const { appointment } = useSuccesBookingStore((state) => state);
     const { buildDropdownlists } = useAppointments({

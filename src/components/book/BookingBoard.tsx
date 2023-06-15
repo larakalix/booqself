@@ -1,5 +1,6 @@
 "use client";
 
+import { ToastProvider } from "react-toast-notifications";
 import { useQuery } from "@tanstack/react-query";
 import { TenantService } from "@/services/tenant/TenantService";
 import { Card } from "@/kit/card/Card";
@@ -14,33 +15,53 @@ type Props = {
 };
 
 export const BookingBoard = ({ id, appointmentId }: Props) => {
-    const { data: boilerplate, isLoading, error } = useQuery(
+    const {
+        data: boilerplate,
+        isLoading,
+        error,
+    } = useQuery(
         ["tenantBookBoilerplate", id, appointmentId],
-        async () => await TenantService().getTenantBookBoilerplate({ id, justTenant: false, appointmentId }, process.env.NEXT_CLOVER_APP_SECRET!)
+        async () =>
+            await TenantService().getTenantBookBoilerplate(
+                { id, justTenant: false, appointmentId },
+                process.env.NEXT_CLOVER_APP_SECRET!
+            )
     );
 
     if (isLoading) {
         return (
-            <AdviceCard title="Please wait" description="Retrieveing tenant data, please wait..." isLoader />
+            <AdviceCard
+                title="Please wait"
+                description="Retrieveing tenant data, please wait..."
+                isLoader
+            />
         );
     }
 
     if (error || !boilerplate || !boilerplate.tenant) {
         return (
-            <AdviceCard title="No tenant found." description="No tenant found. Please check your tenant and try, or contact your administrator." />
+            <AdviceCard
+                title="No tenant found."
+                description="No tenant found. Please check your tenant and try, or contact your administrator."
+            />
         );
     }
 
     if (boilerplate.tenant && !boilerplate.tenant.data.isActive) {
         return (
-            <AdviceCard title="Your tenant is not active." description="Please contact your administrator." />
+            <AdviceCard
+                title="Your tenant is not active."
+                description="Please contact your administrator."
+            />
         );
     }
 
     return (
-        <Card className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[calc(100vh-2.5rem)] p-0">
-            <Calendar boilerplate={boilerplate} />
-            <Apointments boilerplate={boilerplate} />
-        </Card>
+        <ToastProvider>
+            <Card className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[calc(100vh-2.5rem)] p-0">
+                <Calendar boilerplate={boilerplate} />
+                <Apointments boilerplate={boilerplate} />
+            </Card>
+        </ToastProvider>
     );
 };

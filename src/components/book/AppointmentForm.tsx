@@ -3,6 +3,7 @@
 import { Children } from "react";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
+import { useToasts } from "react-toast-notifications";
 import { useRegisterForm } from "../register/hooks/useRegisterForm";
 import { FormField } from "@/kit/form/FormField";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
@@ -16,6 +17,7 @@ export const AppointmentForm = ({
     formFields,
     loading,
 }: AppointmentFormProps) => {
+    const { addToast } = useToasts();
     const { initialValues, validationSchema, buildAppointment } = useRegisterForm({ formFields });
     const { setAppointment } = useSuccesBookingStore((state) => state);
 
@@ -51,6 +53,10 @@ export const AppointmentForm = ({
                     if (response?.id) {
                         actions.resetForm();
                         setAppointment({ ...response });
+                        addToast("Appointment booked successfully", {
+                            appearance: "success",
+                            autoDismiss: true,
+                        });
                     }
 
                     actions.setSubmitting(false);
