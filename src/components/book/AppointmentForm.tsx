@@ -5,17 +5,8 @@ import * as yup from "yup";
 import { Formik, Form } from "formik";
 import { useRegisterForm } from "../register/hooks/useRegisterForm";
 import { FormField } from "@/kit/form/FormField";
-import { mergeTimeWithDate } from "@/utils/time";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
 import { useSuccesBookingStore } from "@/stores/bookingStore";
-import { findAndReturn } from "@/utils/utils";
-import type {
-    IAppointmentEmployee,
-    IAppointmentService,
-    IFormAppointment,
-} from "@/types/models/appointment";
-import type { IEmployee } from "@/types/models/employee";
-import type { IService } from "@/types/models/service";
 import type { AppointmentFormProps } from "@/types/forms/appointment.form";
 
 export const AppointmentForm = ({
@@ -25,8 +16,7 @@ export const AppointmentForm = ({
     formFields,
     loading,
 }: AppointmentFormProps) => {
-    const { initialValues, validationSchema, buildAppointment } =
-        useRegisterForm({ formFields });
+    const { initialValues, validationSchema, buildAppointment } = useRegisterForm({ formFields });
     const { setAppointment } = useSuccesBookingStore((state) => state);
 
     return (
@@ -40,12 +30,8 @@ export const AppointmentForm = ({
                         : {
                               time: null,
                               ...boilerplate?.appointment.attributes,
-                              employee:
-                                  boilerplate?.appointment.attributes.employee
-                                      .cloverId,
-                              service:
-                                  boilerplate?.appointment.attributes.service
-                                      .cloverId,
+                              employee: boilerplate?.appointment.attributes.employee.cloverId,
+                              service: boilerplate?.appointment.attributes.service.cloverId,
                           }
                 }
                 onSubmit={async (values, actions) => {
@@ -59,15 +45,8 @@ export const AppointmentForm = ({
                     );
 
                     const response = boilerplate?.appointment
-                        ? await AppointmentService().update(
-                              boilerplate?.appointment.id,
-                              appointment,
-                              boilerplate.tenant.data.id
-                          )
-                        : await AppointmentService().create(
-                              appointment,
-                              boilerplate.tenant.data.id
-                          );
+                        ? await AppointmentService().update(boilerplate?.appointment.id, appointment, boilerplate.tenant.data.id)
+                        : await AppointmentService().create(appointment, boilerplate.tenant.data.id);
 
                     if (response?.id) {
                         actions.resetForm();
@@ -80,19 +59,15 @@ export const AppointmentForm = ({
                 {({ values, errors, isSubmitting }) => (
                     <Form className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4">
                         {Children.toArray(
-                            formFields.map((field) => (
-                                <FormField formField={field} />
-                            ))
+                            formFields.map((field) => (<FormField formField={field} />))
                         )}
 
                         <button
                             disabled={isSubmitting || !selectedDay || loading}
-                            className="col-span-1 lg:col-span-2 bg-blue-400 text-white rounded-md py-4 px-8"
+                            className="col-span-1 lg:col-span-2 bg-blue-400 text-white rounded-md py-4 px-8 hover:ring-2 hover:ring-blue-200 hover:bg-blue-500"
                             type="submit"
                         >
-                            {boilerplate?.appointment
-                                ? "Reschedule"
-                                : "Book now"}
+                            { boilerplate?.appointment ? "Reschedule" : "Book now" }
                         </button>
                     </Form>
                 )}

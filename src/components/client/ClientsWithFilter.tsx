@@ -1,15 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useToasts } from "react-toast-notifications";
 import { DynamicForm } from "../generic/form/DynamicForm";
+import { EmptyResults } from "../generic/EmptyResults";
+import { Loading } from "../generic/Loading";
 import { Clients } from "../home";
 import { useClientsFilterStore } from "@/stores/filterStore";
 import { ClientService } from "@/services/client/ClientService";
-import { EmptyResults } from "../generic/EmptyResults";
 import { useAuthStore } from "@/stores/authStore";
 
 export const ClientsWithFilter = () => {
+    const { addToast } = useToasts();
+    const { data, isLoading, error } = useQuery(
+        ["getCloverClients"],
+        async () => await ClientService().getCloverClients(params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
+        {
+            onSuccess: (data) => {
+                if (data) setClients(data);
+            },
+            onError: (error) => addToast(`${error}`, { appearance: "error", autoDismiss: true }),
+        }
+    );
+
     const { params } = useAuthStore((state) => state);
     const { loading, clients, setLoading, setClients } = useClientsFilterStore(
         (state) => state
@@ -30,17 +45,6 @@ export const ClientsWithFilter = () => {
         },
         []
     );
-
-    useEffect(() => {
-        (async () => {
-            const rows = await ClientService().getCloverClients(
-                params?.merchant_id!,
-                process.env.NEXT_CLOVER_APP_SECRET!
-            );
-
-            if (rows) setClients(rows);
-        })();
-    }, []);
 
     return (
         <div className="flex flex-col gap-6">
@@ -79,8 +83,10 @@ export const ClientsWithFilter = () => {
                 onSubmit={handleSubmit}
             />
 
-            {!clients || clients.length === 0 ? (
-                <EmptyResults text="No appointments found" />
+            {isLoading ? (
+                <Loading />
+            ) : !clients || clients.length === 0 ? (
+                <EmptyResults text="No clients found." />
             ) : (
                 <Clients data={clients} />
             )}

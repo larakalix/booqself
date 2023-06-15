@@ -21,15 +21,11 @@ export const useDay = ({ day, selectedDay, style }: Props) => {
 
     const styles = clsx({
         "border-blue-500 text-white": isEqual(day, selectedDay!) && !isToday(day),
-        "hidden md:flex text-gray-500 bg-gray-200 cursor-not-allowed opacity-50": isPast(day) && isSameMonth(day, new Date()),
-        hidden:
-            isPast(day) &&
-            isSameMonth(day, new Date()) &&
-            style === CalendarStyle.List,
+        "hidden md:flex text-gray-500 bg-gray-200 cursor-not-allowed opacity-50": isPast(day) && isSameMonth(day, new Date()) && !isToday(day), hidden: isPast(day) && isSameMonth(day, new Date()) && style === CalendarStyle.List,
         "h-20 md:h-36 xl:h-48": style === CalendarStyle.Grid,
         "h-auto pb-2": style === CalendarStyle.List,
-        "text-blue-600 font-bold": isToday(day),
-        "hover:transition-all font-bold hover:border-green-500": !isToday(day) && !isPast(day),
+        "bg-blue-100 text-blue-600 border-blue-500 hover:border-green-500 font-bold": isToday(day),
+        "hover:transition-all font-bold hover:border-green-500": !isPast(day) && !isToday(day),
     });
 
     return {

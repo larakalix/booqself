@@ -3,7 +3,7 @@ import { AppointmentsWithFilter } from "@/components/appointments/AppointmentsWi
 
 export default function AppointmentsPage() {
     return (
-        <PageWrapper>
+        <PageWrapper title="Appointments">
             <AppointmentsWithFilter />
         </PageWrapper>
     );

@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { EmptyResults } from "../generic/EmptyResults";
+import { Loading } from "../generic/Loading";
 import { useOrdersFilterStore } from "@/stores/filterStore";
 import { OrderService } from "@/services/order/OrderService";
 import { DynamicForm } from "../generic/form/DynamicForm";
@@ -10,6 +12,16 @@ import { Orders } from "./Orders";
 import { useAuthStore } from "@/stores/authStore";
 
 export const OrdersWithFilter = () => {
+    const { data, isLoading, error } = useQuery(
+        ["getCloverEmployees"],
+        async () => await OrderService().getCloverOrders(params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
+        {
+            onSuccess: (data) => {
+                if (data) setOrders(data);
+            },
+        }
+    );
+    
     const { params } = useAuthStore((state) => state);
     const { loading, orders, setLoading, setOrders } = useOrdersFilterStore(
         (state) => state
@@ -31,17 +43,6 @@ export const OrdersWithFilter = () => {
         []
     );
 
-    useEffect(() => {
-        (async () => {
-            const rows = await OrderService().getCloverOrders(
-                params?.merchant_id!,
-                process.env.NEXT_CLOVER_APP_SECRET!
-            );
-
-            if (rows) setOrders(rows);
-        })();
-    }, []);
-
     return (
         <div className="flex flex-col gap-6">
             <DynamicForm
@@ -61,8 +62,10 @@ export const OrdersWithFilter = () => {
                 onSubmit={handleSubtmit}
             />
 
-            {!orders || orders.length === 0 ? (
-                <EmptyResults text="No orders found" />
+            {isLoading ? (
+                <Loading />
+            ) : !orders || orders.length === 0 ? (
+                <EmptyResults text="No orders found." />
             ) : (
                 <Orders data={orders} />
             )}

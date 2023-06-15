@@ -2,40 +2,36 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { TenantService } from "@/services/tenant/TenantService";
+import { useQuery } from "@tanstack/react-query";
 import { useTenantStore } from "@/stores/tenantStore";
+import { useAuthStore } from "@/stores/authStore";
+import { TenantService } from "@/services/tenant/TenantService";
 import { SettingsForm } from "./SettingsForm";
 import { Card } from "@/kit/card/Card";
+import { AdviceCard } from "../generic/AdviceCard";
 import { generateTimes } from "@/utils/time";
-import { IOptionable } from "@/types/models/generic";
+import type { IOptionable } from "@/types/models/generic";
 
 export const SettingsBoard = () => {
-    const { loading, tenant, setTenant } = useTenantStore((state) => state);
+    const { tenant } = useTenantStore((state) => state);
 
-    const timeOptions: IOptionable[] = useMemo(
-        () =>
-            generateTimes().map((time, index) => ({
-                label: time,
-                value: `index-${index}`,
-            })),
-        []
-    );
+    // const timeOptions: IOptionable[] = useMemo(
+    //     () =>
+    //         generateTimes().map((time, index) => ({
+    //             label: time,
+    //             value: `index-${index}`,
+    //         })),
+    //     []
+    // );
 
-    useEffect(() => {
-        (async () => {
-            const tenant = await TenantService().getTenantById({
-                id: process.env.NEXT_APP_CLIENT_ID!,
-                justTenant: true,
-            });
-
-            setTenant(tenant);
-        })();
-    }, []);
+    if (!tenant) {
+        return (<AdviceCard title="No tenant found" description="No tenant found, please contact support." />);
+    }
 
     return (
         <Card className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <SettingsForm
-                loading={loading}
+                loading={false}
                 tenant={tenant}
                 formFields={[
                     {

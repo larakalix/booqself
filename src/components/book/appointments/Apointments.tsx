@@ -15,14 +15,7 @@ export const Apointments = ({
 }: {
     boilerplate: ITenantBooking;
 }) => {
-    const {
-        loading,
-        appointments,
-        currentMonth,
-        selectedDay,
-        setLoading,
-        setFlatAppointments,
-    } = useBookingStore((state) => state);
+    const { loading, appointments, currentMonth, selectedDay, setLoading, setFlatAppointments } = useBookingStore((state) => state);
     const { appointment } = useSuccesBookingStore((state) => state);
     const { buildDropdownlists } = useAppointments({
         timeOptions: boilerplate.tenant.data.timeOptions,
@@ -30,8 +23,7 @@ export const Apointments = ({
         selectedDay,
     });
 
-    const { timeOptions, employeeDp, serviceDp } =
-        buildDropdownlists(boilerplate);
+    const { timeOptions, employeeDp, serviceDp } = buildDropdownlists(boilerplate);
 
     useEffect(() => {
         (async () => {

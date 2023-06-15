@@ -1,53 +1,39 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { TenantService } from "@/services/tenant/TenantService";
 import { Card } from "@/kit/card/Card";
 import { AdviceCard } from "@/components/generic/AdviceCard";
 import { Calendar } from "./Calendar";
 import { Apointments } from "./appointments/Apointments";
-import type { ITenantBooking } from "@/types/models/tenant";
 
 type Props = {
     id: string;
     appointmentId?: string;
+    employeeId?: string;
 };
 
 export const BookingBoard = ({ id, appointmentId }: Props) => {
-    const [boilerplate, setBoilerplate] = useState<ITenantBooking | null>(null);
+    const { data: boilerplate, isLoading, error } = useQuery(
+        ["tenantBookBoilerplate", id, appointmentId],
+        async () => await TenantService().getTenantBookBoilerplate({ id, justTenant: false, appointmentId }, process.env.NEXT_CLOVER_APP_SECRET!)
+    );
 
-    useEffect(() => {
-        (async () => {
-            const boilerplate = await TenantService().getTenantBookBoilerplate(
-                {
-                    id,
-                    justTenant: false,
-                    appointmentId,
-                },
-                process.env.NEXT_CLOVER_APP_SECRET!
-            );
-
-            setBoilerplate(boilerplate);
-        })();
-    }, []);
-
-    if (!boilerplate || !boilerplate.tenant) {
+    if (isLoading) {
         return (
-            <AdviceCard
-                title="No tenant found."
-                description="No tenant found. Please check your tenant and try, or
-                contact your administrator."
-            />
+            <AdviceCard title="Please wait" description="Retrieveing tenant data, please wait..." isLoader />
+        );
+    }
+
+    if (error || !boilerplate || !boilerplate.tenant) {
+        return (
+            <AdviceCard title="No tenant found." description="No tenant found. Please check your tenant and try, or contact your administrator." />
         );
     }
 
     if (boilerplate.tenant && !boilerplate.tenant.data.isActive) {
         return (
-            <AdviceCard
-                title="Your tenant is not active."
-                description="Please contact your administrator."
-            />
+            <AdviceCard title="Your tenant is not active." description="Please contact your administrator." />
         );
     }
 

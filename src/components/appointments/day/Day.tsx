@@ -1,9 +1,8 @@
 "use client";
 
 import { Children } from "react";
-import { useRouter } from "next/navigation";
 import { Subtitle } from "@tremor/react";
-import { format, getDay, isPast, parseISO } from "date-fns";
+import { format, getDay, isPast, isToday, parseISO } from "date-fns";
 import { useCalendarStore } from "@/stores/bookingStore";
 import type { IAppointment } from "@/types/models/appointment";
 import { CalendarStyle } from "@/types/forms/calendar";
@@ -16,7 +15,6 @@ type Props = {
 };
 
 export const Day = ({ day, index, appointments }: Props) => {
-    const router = useRouter();
     const { style, selectedDay, selectDay } = useCalendarStore(
         (state) => state
     );
@@ -30,7 +28,7 @@ export const Day = ({ day, index, appointments }: Props) => {
         <button
             id={`day-${index}`}
             type="button"
-            disabled={isPast(day)}
+            disabled={isPast(day) && !isToday(day)}
             className={`
             relative border border-bg-card flex flex-col gap-1 items-start justify-start rounded-lg font-light text-sm w-full overflow-hidden px-2 py-1
                 ${

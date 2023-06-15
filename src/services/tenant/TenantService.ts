@@ -16,15 +16,15 @@ export const TenantService = () => {
         justTenant?: boolean;
     }) => {
         const URI = appendQueryParams(
-            `${process.env.NEXT_CLOVER_API_URL}/custom-tenant/${id}`,
+            `${process.env.NEXT_STRAPI_URL}/custom-tenant/${id}`,
             { ...params }
         );
         const res = await fetch(URI, GET_CONFIG);
         if (!res.ok) throw new Error("Failed to fetch data");
 
-        const tenant: { data: ITenantAttributes } = await res.json();
+        const { data } = await res.json();
 
-        return tenant.data;
+        return data as ITenantBoilerplate;
     };
 
     const getTenantBookBoilerplate = async (

@@ -6,16 +6,15 @@ import clsx from "clsx";
 import { useOnClickOutside } from "usehooks-ts";
 import { CgMenuLeft, CgClose } from "react-icons/cg";
 import { HiLogout } from "react-icons/hi";
-import { ROUTES } from "@/ constants/routes";
 import { Logo } from "./Logo";
-
-import type { NavItems } from "@/types/layout";
 import { useAuthStore } from "@/stores/authStore";
+import { ROUTES } from "@/ constants/routes";
+import type { NavItems } from "@/types/layout";
 
 const links: NavItems[] = [
     { label: "Home", route: ROUTES.DASHBOARD },
-    // { label: "Register client", route: ROUTES.REGISTER },
     { label: "Appointments", route: ROUTES.APPOINTMENTS },
+    { label: "Memberships", route: ROUTES.MEMBERSHIPS },
     { label: "Clients", route: ROUTES.CLIENTS },
     { label: "Employees", route: ROUTES.EMPLOYEES },
     { label: "Services", route: ROUTES.SERVICES },

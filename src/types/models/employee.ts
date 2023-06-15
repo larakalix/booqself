@@ -22,6 +22,7 @@ export interface IEmployee extends IEmployeeAttributes, ICreatedAt {
     id: number;
 }
 
+
 export type IEmployeeFiltered = {
     data: IEmployee[];
     meta: IMeta;

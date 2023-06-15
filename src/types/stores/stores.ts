@@ -1,6 +1,7 @@
 import type { IAppointmentFiltered } from "../models/appointment";
 import type { IClient } from "../models/client";
 import type { IEmployee } from "../models/employee";
+import type { IMembershipFiltered } from "../models/membership";
 import type { IOrder } from "../models/order";
 import type { IService } from "../models/service";
 
@@ -33,4 +34,9 @@ export type ServicesFilterStoreProps = IGenericStore & {
 export type OrdersFilterStoreProps = IGenericStore & {
     orders: IOrder[];
     setOrders: (orders: IOrder[]) => void;
+};
+
+export type MembershipsFilterStoreProps = IGenericStore & {
+    memberships: IMembershipFiltered | null;
+    setMemberships: (memberships: IMembershipFiltered) => void;
 };

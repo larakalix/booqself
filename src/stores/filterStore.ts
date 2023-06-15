@@ -3,10 +3,10 @@ import type {
     AppointmentsFilterStoreProps,
     ClientsFilterStoreProps,
     EmployeesFilterStoreProps,
+    MembershipsFilterStoreProps,
     OrdersFilterStoreProps,
     ServicesFilterStoreProps,
 } from "@/types/stores/stores";
-import { AppointmentService } from "@/services/appointment/AppointmentServices";
 
 export const useAppoinmentsFilterStore = create<AppointmentsFilterStoreProps>(
     (set, get) => ({
@@ -19,7 +19,9 @@ export const useAppoinmentsFilterStore = create<AppointmentsFilterStoreProps>(
             const rows = get().appointments;
             if (!rows) return [];
 
-            return rows?.data.filter((appointment) => appointment.appointmentDay === day);
+            return rows?.data.filter(
+                (appointment) => appointment.appointmentDay === day
+            );
         },
     })
 );
@@ -56,6 +58,15 @@ export const useOrdersFilterStore = create<OrdersFilterStoreProps>(
         loading: false,
         orders: [],
         setOrders: (orders) => set({ orders, loading: false }),
+        setLoading: (loading) => set({ loading }),
+    })
+);
+
+export const useMembershipsFilterStore = create<MembershipsFilterStoreProps>(
+    (set, get) => ({
+        loading: false,
+        memberships: null,
+        setMemberships: (memberships) => set({ memberships, loading: false }),
         setLoading: (loading) => set({ loading }),
     })
 );

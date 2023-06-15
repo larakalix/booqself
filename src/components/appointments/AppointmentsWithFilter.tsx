@@ -1,44 +1,59 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useToasts } from "react-toast-notifications";
+import { useAuthStore } from "@/stores/authStore";
 import { DynamicForm } from "../generic/form/DynamicForm";
 import { Appointments } from "../home";
-import { useAppoinmentsFilterStore } from "@/stores/filterStore";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
 import { EmptyResults } from "../generic/EmptyResults";
+import { Loading } from "../generic/Loading";
 import { AppointmentsCalendar } from "./AppointmentsCalendar";
+import { useAppoinmentsFilterStore } from "@/stores/filterStore";
 
 export const AppointmentsWithFilter = () => {
-    const { loading, appointments, setLoading, setAppointments } = useAppoinmentsFilterStore((state) => state);
+    const { addToast } = useToasts();
+    const { data, isLoading, error } = useQuery(
+        ["getAppointments"],
+        async () =>
+            await AppointmentService().getByFilter(params?.merchant_id!, {
+                offset: 0,
+                limit: 50,
+            }),
+        {
+            onSuccess: (data) => {
+                if (data) setAppointments(data);
+            },
+            onError: (error) =>
+                addToast(`${error}`, {
+                    appearance: "error",
+                    autoDismiss: true,
+                }),
+        }
+    );
+
+    const { params } = useAuthStore((state) => state);
+    const { loading, appointments, setLoading, setAppointments } =
+        useAppoinmentsFilterStore((state) => state);
 
     const handleSubtmit = useMemo(
         () => async (values: any, actions: any) => {
             setLoading(true);
             const { name, email, employee, rangeDate } = values;
 
-            const filteredAppointments = await AppointmentService().getByFilter(
-                process.env.NEXT_APP_CLIENT_ID!,
+            const rows = await AppointmentService().getByFilter(
+                params?.merchant_id!,
                 { name, email, employee, rangeDate, offset: 0, limit: 50 }
             );
 
-            if (filteredAppointments) setAppointments(filteredAppointments);
+            if (rows) setAppointments(rows);
             actions.setSubmitting(false);
             setLoading(false);
         },
         []
     );
-
-    useEffect(() => {
-        (async () => {
-            const filteredAppointments = await AppointmentService().getByFilter(
-                process.env.NEXT_APP_CLIENT_ID!,
-                { offset: 0, limit: 50 }
-            );
-
-            if (filteredAppointments) setAppointments(filteredAppointments);
-        })();
-    }, []);
 
     return (
         <>
@@ -79,8 +94,10 @@ export const AppointmentsWithFilter = () => {
                     onSubmit={handleSubtmit}
                 />
 
-                {!appointments || appointments.data.length === 0 ? (
-                    <EmptyResults text="No appointments found" />
+                {isLoading ? (
+                    <Loading />
+                ) : !appointments || appointments.data.length === 0 ? (
+                    <EmptyResults text="No appointments found." />
                 ) : (
                     <Appointments
                         data={appointments.data}

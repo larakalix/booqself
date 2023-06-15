@@ -1,15 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useEffect, useMemo } from "react";
-import { EmptyResults } from "../generic/EmptyResults";
+import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useToasts } from "react-toast-notifications";
 import { useEmployeesFilterStore } from "@/stores/filterStore";
+import { useAuthStore } from "@/stores/authStore";
+import { EmptyResults } from "../generic/EmptyResults";
 import { EmployeeService } from "@/services/employee/EmployeeService";
 import { DynamicForm } from "../generic/form/DynamicForm";
+import { Loading } from "../generic/Loading";
 import { Employees } from "./Employees";
-import { useAuthStore } from "@/stores/authStore";
 
 export const EmployeesWithFilter = () => {
+    const { addToast } = useToasts();
+    const { data, isLoading, error } = useQuery(
+        ["getCloverEmployees"],
+        async () => await EmployeeService().getCloverEmployees(params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
+        {
+            onSuccess: (data) => {
+                if (data) setEmployees(data);
+            },
+            onError: (error) => addToast(`${error}`, { appearance: "error", autoDismiss: true }),
+        }
+    );
+
     const { params } = useAuthStore((state) => state);
     const { loading, employees, setLoading, setEmployees } =
         useEmployeesFilterStore((state) => state);
@@ -29,17 +44,6 @@ export const EmployeesWithFilter = () => {
         },
         []
     );
-
-    useEffect(() => {
-        (async () => {
-            const rows = await EmployeeService().getCloverEmployees(
-                params?.merchant_id!,
-                process.env.NEXT_CLOVER_APP_SECRET!
-            );
-
-            if (rows) setEmployees(rows);
-        })();
-    }, []);
 
     return (
         <div className="flex flex-col gap-6">
@@ -78,8 +82,10 @@ export const EmployeesWithFilter = () => {
                 onSubmit={handleSubtmit}
             />
 
-            {!employees || employees.length === 0 ? (
-                <EmptyResults text="No employees found" />
+            {isLoading ? (
+                <Loading />
+            ) : !employees || employees.length === 0 ? (
+                <EmptyResults text="No employees found." />
             ) : (
                 <Employees data={employees} />
             )}

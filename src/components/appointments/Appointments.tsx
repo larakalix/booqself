@@ -9,12 +9,7 @@ import {
     Text,
     Title,
 } from "@tremor/react";
-import {
-    HiOutlineMail,
-    HiOutlineUser,
-    HiPencil,
-    HiTrash,
-} from "react-icons/hi";
+import { HiOutlineMail, HiOutlineUser, HiPencil } from "react-icons/hi";
 import { AiOutlineCheckCircle, AiOutlineFieldTime } from "react-icons/ai";
 import { format, isPast, parseISO } from "date-fns";
 import { GenericTableHead } from "../generic/GenericTableHead";
@@ -29,19 +24,9 @@ export const Appointments = ({
     const { params } = useAuthStore((state) => state);
     return (
         <Card className="relative w-full text-left ring-1 bg-white shadow border-blue-500 ring-gray-200 p-6 rounded-md">
-            <Title className="text-gray-700 text-lg font-medium">
-                Appointments
-            </Title>
-
             <Table className="mt-5">
                 <GenericTableHead
-                    headers={[
-                        "Client",
-                        "Employee",
-                        "Service",
-                        "Status",
-                        "Actions",
-                    ]}
+                    headers={["Client", "Employee", "Service", "Status", ""]}
                 />
                 <TableBody className="align-top overflow-x-auto divide-y divide-gray-200">
                     {Children.toArray(
@@ -134,12 +119,6 @@ export const Appointments = ({
                                             >
                                                 <HiPencil />
                                             </Link>
-                                            <button
-                                                type="button"
-                                                className="text-red-500 hover:text-red-600"
-                                            >
-                                                <HiTrash />
-                                            </button>
                                         </div>
                                     ) : (
                                         <span></span>

@@ -1,12 +1,13 @@
 import { Children } from "react";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
+import { useToasts } from "react-toast-notifications";
 import { useRegisterForm } from "../register/hooks/useRegisterForm";
 import { FormField } from "@/kit/form/FormField";
-import type { IFormField } from "@/types/forms/form";
-import type { ITenantAttributes } from "@/types/models/tenant";
 import { TenantService } from "@/services/tenant/TenantService";
 import { useTenantStore } from "@/stores/tenantStore";
+import type { IFormField } from "@/types/forms/form";
+import type { ITenantAttributes } from "@/types/models/tenant";
 
 type Props = {
     loading: boolean;
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export const SettingsForm = ({ loading, tenant, formFields }: Props) => {
+    const { addToast } = useToasts();
     const { initialValues, validationSchema } = useRegisterForm({ formFields });
     const { setTenant } = useTenantStore((state) => state);
 
@@ -38,7 +40,10 @@ export const SettingsForm = ({ loading, tenant, formFields }: Props) => {
 
                     if (response?.id) {
                         actions.resetForm();
-                        setTenant(response);
+                        setTenant(response, true);
+                        addToast('Settings saved successfully.', { appearance: 'success', autoDismiss: true, });
+                    } else {
+                        addToast('An error has ocurred, please try again.', { appearance: 'error', autoDismiss: true, });
                     }
 
                     actions.setSubmitting(false);
