@@ -1,4 +1,4 @@
-import { Children } from "react";
+import { Children, useMemo } from "react";
 import Link from "next/link";
 import {
     Card,
@@ -9,6 +9,7 @@ import {
     Text,
     Title,
 } from "@tremor/react";
+import { HiPencil } from "react-icons/hi";
 import { useAuthStore } from "@/stores/authStore";
 import { GenericTableHead } from "../generic";
 import type { IMeta } from "@/types/models/generic";
@@ -24,9 +25,22 @@ export const Memberships = ({
 
     return (
         <Card className="relative w-full text-left ring-1 bg-white shadow border-blue-500 ring-gray-200 p-6 rounded-md">
-            <Title className="text-gray-700 text-lg font-medium">
-                Memberships
-            </Title>
+            <header className="w-full flex items-center justify-between">
+                <Title className="text-gray-700 text-xl font-medium">
+                    Memberships
+                </Title>
+
+                <ul className="flex items-center gap-2">
+                    <li>
+                        <Link
+                            href="/dashboard/membership"
+                            className="bg-green-400 text-white text-sm rounded-md py-2 px-4 hover:ring-2 hover:ring-green-200 hover:bg-green-500"
+                        >
+                            New
+                        </Link>
+                    </li>
+                </ul>
+            </header>
 
             <Table className="mt-5">
                 <GenericTableHead
@@ -60,13 +74,14 @@ export const Memberships = ({
                                 </TableCell>
                                 <TableCell>
                                     <div className="flex items-center gap-4">
-                                        {/* <Link
-                                            href={`/booking/${params?.merchant_id}/${appointment.id}`}
-                                            target="_blank"
-                                            className="text-blue-500 hover:text-blue-600"
-                                        >
-                                            <HiPencil />
-                                        </Link> */}
+                                        <div className="flex items-center gap-4">
+                                            <Link
+                                                href={`/dashboard/membership/${membership.id}`}
+                                                className="text-blue-500 hover:text-blue-600"
+                                            >
+                                                <HiPencil />
+                                            </Link>
+                                        </div>
                                     </div>
                                 </TableCell>
                             </TableRow>

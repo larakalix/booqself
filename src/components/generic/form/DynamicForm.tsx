@@ -40,17 +40,19 @@ export const DynamicForm = ({
                                 ))
                             )}
 
-                            <div className="flex flex-col items-center justify-end">
-                                <button
-                                    className="bg-yellow-400 text-white text-sm rounded-md py-[0.6rem] px-6"
-                                    type="button"
-                                    onClick={() => {
-                                        resetForm();
-                                    }}
-                                >
-                                    Clear filters
-                                </button>
-                            </div>
+                            {config.areFilters && (
+                                <div className="flex flex-col items-center justify-end">
+                                    <button
+                                        className="bg-yellow-400 text-white text-sm rounded-md py-[0.6rem] px-6"
+                                        type="button"
+                                        onClick={() => {
+                                            resetForm();
+                                        }}
+                                    >
+                                        Clear filters
+                                    </button>
+                                </div>
+                            )}
                             <div className="flex flex-col items-center justify-end">
                                 <button
                                     disabled={isSubmitting}

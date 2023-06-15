@@ -7,7 +7,6 @@ import {
     TableBody,
     TableCell,
     Text,
-    Title,
 } from "@tremor/react";
 import { HiOutlineMail, HiOutlineUser, HiPencil } from "react-icons/hi";
 import { AiOutlineCheckCircle, AiOutlineFieldTime } from "react-icons/ai";

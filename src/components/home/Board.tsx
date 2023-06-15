@@ -11,12 +11,16 @@ export const Board = () => {
     const { tenant } = useTenantStore((state) => state);
     const tiles = [
         {
-            route: ROUTES.CLIENTS,
-            title: "Clients",
-        },
-        {
             route: ROUTES.APPOINTMENTS,
             title: "Appointments",
+        },
+        {
+            route: ROUTES.MEMBERSHIPS,
+            title: "Memberships",
+        },
+        {
+            route: ROUTES.CLIENTS,
+            title: "Clients",
         },
         {
             route: ROUTES.EMPLOYEES,
@@ -25,6 +29,10 @@ export const Board = () => {
         {
             route: ROUTES.SERVICES,
             title: "Services",
+        },
+        {
+            route: ROUTES.ORDERS,
+            title: "Orders",
         },
     ];
 

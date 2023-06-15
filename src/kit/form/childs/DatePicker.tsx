@@ -1,4 +1,5 @@
-// import { DateRangePicker } from "@tremor/react";
+"use client";
+
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { addDays, format } from "date-fns";
