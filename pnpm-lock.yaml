@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@headlessui/react': ^1.7.14
+  '@radix-ui/react-checkbox': ^1.0.4
   '@radix-ui/react-dialog': ^1.0.4
   '@radix-ui/react-popover': ^1.0.6
   '@radix-ui/react-slot': ^1.0.2
@@ -38,6 +39,7 @@ specifiers:
   pdf-lib: ^1.17.1
   postcss: 8.4.23
   react: 18.2.0
+  react-color-palette: ^6.2.0
   react-day-picker: ^8.7.1
   react-dom: 18.2.0
   react-icons: ^4.8.0
@@ -53,6 +55,7 @@ specifiers:
 
 dependencies:
   '@headlessui/react': 1.7.14_biqbaboplfbrettd7655fr4n2y
+  '@radix-ui/react-checkbox': 1.0.4_h73yytdk5ntplvft5jzh7k37ce
   '@radix-ui/react-dialog': 1.0.4_h73yytdk5ntplvft5jzh7k37ce
   '@radix-ui/react-popover': 1.0.6_h73yytdk5ntplvft5jzh7k37ce
   '@radix-ui/react-slot': 1.0.2_bfoz4c5kom3f237nig75ykjhhy
@@ -86,6 +89,7 @@ dependencies:
   pdf-lib: 1.17.1
   postcss: 8.4.23
   react: 18.2.0
+  react-color-palette: 6.2.0_react@18.2.0
   react-day-picker: 8.7.1_kzhlcyde2l6xjiirkbg7jzhosa
   react-dom: 18.2.0_react@18.2.0
   react-icons: 4.8.0_react@18.2.0
@@ -1742,6 +1746,34 @@ packages:
     dependencies:
       '@babel/runtime': 7.22.0
       '@radix-ui/react-primitive': 1.0.3_h73yytdk5ntplvft5jzh7k37ce
+      '@types/react': 18.2.7
+      '@types/react-dom': 18.2.4
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@radix-ui/react-checkbox/1.0.4_h73yytdk5ntplvft5jzh7k37ce:
+    resolution: {integrity: sha512-CBuGQa52aAYnADZVt/KBQzXrwx6TqnlwtcIPGtVt5JkkzQwMOLJjPukimhfKEr4GQNd43C+djUh5Ikopj8pSLg==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.22.0
+      '@radix-ui/primitive': 1.0.1
+      '@radix-ui/react-compose-refs': 1.0.1_bfoz4c5kom3f237nig75ykjhhy
+      '@radix-ui/react-context': 1.0.1_bfoz4c5kom3f237nig75ykjhhy
+      '@radix-ui/react-presence': 1.0.1_h73yytdk5ntplvft5jzh7k37ce
+      '@radix-ui/react-primitive': 1.0.3_h73yytdk5ntplvft5jzh7k37ce
+      '@radix-ui/react-use-controllable-state': 1.0.1_bfoz4c5kom3f237nig75ykjhhy
+      '@radix-ui/react-use-previous': 1.0.1_bfoz4c5kom3f237nig75ykjhhy
+      '@radix-ui/react-use-size': 1.0.1_bfoz4c5kom3f237nig75ykjhhy
       '@types/react': 18.2.7
       '@types/react-dom': 18.2.4
       react: 18.2.0
@@ -5773,6 +5805,15 @@ packages:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
     dependencies:
       safe-buffer: 5.2.1
+    dev: false
+
+  /react-color-palette/6.2.0_react@18.2.0:
+    resolution: {integrity: sha512-9rIboaRJNoeF8aCI2f3J8wgMyhl74SnGmZLDjor3bKf0iDBhP2EBv0/jGmm0hrj6OackGCqtWl5ZvM89XUc3sg==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-day-picker/8.7.1_kzhlcyde2l6xjiirkbg7jzhosa:

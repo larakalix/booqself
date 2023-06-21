@@ -1,7 +1,10 @@
 import { GET_CONFIG, POST_CONFIG, PUT_CONFIG } from "../configurations/generic";
 import { appendQueryParams } from "@/utils/utils";
 import type { IPaginable } from "@/types/models/generic";
-import type { IMembershipFiltered } from "@/types/models/membership";
+import type {
+    IFormMembership,
+    IMembershipFiltered,
+} from "@/types/models/membership";
 
 export const MembershipService = () => {
     const getByFilter = async (
@@ -34,7 +37,54 @@ export const MembershipService = () => {
         }
     };
 
+    const create = async (membership: IFormMembership, tenant: number) => {
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_STRAPI_URL}/custom-membership/create`,
+                {
+                    ...POST_CONFIG,
+                    body: JSON.stringify({
+                        ...membership,
+                        tenant,
+                    }),
+                }
+            );
+            if (!res.ok) throw new Error("Failed to create membership");
+
+            const data = await res.json();
+
+            return data.data as IFormMembership;
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
+    const update = async (
+        id: number,
+        appointment: IFormMembership,
+        tenant: number
+    ) => {
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_STRAPI_URL}/custom-membership/update/${id}`,
+                {
+                    ...PUT_CONFIG,
+                    body: JSON.stringify(appointment),
+                }
+            );
+            if (!res.ok) throw new Error("Failed to create membership");
+
+            const { data } = await res.json();
+
+            return data as IFormMembership;
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
     return {
+        create,
+        update,
         getByFilter,
     };
 };

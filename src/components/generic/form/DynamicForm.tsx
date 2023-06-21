@@ -32,7 +32,7 @@ export const DynamicForm = ({
                     initialValues={initialValues}
                     onSubmit={onSubmit}
                 >
-                    {({ errors, isSubmitting, resetForm }) => (
+                    {({ values, errors, isSubmitting, resetForm }) => (
                         <Form className="flex flex-wrap items-stretch justify-start gap-2 md:gap-4 w-full">
                             {Children.toArray(
                                 formFields.map((field) => (

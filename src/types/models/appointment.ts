@@ -12,9 +12,9 @@ export type IAppointmentAttributes = ICreatedAt & {
     service: IService | null;
 };
 
-export interface IAppointment extends IAppointmentAttributes, ICreatedAt {
-    id: number;
-}
+export type IAppointment = IIdentifier &
+    IAppointmentAttributes &
+    ICreatedAt & {};
 
 export type IAppointmentFiltered = {
     data: IAppointment[];

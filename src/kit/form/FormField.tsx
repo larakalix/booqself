@@ -8,6 +8,7 @@ import {
     Radio,
     DatePicker,
     Textarea,
+    Colorpicker,
 } from "./childs";
 import type { IFormField } from "@/types/forms/form";
 
@@ -19,6 +20,7 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
     radio: Radio,
     date: DatePicker,
     area: Textarea,
+    colorpicker: Colorpicker,
 };
 
 export const FormField = ({

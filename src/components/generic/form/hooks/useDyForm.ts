@@ -37,12 +37,16 @@ export const useDyForm = ({ formFields }: { formFields: IFormField[] }) => {
             case "dropdown":
             case "checkbox":
             case "radio":
-                validationSchema[field.name] = validationSchema[
-                    field.name
-                ].oneOf(
-                    field.options?.map((option) => option.value),
-                    `Invalid ${field.label} selection`
-                );
+                // validationSchema[field.name] = validationSchema[
+                //     field.name
+                // ].oneOf(
+                //     field.options?.map((option) => option.value),
+                //     `Invalid ${field.label} selection`
+                // );
+                validationSchema[field.name] = yup.array()
+                    .of(yup.string().oneOf(field.options?.map((option) => option.value)))
+                    .min(1, `Please select at least one ${field.label}`)
+                    .required(`Please select ${field.label}`);
                 break;
             case "switch":
                 validationSchema[field.name] = yup.boolean();

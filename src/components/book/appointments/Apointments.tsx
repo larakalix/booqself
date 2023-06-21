@@ -15,8 +15,14 @@ export const Apointments = ({
 }: {
     boilerplate: ITenantBooking;
 }) => {
-    
-    const { loading, appointments, currentMonth, selectedDay, setLoading, setFlatAppointments } = useBookingStore((state) => state);
+    const {
+        loading,
+        appointments,
+        currentMonth,
+        selectedDay,
+        setLoading,
+        setFlatAppointments,
+    } = useBookingStore((state) => state);
     const { appointment } = useSuccesBookingStore((state) => state);
     const { buildDropdownlists } = useAppointments({
         timeOptions: boilerplate.tenant.data.timeOptions,
@@ -45,18 +51,30 @@ export const Apointments = ({
         return () => {};
     }, [currentMonth]);
 
-    if (appointment && selectedDay) return <Success appointment={appointment} boilerplate={boilerplate} />;
+    if (appointment && selectedDay)
+        return <Success appointment={appointment} boilerplate={boilerplate} />;
     if (!selectedDay) return <NoSelectedDay />;
 
     return (
         <div className="flex items-center justify-center flex-col gap-8 p-5 border-t border-l-0 md:border-t-0 md:border-l border-gray-300">
-            <h2 className="font-semibold text-gray-900">
-                Schedule for{" "}
-                <time dateTime={format(selectedDay!, "yyyy-MM-dd")}>
-                    {format(selectedDay!, "MMM dd, yyy")}
-                </time>
-            </h2>
-
+            {boilerplate?.appointment ? (
+                <h2 className="font-semibold text-gray-900">
+                    Scheduled for{" "}
+                    <time dateTime={format(selectedDay!, "yyyy-MM-dd")}>
+                        {format(
+                            new Date(boilerplate.appointment.attributes.appointmentDay!),
+                            "EEEE MMM dd yyyy, h:mma"
+                        )}
+                    </time>
+                </h2>
+            ) : (
+                <h2 className="font-semibold text-gray-900">
+                    Schedule for{" "}
+                    <time dateTime={format(selectedDay!, "yyyy-MM-dd")}>
+                        {format(selectedDay!, "MMM dd, yyy")}
+                    </time>
+                </h2>
+            )}
             <AppointmentForm
                 loading={loading}
                 boilerplate={boilerplate}
@@ -102,7 +120,6 @@ export const Apointments = ({
                     },
                 ]}
             />
-
             <Availability
                 selectedDay={selectedDay}
                 appointments={appointments}

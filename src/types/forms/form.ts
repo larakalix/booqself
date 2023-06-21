@@ -19,7 +19,8 @@ export type IFormField =
     | IFormSwitchInput
     | IFormRadioGroup
     | IDatePickerForm
-    | ITextAreaForm;
+    | ITextAreaForm
+    | IColorPickerInput;
 
 export interface IFormSelections extends ILabelable {
     value: string;
@@ -33,6 +34,10 @@ export interface IRegexable {
 
 export interface IFormTextInput extends ICommon, IRegexable {
     type: "text";
+}
+
+export interface IColorPickerInput extends ICommon, IRegexable {
+    type: "colorpicker";
 }
 
 export interface IOptionable {

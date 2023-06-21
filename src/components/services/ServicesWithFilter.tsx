@@ -15,7 +15,7 @@ import { useAuthStore } from "@/stores/authStore";
 export const ServicesWithFilter = () => {
     const { addToast } = useToasts();
     const { data, isLoading, error } = useQuery(
-        ["getCloverEmployees"],
+        ["getCloverServices"],
         async () => await ServiceService().getCloverServices(params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
         {
             onSuccess: (data) => {
