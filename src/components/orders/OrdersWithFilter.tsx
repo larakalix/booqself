@@ -12,16 +12,12 @@ import { Orders } from "./Orders";
 import { useAuthStore } from "@/stores/authStore";
 
 export const OrdersWithFilter = () => {
-    const { data, isLoading, error } = useQuery(
-        ["getCloverEmployees"],
-        async () => await OrderService().getCloverOrders(params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
-        {
-            onSuccess: (data) => {
-                if (data) setOrders(data);
-            },
-        }
-    );
-    
+    const { data, isLoading, error } = useQuery({
+        queryKey: ["getCloverOrders"],
+        queryFn: async () => await OrderService().getCloverOrders(params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
+        onSuccess: (data) => { if (data) setOrders(data); },
+    });
+
     const { params } = useAuthStore((state) => state);
     const { loading, orders, setLoading, setOrders } = useOrdersFilterStore(
         (state) => state

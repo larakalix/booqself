@@ -43,29 +43,32 @@ export const Board = () => {
 
     return (
         <>
-            <Header tenant={tenant} />
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Header tenant={tenant} />
 
-            {/* <Card>
-                <Charts appointments={tenant.appointments.data ?? []} />
-            </Card> */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {Children.toArray(
-                    tiles.map((tile) => (
-                        <Card className="h-[10rem] flex flex-col justify-between">
-                            <CardTitle className="text-xl font-bold p-4">
-                                {tile.title}
-                            </CardTitle>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {Children.toArray(
+                        tiles.map((tile) => (
+                            <Card className="h-[10rem] flex flex-col justify-between">
+                                <CardTitle className="text-xl font-bold p-4">
+                                    {tile.title}
+                                </CardTitle>
 
-                            <Link
-                                href={tile.route}
-                                className="text-blue-500 text-sm p-4"
-                            >
-                                View more
-                            </Link>
-                        </Card>
-                    ))
-                )}
-            </div>
+                                <Link
+                                    href={tile.route}
+                                    className="text-blue-500 text-sm p-4"
+                                >
+                                    View more
+                                </Link>
+                            </Card>
+                        ))
+                    )}
+                </div>
+
+                <div className="col-span-2">
+                    <Charts />
+                </div>
+            </section>
         </>
     );
 };

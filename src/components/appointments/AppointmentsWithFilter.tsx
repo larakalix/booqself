@@ -15,24 +15,12 @@ import { useAppoinmentsFilterStore } from "@/stores/filterStore";
 
 export const AppointmentsWithFilter = () => {
     const { addToast } = useToasts();
-    const { data, isLoading, error } = useQuery(
-        ["getAppointments"],
-        async () =>
-            await AppointmentService().getByFilter(params?.merchant_id!, {
-                offset: 0,
-                limit: 50,
-            }),
-        {
-            onSuccess: (data) => {
-                if (data) setAppointments(data);
-            },
-            onError: (error) =>
-                addToast(`${error}`, {
-                    appearance: "error",
-                    autoDismiss: true,
-                }),
-        }
-    );
+    const { data, isLoading, error } = useQuery({
+        queryKey: ["getAppointments"],
+        queryFn: async () => await AppointmentService().getByFilter(params?.merchant_id!, { offset: 0, limit: 50 }),
+        onSuccess: (data) => { if (data) setAppointments(data); },
+        onError: (error) => addToast(`${error}`, { appearance: "error", autoDismiss: true }),
+    });
 
     const { params } = useAuthStore((state) => state);
     const { loading, appointments, setLoading, setAppointments } =

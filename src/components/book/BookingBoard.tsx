@@ -19,14 +19,10 @@ export const BookingBoard = ({ id, appointmentId }: Props) => {
         data: boilerplate,
         isLoading,
         error,
-    } = useQuery(
-        ["tenantBookBoilerplate", id, appointmentId],
-        async () =>
-            await TenantService().getTenantBookBoilerplate(
-                { id, justTenant: false, appointmentId },
-                process.env.NEXT_CLOVER_APP_SECRET!
-            )
-    );
+    } = useQuery({
+        queryKey: ["tenantBookBoilerplate", id, appointmentId],
+        queryFn: async () => await TenantService().getTenantBookBoilerplate({ id, justTenant: false, appointmentId }, process.env.NEXT_CLOVER_APP_SECRET!),
+    }); 
 
     if (isLoading) {
         return (

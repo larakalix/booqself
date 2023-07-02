@@ -25,7 +25,12 @@ export const SettingsBoard = () => {
     // );
 
     if (!tenant) {
-        return (<AdviceCard title="No tenant found" description="No tenant found, please contact support." />);
+        return (
+            <AdviceCard
+                title="No tenant found"
+                description="No tenant found, please contact support."
+            />
+        );
     }
 
     return (
@@ -76,6 +81,18 @@ export const SettingsBoard = () => {
                     {
                         name: "isActive",
                         label: "Active/Inactive",
+                        type: "switch",
+                        required: false,
+                    },
+                    {
+                        name: "allowCloverSync",
+                        label: "Allow Clover Sync",
+                        type: "switch",
+                        required: false,
+                    },
+                    {
+                        name: "avoidUserCloverData",
+                        label: "Avoid User Clover Data",
                         type: "switch",
                         required: false,
                     },

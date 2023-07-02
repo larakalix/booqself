@@ -41,9 +41,15 @@ export const SettingsForm = ({ loading, tenant, formFields }: Props) => {
                     if (response?.id) {
                         actions.resetForm();
                         setTenant(response, true);
-                        addToast('Settings saved successfully.', { appearance: 'success', autoDismiss: true, });
+                        addToast("Settings saved successfully.", {
+                            appearance: "success",
+                            autoDismiss: true,
+                        });
                     } else {
-                        addToast('An error has ocurred, please try again.', { appearance: 'error', autoDismiss: true, });
+                        addToast("An error has ocurred, please try again.", {
+                            appearance: "error",
+                            autoDismiss: true,
+                        });
                     }
 
                     actions.setSubmitting(false);

@@ -14,16 +14,12 @@ import { useAuthStore } from "@/stores/authStore";
 
 export const ClientsWithFilter = () => {
     const { addToast } = useToasts();
-    const { data, isLoading, error } = useQuery(
-        ["getCloverClients"],
-        async () => await ClientService().getCloverClients(params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
-        {
-            onSuccess: (data) => {
-                if (data) setClients(data);
-            },
-            onError: (error) => addToast(`${error}`, { appearance: "error", autoDismiss: true }),
-        }
-    );
+    const { data, isLoading, error } = useQuery({
+        queryKey: ["getCloverClients"],
+        queryFn: async () => await ClientService().getCloverClients(params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
+        onSuccess: (data) => { if (data) setClients(data); },
+        onError: (error) => addToast(`${error}`, { appearance: "error", autoDismiss: true }),
+    });
 
     const { params } = useAuthStore((state) => state);
     const { loading, clients, setLoading, setClients } = useClientsFilterStore(

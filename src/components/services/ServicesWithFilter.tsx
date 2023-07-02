@@ -14,16 +14,12 @@ import { useAuthStore } from "@/stores/authStore";
 
 export const ServicesWithFilter = () => {
     const { addToast } = useToasts();
-    const { data, isLoading, error } = useQuery(
-        ["getCloverServices"],
-        async () => await ServiceService().getCloverServices(params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
-        {
-            onSuccess: (data) => {
-                if (data) setServices(data);
-            },
-            onError: (error) => addToast(`${error}`, { appearance: "error", autoDismiss: true }),
-        }
-    );
+    const { data, isLoading, error } = useQuery({
+        queryKey: ["getCloverServices"],
+        queryFn: async () => await ServiceService().getCloverServices(params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
+        onSuccess: (data) => { if (data) setServices(data); },
+        onError: (error) => addToast(`${error}`, { appearance: "error", autoDismiss: true }),
+    });
 
     const { params } = useAuthStore((state) => state);
     const { loading, services, setLoading, setServices } = useServicesFilterStore((state) => state);

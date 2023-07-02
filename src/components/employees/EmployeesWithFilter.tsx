@@ -14,16 +14,12 @@ import { Employees } from "./Employees";
 
 export const EmployeesWithFilter = () => {
     const { addToast } = useToasts();
-    const { data, isLoading, error } = useQuery(
-        ["getCloverEmployees"],
-        async () => await EmployeeService().getCloverEmployees(params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
-        {
-            onSuccess: (data) => {
-                if (data) setEmployees(data);
-            },
-            onError: (error) => addToast(`${error}`, { appearance: "error", autoDismiss: true }),
-        }
-    );
+    const { data, isLoading, error } = useQuery({
+        queryKey: ["getEmployees"],
+        queryFn: async () => await EmployeeService().getCloverEmployees(params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
+        onSuccess: (data) => { if (data) setEmployees(data); },
+        onError: (error) => addToast(`${error}`, { appearance: "error", autoDismiss: true }),
+    });
 
     const { params } = useAuthStore((state) => state);
     const { loading, employees, setLoading, setEmployees } =

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { BsCalendar3 } from "react-icons/bs";
 import { format, parseISO } from "date-fns";
 import type { IFormAppointment } from "@/types/models/appointment";
@@ -18,7 +19,15 @@ export const Success = ({ appointment, boilerplate }: Props) => {
 
     return (
         <div className="flex items-center justify-center flex-col gap-8 p-5 border-t border-l-0 md:border-t-0 md:border-l border-gray-300">
-            <header className="w-full max-w-[70%] text-center border-b border-gray-100 pb-4 px-8">
+            <header className="flex flex-col items-center w-full max-w-[70%] text-center border-b border-gray-100 pb-4 px-8">
+                <Image
+                    src="/icon/checkmark.webp"
+                    width={80}
+                    height={80}
+                    alt="Successfull appointment booking"
+                    loading="lazy"
+                />
+
                 <h1 className="font-bold text-black">Confirmed</h1>
                 <h2 className="font-normal text-gray-900">
                     {boilerplate?.appointment
