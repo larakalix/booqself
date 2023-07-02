@@ -8,7 +8,12 @@ import {
     TableCell,
     Text,
 } from "@tremor/react";
-import { HiOutlineMail, HiOutlineUser, HiPencil } from "react-icons/hi";
+import {
+    HiOutlineMail,
+    HiOutlineUser,
+    HiOutlinePhone,
+    HiPencil,
+} from "react-icons/hi";
 import { AiOutlineCheckCircle, AiOutlineFieldTime } from "react-icons/ai";
 import { format, isPast, parseISO } from "date-fns";
 import { GenericTableHead } from "../generic/GenericTableHead";
@@ -40,6 +45,10 @@ export const Appointments = ({
                                         <Text className="flex items-center gap-1 text-sm text-gray-500">
                                             <HiOutlineMail className="text-gray-800" />
                                             {appointment.email}
+                                        </Text>
+                                        <Text className="flex items-center gap-1 text-sm text-gray-500">
+                                            <HiOutlinePhone className="text-gray-800" />
+                                            {appointment.phone}
                                         </Text>
                                     </div>
                                 </TableCell>

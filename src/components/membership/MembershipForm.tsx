@@ -17,6 +17,7 @@ import { MembershipService } from "@/services/membership/MembershipService";
 import { ROUTES } from "@/ constants/routes";
 import type { IFormMembership } from "@/types/models/membership";
 import type { IService } from "@/types/models/service";
+import { AdviceCard } from "../generic/AdviceCard";
 
 type Props = {
     id?: number;
@@ -29,11 +30,7 @@ export const MembershipForm = ({ id }: Props) => {
     const { addToast } = useToasts();
     const { data, isLoading, error } = useQuery(
         ["getCloverServicesForMembership"],
-        async () =>
-            await ServiceService().getCloverServices(
-                params?.merchant_id!,
-                process.env.NEXT_CLOVER_APP_SECRET!
-            ),
+        async () => await ServiceService().getCloverServices( params?.merchant_id!, process.env.NEXT_CLOVER_APP_SECRET!),
         {
             onSuccess: (data) => {
                 if (data) setServices(data);
@@ -57,8 +54,7 @@ export const MembershipForm = ({ id }: Props) => {
             ) => {
                 const { name, price, tier, service } = values;
 
-                const services =
-                    data?.filter((s) => service.includes(s.id)) ?? [];
+                const services = data?.filter((s) => service.includes(s.id)) ?? [];
 
                 const membership: IFormMembership = {
                     id,
@@ -66,42 +62,38 @@ export const MembershipForm = ({ id }: Props) => {
                     price,
                     tier,
                     services: service
-                        .filter((id: number) =>
-                            services.some((service) => service.id === id)
-                        )
+                        .filter((id: number) => services.some((service) => service.id === id))
                         .map((s: number) => {
-                            const { id, name, parsedPrice } = services.find(
-                                (item) => item.id === s
-                            )!;
-                            return {
-                                name,
-                                price: parsedPrice,
-                                cloverId: id,
-                                redeemed: false,
-                            };
+                            const { id, name, parsedPrice } = services.find((item) => item.id === s)!;
+                            return { name, price: parsedPrice, cloverId: id, redeemed: false };
                         }),
                 };
 
-                const response = id
-                    ? await MembershipService().update(
-                          id,
-                          membership,
-                          tenant?.id!
-                      )
-                    : await MembershipService().create(membership, tenant?.id!);
+                console.log("membership", membership);
 
-                if (response?.id) {
-                    const message = !id ? "created" : "updated";
-                    actions.resetForm();
-                    addToast(`Membership ${message} successfully`, {
-                        appearance: "success",
-                        autoDismiss: true,
-                    });
-                    router.push(ROUTES.MEMBERSHIPS);
-                }
+                // const response = id
+                //     ? await MembershipService().update(
+                //           id,
+                //           membership,
+                //           tenant?.id!
+                //       )
+                //     : await MembershipService().create(membership, tenant?.id!);
+
+                // if (response?.id) {
+                //     const message = !id ? "created" : "updated";
+                //     actions.resetForm();
+                //     addToast(`Membership ${message} successfully`, {
+                //         appearance: "success",
+                //         autoDismiss: true,
+                //     });
+                //     router.push(ROUTES.MEMBERSHIPS);
+                // }
             },
         [tenant?.id]
     );
+
+    if (isLoading) return (<AdviceCard title="Please wait" description="Retrieveing membership data, please wait..." isLoader />);
+
 
     return (
         <Card className="p-6">
@@ -116,6 +108,12 @@ export const MembershipForm = ({ id }: Props) => {
             <DynamicForm
                 formFields={[
                     {
+                        name: "tier",
+                        label: "Tier Color",
+                        type: "colorpicker",
+                        placeholder: "ex: #2549df",
+                    },
+                    {
                         name: "name",
                         label: "Name",
                         type: "text",
@@ -129,18 +127,12 @@ export const MembershipForm = ({ id }: Props) => {
                         required: true,
                         placeholder: "ex: 100",
                     },
-                    {
-                        name: "tier",
-                        label: "Tier Color",
-                        type: "colorpicker",
-                        placeholder: "ex: #2549df",
-                    },
                     serviceDp,
                 ]}
                 isLoading={false}
                 config={{
                     areFilters: false,
-                    buttonLabel: "Create new membership",
+                    buttonLabel: id ? "Update" : "Create",
                 }}
                 onSubmit={handleClick}
             />

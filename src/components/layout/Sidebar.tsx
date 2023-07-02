@@ -14,7 +14,6 @@ import type { NavItems } from "@/types/layout";
 const links: NavItems[] = [
     { label: "Home", route: ROUTES.DASHBOARD },
     { label: "Appointments", route: ROUTES.APPOINTMENTS },
-    { label: "Memberships", route: ROUTES.MEMBERSHIPS },
     { label: "Clients", route: ROUTES.CLIENTS },
     { label: "Employees", route: ROUTES.EMPLOYEES },
     { label: "Services", route: ROUTES.SERVICES },

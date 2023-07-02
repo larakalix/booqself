@@ -15,10 +15,6 @@ export const Board = () => {
             title: "Appointments",
         },
         {
-            route: ROUTES.MEMBERSHIPS,
-            title: "Memberships",
-        },
-        {
             route: ROUTES.CLIENTS,
             title: "Clients",
         },
