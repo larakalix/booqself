@@ -55,8 +55,34 @@ export const EmployeeService = () => {
         }
     };
 
+    const getEmployeeById = async (
+        id: string,
+        merchantId: string,
+        apiKey: string
+    ) => {
+        try {
+            const URI = `${process.env.NEXT_CLOVER_API_URL}/employees/${id}`;
+            const res = await fetch(URI, {
+                ...GET_CONFIG,
+                headers: {
+                    ...GET_CONFIG.headers,
+                    authorization: `Bearer ${apiKey}`,
+                    merchantid: merchantId,
+                },
+            });
+            if (!res.ok) throw new Error("Failed to get employee");
+
+            const data = await res.json();
+            console.log("__DATAA", data);
+            return data as IEmployee;
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
     return {
         getByFilter,
         getCloverEmployees,
+        getEmployeeById,
     };
 };

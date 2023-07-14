@@ -24,19 +24,11 @@ const InnerComponent = ({
 }: Props & {
     params: AuthParamProps;
 }) => {
-    const { data, isLoading, error } = useQuery(
-        ["getTenantById"],
-        async () =>
-            await TenantService().getTenantById({
-                id: params?.merchant_id!,
-                justTenant: false,
-            }),
-        {
-            onSuccess: (data) => {
-                if (data) setTenant(data, true);
-            },
-        }
-    );
+    const { isLoading, error } = useQuery({
+        queryKey: ["getTenantById", { id: params?.merchant_id!, justTenant: false }],
+        queryFn: async () => await TenantService().getTenantById({ id: params?.merchant_id!, justTenant: false }),
+        onSuccess: (data) => { if (data) setTenant(data, true); },
+    });
 
     const { tenant, setTenant } = useTenantStore((state) => state);
 

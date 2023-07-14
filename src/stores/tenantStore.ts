@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { ITenantAttributes, ITenantBooking } from "@/types/models/tenant";
+import type { ITenantAttributes } from "@/types/models/tenant";
 
 type TenantStoreProps = {
     loading: boolean;

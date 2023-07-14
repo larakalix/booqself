@@ -31,8 +31,7 @@ export const Apointments = ({
         selectedDay,
     });
 
-    const { timeOptions, employeeDp, serviceDp } =
-        buildDropdownlists(boilerplate);
+    const { timeOptions, employeeDp, serviceDp } = buildDropdownlists(boilerplate);
 
     useEffect(() => {
         (async () => {
