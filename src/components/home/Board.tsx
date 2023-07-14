@@ -6,6 +6,7 @@ import { Card, CardTitle } from "@/kit/card/Card";
 import { Charts } from "./Charts";
 import { AdviceCard } from "../generic/AdviceCard";
 import { ROUTES } from "@/ constants/routes";
+import { Latest } from "./Latest";
 
 export const Board = () => {
     const { tenant } = useTenantStore((state) => state);
@@ -46,10 +47,16 @@ export const Board = () => {
             <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Header tenant={tenant} />
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <Latest />
+
+                <div className="md:col-span-2">
+                    <Charts />
+                </div>
+
+                <div className="grid grid-cols-2 xl:grid-cols-3 gap-4">
                     {Children.toArray(
                         tiles.map((tile) => (
-                            <Card className="h-[10rem] flex flex-col justify-between">
+                            <Card className="h-full flex flex-col justify-between">
                                 <CardTitle className="text-xl font-bold p-4">
                                     {tile.title}
                                 </CardTitle>
@@ -63,10 +70,6 @@ export const Board = () => {
                             </Card>
                         ))
                     )}
-                </div>
-
-                <div className="md:col-span-2">
-                    <Charts />
                 </div>
             </section>
         </>

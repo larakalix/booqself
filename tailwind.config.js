@@ -3,12 +3,12 @@ module.exports = {
     mode: "jit",
     darkMode: ["class"],
     content: [
+        "./node_modules/flowbite-react/**/*.js",
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/kit/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
         "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
-        "./node_modules/flowbite-react/**/*.js",
     ],
     theme: {
         container: {

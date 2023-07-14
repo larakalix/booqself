@@ -77,7 +77,7 @@ export const PageWrapper = ({ title, className = "", children }: Props) => {
             <InnerComponent params={params!}>
                 <ToastProvider>
                     <section
-                        className={`min-h-screen w-full ml-0 xl:ml-60 p-5 ${className}`}
+                        className={`min-h-screen w-full ml-0 xl:ml-60 p-0 md:p-5 ${className}`}
                     >
                         {title && (
                             <header className="w-full lg:flex lg:items-center lg:justify-between p-6">

@@ -18,11 +18,24 @@ export const Header = ({ tenant }: { tenant: ITenantAttributes }) => {
                         <h1 className="text-2xl font-bold">
                             Welcome to {tenant.name}!
                         </h1>
-                        <h2>{greetings} User!</h2>
+                        <p className="text-base font-normal text-gray-500 dark:text-gray-400">
+                            {greetings}! We&apos;re delighted to have you here
+                            User!
+                        </p>
+
+                        <p className="hidden lg:block text-base font-normal text-gray-500 dark:text-gray-400">
+                            If you have any questions or need assistance, please
+                            don&apos;t hesitate to reach out. Our team is ready
+                            to provide you with the support you need.
+                        </p>
+
+                        <p className="text-base font-normal text-gray-500 dark:text-gray-400">
+                            Thank you for choosing {tenant.name}!
+                        </p>
 
                         <a
                             href={`mailto:${tenant.email}`}
-                            className="text-blue-600"
+                            className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-5 text-center my-2"
                         >
                             Contact us, we&apos;ll help you!
                         </a>
@@ -30,6 +43,7 @@ export const Header = ({ tenant }: { tenant: ITenantAttributes }) => {
                 )}
 
                 <Image
+                    className="hidden lg:block"
                     src="/images/jump.webp"
                     width={256}
                     height={256}

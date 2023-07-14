@@ -1,12 +1,13 @@
 import Link from "next/link";
+import { ROUTES } from "@/ constants/routes";
 
 export const Logo = () => {
     return (
-        <small>
+        <small className="flex ml-2 md:mr-24">
             <Link
-                href={`/dashboard`}
+                href={ROUTES.HOME}
                 passHref
-                className="text-main-blue text-[1.5rem] font-semibold"
+                className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-white"
             >
                 Pura Vida
             </Link>
