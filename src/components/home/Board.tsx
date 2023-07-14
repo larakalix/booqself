@@ -65,7 +65,7 @@ export const Board = () => {
                     )}
                 </div>
 
-                <div className="col-span-2">
+                <div className="md:col-span-2">
                     <Charts />
                 </div>
             </section>
