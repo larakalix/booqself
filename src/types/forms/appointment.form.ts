@@ -1,5 +1,5 @@
 import type { ITenantBooking } from "../models/tenant";
-import type { IFormField, IFormSelections } from "./form";
+import type { IFormDropdown, IFormField, IFormSelections } from "./form";
 
 export type AppointmentFormProps = {
     selectedDay: Date | null;
@@ -7,4 +7,16 @@ export type AppointmentFormProps = {
     formFields: IFormField[];
     boilerplate: ITenantBooking;
     loading: boolean;
+};
+
+export type ScheduleType = "Form" | "Wizard";
+
+export type WizardStep = {
+    label: string;
+    content: JSX.Element;
+};
+
+export type ScheduleData = {
+    employees: IFormDropdown;
+    services: IFormDropdown;
 };

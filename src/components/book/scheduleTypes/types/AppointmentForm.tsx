@@ -4,7 +4,7 @@ import { Children } from "react";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
 import { useToasts } from "react-toast-notifications";
-import { useRegisterForm } from "../register/hooks/useRegisterForm";
+import { useRegisterForm } from "../../../register/hooks/useRegisterForm";
 import { FormField } from "@/kit/form/FormField";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
 import { useSuccesBookingStore } from "@/stores/bookingStore";
@@ -18,8 +18,7 @@ export const AppointmentForm = ({
     loading,
 }: AppointmentFormProps) => {
     const { addToast } = useToasts();
-    const { initialValues, validationSchema, buildAppointment } =
-        useRegisterForm({ formFields });
+    const { initialValues, validationSchema, buildAppointment } = useRegisterForm({ formFields });
     const { setAppointment } = useSuccesBookingStore((state) => state);
 
     return (
@@ -33,12 +32,8 @@ export const AppointmentForm = ({
                         : {
                               time: null,
                               ...boilerplate?.appointment.attributes,
-                              employee:
-                                  boilerplate?.appointment.attributes.employee
-                                      .cloverId,
-                              service:
-                                  boilerplate?.appointment.attributes.service
-                                      .cloverId,
+                              employee: boilerplate?.appointment.attributes.employee.cloverId,
+                              service: boilerplate?.appointment.attributes.service.cloverId,
                           }
                 }
                 onSubmit={async (values, actions) => {

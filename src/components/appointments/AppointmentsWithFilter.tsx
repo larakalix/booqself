@@ -23,8 +23,7 @@ export const AppointmentsWithFilter = () => {
     });
 
     const { params } = useAuthStore((state) => state);
-    const { loading, appointments, setLoading, setAppointments } =
-        useAppoinmentsFilterStore((state) => state);
+    const { loading, appointments, setLoading, setAppointments } = useAppoinmentsFilterStore((state) => state);
 
     const handleSubtmit = useMemo(
         () => async (values: any, actions: any) => {

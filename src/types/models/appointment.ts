@@ -2,15 +2,19 @@ import type { ICreatedAt, IIdentifier, IMeta } from "./generic";
 import type { IEmployee } from "./employee";
 import type { IService } from "./service";
 
-export type IAppointmentAttributes = ICreatedAt & {
+export type IWizardAppointment = {
     name: string;
     email: string;
     comment: string;
-    appointmentDay: string;
     phone: string;
-    employee: IEmployee | null;
-    service: IService | null;
 };
+
+export type IAppointmentAttributes = ICreatedAt &
+    IWizardAppointment & {
+        appointmentDay: string;
+        employee: IEmployee | null;
+        service: IService | null;
+    };
 
 export type IAppointment = IIdentifier &
     IAppointmentAttributes &

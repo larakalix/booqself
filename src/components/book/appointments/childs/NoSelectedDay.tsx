@@ -11,7 +11,7 @@ export const NoSelectedDay = () => {
                 loading="lazy"
             />
 
-            <h2 className="font-semibold text-gray-900 text-base md:text-xl">
+            <h2 className="text-center mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-2xl lg:text-2xl dark:text-white">
                 Select a day to book an appointment.
             </h2>
         </div>

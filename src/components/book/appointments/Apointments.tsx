@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { format, getMonth, getYear, parse } from "date-fns";
 import { useBookingStore, useSuccesBookingStore } from "@/stores/bookingStore";
-import { AppointmentForm } from "../AppointmentForm";
+import { AppointmentFactory } from "../scheduleTypes/AppointmentFactory";
 import { Availability, NoSelectedDay, Success } from "./childs";
 import { useAppointments } from "./hooks/useAppointments";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
@@ -31,8 +31,7 @@ export const Apointments = ({
         selectedDay,
     });
 
-    const { timeOptions, employeeDp, serviceDp } =
-        buildDropdownlists(boilerplate);
+    const { timeOptions, employeeDp, serviceDp } = buildDropdownlists(boilerplate);
 
     useEffect(() => {
         (async () => {
@@ -53,8 +52,7 @@ export const Apointments = ({
         return () => {};
     }, [currentMonth]);
 
-    if (appointment && selectedDay)
-        return <Success appointment={appointment} boilerplate={boilerplate} />;
+    if (appointment && selectedDay) return <Success appointment={appointment} boilerplate={boilerplate} />;
     if (!selectedDay) return <NoSelectedDay />;
 
     return (
@@ -89,11 +87,14 @@ export const Apointments = ({
                 )}
             </header>
 
-            <AppointmentForm
+            <AppointmentFactory
+                type="Wizard"
                 loading={loading}
                 boilerplate={boilerplate}
                 selectedDay={selectedDay!}
                 timeOptions={timeOptions}
+                employees={employeeDp}
+                services={serviceDp}
                 formFields={[
                     {
                         type: "dropdown",
@@ -134,6 +135,7 @@ export const Apointments = ({
                     },
                 ]}
             />
+
             <Availability
                 selectedDay={selectedDay}
                 appointments={appointments}
