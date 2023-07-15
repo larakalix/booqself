@@ -29,7 +29,7 @@ export const Availability = () => {
             <h5 className="text-start uppercase text-base font-bold mb-4 text-gray-900 dark:text-gray-100">
                 {steps[step].label}
             </h5>
-            <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-4 gap-2 w-full">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 w-full">
                 {Children.toArray(
                     timeOptions.map(({ label, value }, index) => (
                         <div className="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">

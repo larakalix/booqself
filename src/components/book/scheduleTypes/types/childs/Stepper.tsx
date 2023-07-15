@@ -15,9 +15,9 @@ export const Stepper = ({ steps, children }: Props) => {
     const { step } = useWizardStore((state) => state);
 
     return (
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4 w-full xl:max-w-4xl">
             <header className="flex items-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 max-w-full">
-                <ol className="flex items-center justify-between w-full">
+                <ol className="grid grid-cols-2 xl:flex items-center justify-center xl:justify-between xl:flex-wrap gap-4 w-full">
                     {Children.toArray(
                         steps.map(({ label }, index) => (
                             <li

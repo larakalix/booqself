@@ -64,6 +64,16 @@ export const SettingsBoard = () => {
                         label: "Time Zone",
                         type: "text",
                     },
+                    {
+                        name: "appointmentFormType",
+                        label: "Appointment Form Type",
+                        type: "dropdown",
+                        required: true,
+                        options: [
+                            { label: "Form", value: "Form" },
+                            { label: "Wizard", value: "Wizard" },
+                        ],
+                    },
                     // {
                     //     name: "openingTime",
                     //     label: "Opening Time",

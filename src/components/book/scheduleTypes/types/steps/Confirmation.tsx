@@ -10,7 +10,9 @@ import { AppointmentService } from "@/services/appointment/AppointmentServices";
 
 export const Confirmation = () => {
     const { addToast } = useToasts();
-    const { boilerplate, selectedDay, formFields, timeOptions } = useContext(WizardContext) as WizarContextProps;
+    const { boilerplate, selectedDay, formFields, timeOptions } = useContext(
+        WizardContext
+    ) as WizarContextProps;
     const { buildAppointment } = useRegisterForm({ formFields });
     const { setAppointment } = useSuccesBookingStore((state) => state);
     const {
@@ -23,14 +25,18 @@ export const Confirmation = () => {
     } = useWizardStore((state) => state);
 
     const hour = timeOptions.find((t) => t.value === time)?.label!;
-    const employee = boilerplate.employees.elements.find((employee) => `${employee.id}` === employeeId);
-    const service = boilerplate.services.elements.find((service) => `${service.id}` === serviceId);
+    const employee = boilerplate.employees.elements.find(
+        (employee) => `${employee.id}` === employeeId
+    );
+    const service = boilerplate.services.elements.find(
+        (service) => `${service.id}` === serviceId
+    );
 
     const handleClick = async () => {
         const appointment = buildAppointment(
             selectedDay!,
             timeOptions,
-            {...info!, employee: employeeId, service: serviceId, time },
+            { ...info!, employee: employeeId, service: serviceId, time },
             boilerplate
         );
 
@@ -56,7 +62,7 @@ export const Confirmation = () => {
 
     return (
         <div className="w-full">
-            <h2 className="text-center mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-2xl lg:text-2xl dark:text-white">
+            <h2 className="text-center mt-8 md:mt-4 mb-4 text-xl lg:text-2xl font-extrabold tracking-tight leading-none text-gray-900 dark:text-white">
                 Confirm your appointment
             </h2>
 

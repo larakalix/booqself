@@ -3,7 +3,6 @@
 import { Children, useContext } from "react";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
-import { useToasts } from "react-toast-notifications";
 import { useRegisterForm } from "@/components/register/hooks/useRegisterForm";
 import { type WizarContextProps, WizardContext } from "../../WizardProvider";
 import { FormField } from "@/kit/form/FormField";
@@ -11,13 +10,14 @@ import { useWizardStore } from "@/stores/appointmentWizardStore";
 import { StepperActions } from "../childs/StepperActions";
 
 export const Info = () => {
-    const { addToast } = useToasts();
-    const { boilerplate, selectedDay, formFields, steps } = useContext(WizardContext) as WizarContextProps;
+    const { boilerplate, selectedDay, formFields, steps } = useContext(
+        WizardContext
+    ) as WizarContextProps;
     const { initialValues, validationSchema } = useRegisterForm({ formFields });
     const { step, setInfo } = useWizardStore((state) => state);
 
     return (
-        <div className="flex flex-col w-full px-4 md:px-14 xl:max-w-4xl">
+        <div className="flex flex-col w-full xl:max-w-4xl">
             <h5 className="text-start uppercase text-base font-bold mb-4 text-gray-900 dark:text-gray-100">
                 {steps[step].label}
             </h5>
@@ -34,33 +34,6 @@ export const Info = () => {
 
                     setInfo({ ...values });
 
-                    // const appointment = buildAppointment(
-                    //     selectedDay!,
-                    //     timeOptions,
-                    //     values,
-                    //     boilerplate
-                    // );
-
-                    // const response = boilerplate?.appointment
-                    //     ? await AppointmentService().update(
-                    //           boilerplate?.appointment.id,
-                    //           appointment,
-                    //           boilerplate.tenant.data.id
-                    //       )
-                    //     : await AppointmentService().create(
-                    //           appointment,
-                    //           boilerplate.tenant.data.id
-                    //       );
-
-                    // if (response?.id) {
-                    //     actions.resetForm();
-                    //     setAppointment({ ...response });
-                    //     addToast("Appointment booked successfully", {
-                    //         appearance: "success",
-                    //         autoDismiss: true,
-                    //     });
-                    // }
-
                     actions.setSubmitting(false);
                 }}
             >
@@ -72,17 +45,8 @@ export const Info = () => {
                             ))
                         )}
 
-                        {/* <button
-                            disabled={isSubmitting || !selectedDay}
-                            className="relative col-span-1 lg:col-span-2 bg-blue-400 text-white rounded-md py-4 px-8 hover:ring-2 hover:ring-blue-200 hover:bg-blue-500"
-                            type="submit"
-                        >
-                            {boilerplate?.appointment
-                                ? "Reschedule"
-                                : "Book now"}
-                        </button> */}
                         <StepperActions
-                            className="col-span-1 md:col-span-2"
+                            className="col-span-1 lg:col-span-2"
                             step={step}
                             handleBack={() => {}}
                         >

@@ -6,7 +6,7 @@ import { TenantService } from "@/services/tenant/TenantService";
 import { Card } from "@/kit/card/Card";
 import { AdviceCard } from "@/components/generic/AdviceCard";
 import { Calendar } from "./Calendar";
-import { Apointments } from "./appointments/Apointments";
+import { Appointments } from "./appointments/Appointments";
 
 type Props = {
     id: string;
@@ -56,7 +56,7 @@ export const BookingBoard = ({ id, appointmentId }: Props) => {
         <ToastProvider>
             <Card className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[calc(100vh-2.5rem)] p-0">
                 <Calendar boilerplate={boilerplate} />
-                <Apointments boilerplate={boilerplate} />
+                <Appointments boilerplate={boilerplate} />
             </Card>
         </ToastProvider>
     );

@@ -14,8 +14,7 @@ const DynamicWizard = dynamic(
         ),
     {
         loading(loadingProps) {
-            if (loadingProps.error)
-                return <DynamicImportError loadingProps={loadingProps} />;
+            if (loadingProps.error) return <DynamicImportError loadingProps={loadingProps} />;
             else return <Loading />;
         },
     }
@@ -24,16 +23,13 @@ const DynamicForm = dynamic(
     () => import("./types/AppointmentForm").then((mod) => mod.AppointmentForm),
     {
         loading(loadingProps) {
-            if (loadingProps.error)
-                return <DynamicImportError loadingProps={loadingProps} />;
+            if (loadingProps.error) return <DynamicImportError loadingProps={loadingProps} />;
             else return <Loading />;
         },
     }
 );
 
-type Props = {
-    type: ScheduleType;
-} & ScheduleData;
+type Props = { type: ScheduleType } & ScheduleData;
 
 export const AppointmentFactory = ({
     boilerplate,
@@ -52,12 +48,7 @@ export const AppointmentFactory = ({
                 boilerplate={boilerplate}
                 selectedDay={selectedDay!}
                 timeOptions={timeOptions}
-                formFields={formFields.filter(
-                    (field) =>
-                        field.name !== "time" &&
-                        field.name !== "employee" &&
-                        field.name !== "service"
-                )}
+                formFields={formFields.filter((field) => field.name !== "time" && field.name !== "employee" && field.name !== "service")}
                 employees={employees}
                 services={services}
             />

@@ -10,8 +10,9 @@ import { Availability, NoSelectedDay, Success } from "./childs";
 import { useAppointments } from "./hooks/useAppointments";
 import { AppointmentService } from "@/services/appointment/AppointmentServices";
 import type { ITenantBooking } from "@/types/models/tenant";
+import type { ScheduleType } from "@/types/forms/appointment.form";
 
-export const Apointments = ({
+export const Appointments = ({
     boilerplate,
 }: {
     boilerplate: ITenantBooking;
@@ -24,6 +25,10 @@ export const Apointments = ({
         setLoading,
         setFlatAppointments,
     } = useBookingStore((state) => state);
+    const type: ScheduleType =
+        boilerplate.tenant.data.appointmentFormType === "Form"
+            ? "Form"
+            : "Wizard";
     const { appointment } = useSuccesBookingStore((state) => state);
     const { buildDropdownlists } = useAppointments({
         timeOptions: boilerplate.tenant.data.timeOptions,
@@ -39,12 +44,7 @@ export const Apointments = ({
             const date = parse(currentMonth, "MMMM-yyyy", new Date());
 
             if (currentMonth) {
-                const appointments =
-                    await AppointmentService().getBookAppointments(
-                        boilerplate.tenant.data.tenantId,
-                        `${getMonth(date)}`,
-                        `${getYear(date)}`
-                    );
+                const appointments = await AppointmentService().getBookAppointments(boilerplate.tenant.data.tenantId, `${getMonth(date)}`, `${getYear(date)}`);
                 if (appointments) setFlatAppointments(appointments);
             }
         })();
@@ -52,7 +52,8 @@ export const Apointments = ({
         return () => {};
     }, [currentMonth]);
 
-    if (appointment && selectedDay) return <Success appointment={appointment} boilerplate={boilerplate} />;
+    if (appointment && selectedDay)
+        return <Success appointment={appointment} boilerplate={boilerplate} />;
     if (!selectedDay) return <NoSelectedDay />;
 
     return (
@@ -88,7 +89,7 @@ export const Apointments = ({
             </header>
 
             <AppointmentFactory
-                type="Wizard"
+                type={type}
                 loading={loading}
                 boilerplate={boilerplate}
                 selectedDay={selectedDay!}
@@ -136,10 +137,7 @@ export const Apointments = ({
                 ]}
             />
 
-            <Availability
-                selectedDay={selectedDay}
-                appointments={appointments}
-            />
+            <Availability selectedDay={selectedDay} appointments={appointments} />
         </div>
     );
 };

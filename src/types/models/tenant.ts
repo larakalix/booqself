@@ -29,6 +29,7 @@ export type ITenantAttributes = IIsActive &
         closingTime: Date;
         minutesInterval: number;
         timeZone: string;
+        appointmentFormType: string;
         timeOptions: IOptionable[];
     };
 
