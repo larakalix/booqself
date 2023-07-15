@@ -45,16 +45,14 @@ export const AppointmentsCalendar = ({
     };
 
     const calendarStyles = clsx({
-        "grid grid-cols-1 md:grid-cols-3 md:grid-cols-7": style === CalendarStyle.Grid,
+        "grid grid-cols-1 md:grid-cols-3 md:grid-cols-7":
+            style === CalendarStyle.Grid,
         "grid grid-cols-1": style === CalendarStyle.List,
     });
 
     return (
         <>
             <header className="w-full flex items-center justify-between p-6">
-                <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                    Appointments
-                </h2>
                 <button
                     className="font-bold text-3xl text-gray-900 transition-all hover:text-gray-600"
                     onClick={() => switchStyle()}
