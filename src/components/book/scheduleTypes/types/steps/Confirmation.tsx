@@ -48,7 +48,8 @@ export const Confirmation = () => {
               )
             : await AppointmentService().create(
                   appointment,
-                  boilerplate.tenant.data.id
+                  boilerplate.tenant.data.id,
+                  boilerplate.tenant.data.cloverMerchantId ?? ""
               );
 
         if (response?.id) {

@@ -18,7 +18,6 @@ export const Colorpicker = ({ formField }: ColorPickerProps) => {
 
     const handleChange = useMemo(
         () => (color: Color) => {
-            console.log("color", color);
             field.onChange({
                 target: {
                     name: field.name,

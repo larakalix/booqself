@@ -18,7 +18,8 @@ export const AppointmentForm = ({
     loading,
 }: AppointmentFormProps) => {
     const { addToast } = useToasts();
-    const { initialValues, validationSchema, buildAppointment } = useRegisterForm({ formFields });
+    const { initialValues, validationSchema, buildAppointment } =
+        useRegisterForm({ formFields });
     const { setAppointment } = useSuccesBookingStore((state) => state);
 
     return (
@@ -32,8 +33,12 @@ export const AppointmentForm = ({
                         : {
                               time: null,
                               ...boilerplate?.appointment.attributes,
-                              employee: boilerplate?.appointment.attributes.employee.cloverId,
-                              service: boilerplate?.appointment.attributes.service.cloverId,
+                              employee:
+                                  boilerplate?.appointment.attributes.employee
+                                      .cloverId,
+                              service:
+                                  boilerplate?.appointment.attributes.service
+                                      .cloverId,
                           }
                 }
                 onSubmit={async (values, actions) => {
@@ -54,7 +59,8 @@ export const AppointmentForm = ({
                           )
                         : await AppointmentService().create(
                               appointment,
-                              boilerplate.tenant.data.id
+                              boilerplate.tenant.data.id,
+                              boilerplate.tenant.data.cloverMerchantId ?? ""
                           );
 
                     if (response?.id) {
