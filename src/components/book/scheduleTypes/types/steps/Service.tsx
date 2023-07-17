@@ -7,8 +7,10 @@ import { useWizardStore } from "@/stores/appointmentWizardStore";
 
 export const Service = () => {
     const { addToast } = useToasts();
-    const { employees, services } = useContext(WizardContext) as WizarContextProps;
+    const { boilerplate, employees, services } = useContext(WizardContext) as WizarContextProps;
     const { step, service, employee, setStep, setService, setEmployee } = useWizardStore((state) => state);
+
+    const disableOptions = !!boilerplate.appointment;
 
     const handleServiceChange = (event: MouseEvent<HTMLInputElement>) => {
         const { value } = event.target as HTMLInputElement;
@@ -22,7 +24,10 @@ export const Service = () => {
 
     const handleClick = () => {
         if (!service || !employee) {
-            addToast("Please select an employee and a service to continue.", { appearance: "warning", autoDismiss: true });
+            addToast("Please select an employee and a service to continue.", {
+                appearance: "warning",
+                autoDismiss: true,
+            });
             return;
         }
         setStep(step + 1);
@@ -38,8 +43,10 @@ export const Service = () => {
                                 id={`service-radio-${index}`}
                                 type="radio"
                                 value={value}
+                                checked={service === value}
                                 name="service-radio"
-                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled={disableOptions}
                                 onClick={handleServiceChange}
                             />
                             <label
@@ -60,8 +67,10 @@ export const Service = () => {
                                 id={`employee-radio-${index}`}
                                 type="radio"
                                 value={value}
+                                checked={employee === value}
                                 name="employee-radio"
-                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled={disableOptions}
                                 onClick={handleEmployeeChange}
                             />
                             <label
@@ -82,7 +91,6 @@ export const Service = () => {
                 <button
                     type="button"
                     className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                    // disabled={isSubmitting || !selectedDay}
                     onClick={() => handleClick()}
                 >
                     Next

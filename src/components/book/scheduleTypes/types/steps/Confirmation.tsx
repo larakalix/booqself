@@ -44,7 +44,7 @@ export const Confirmation = () => {
             ? await AppointmentService().update(
                   boilerplate?.appointment.id,
                   appointment,
-                  boilerplate.tenant.data.id
+                  boilerplate.tenant.data.cloverMerchantId ?? ""
               )
             : await AppointmentService().create(
                   appointment,

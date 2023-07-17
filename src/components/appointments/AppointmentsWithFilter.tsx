@@ -45,7 +45,7 @@ export const AppointmentsWithFilter = () => {
     return (
         <>
             <AppointmentsCalendar appointments={appointments} />
-            <div className="flex flex-col gap-6">
+            <div className="hidden md:flex flex-col gap-6">
                 <DynamicForm
                     formFields={[
                         {

@@ -51,8 +51,7 @@ export const AppointmentService = () => {
                 }),
                 headers: {
                     ...POST_CONFIG.headers,
-                    authorization: `Bearer ${process.env
-                        .NEXT_CLOVER_APP_SECRET!}`,
+                    authorization: `Bearer ${process.env.NEXT_CLOVER_APP_SECRET!}`,
                     merchantid: merchantId,
                 },
             });
@@ -69,14 +68,19 @@ export const AppointmentService = () => {
     const update = async (
         id: number,
         appointment: IFormAppointment,
-        tenant: number
+        merchantId: string
     ) => {
         try {
             const res = await fetch(
-                `${process.env.NEXT_STRAPI_URL}/custom-appointment/update/${id}`,
+                `${process.env.NEXT_CLOVER_API_URL}/book/${id}`,
                 {
                     ...PUT_CONFIG,
                     body: JSON.stringify(appointment),
+                    headers: {
+                        ...POST_CONFIG.headers,
+                        authorization: `Bearer ${process.env.NEXT_CLOVER_APP_SECRET!}`,
+                        merchantid: merchantId,
+                    },
                 }
             );
             if (!res.ok) throw new Error("Failed to create appointment");

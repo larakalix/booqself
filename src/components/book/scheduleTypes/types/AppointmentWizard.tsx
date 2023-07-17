@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
+import { useEffect } from "react";
 import { useWizardStore } from "@/stores/appointmentWizardStore";
 import { Availability, Confirmation, Info, Service } from "./steps";
 import { Stepper } from "./childs/Stepper";
@@ -18,7 +20,7 @@ export const AppointmentWizard = ({
     employees,
     services,
 }: AppointmentFormProps & ScheduleData) => {
-    const { step, ...props } = useWizardStore((state) => state);
+    const { step } = useWizardStore((state) => state);
 
     const steps: WizardStep[] = [
         {
@@ -38,6 +40,18 @@ export const AppointmentWizard = ({
             content: <Confirmation />,
         },
     ];
+
+    useEffect(() => {
+        if (!boilerplate.appointment) return;
+
+        const { cloverEmployeeId, cloverServiceId } = boilerplate.appointment.attributes;
+        const employee = employees.options.find((employee) => employee.value === cloverEmployeeId)?.value;
+        const service = services.options.find((service) => service.value === cloverServiceId)?.value;
+
+        if (!employee || !service) return;
+
+        useWizardStore.setState((state) => ({ ...state, employee, service }));
+    }, []);
 
     return (
         <AppointmentProvider

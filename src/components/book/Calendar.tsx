@@ -40,9 +40,7 @@ export const Calendar = ({ boilerplate }: Props) => {
 
     useEffect(() => {
         if (boilerplate.appointment) {
-            const appointmentDay = new Date(
-                boilerplate.appointment.attributes.appointmentDay
-            );
+            const appointmentDay = new Date(boilerplate.appointment.attributes.appointmentDay);
             selectDay(appointmentDay);
             setCurrentMonth(format(appointmentDay, "MMM-yyyy"));
         }
