@@ -51,7 +51,8 @@ export const AppointmentService = () => {
                 }),
                 headers: {
                     ...POST_CONFIG.headers,
-                    authorization: `Bearer ${process.env.NEXT_CLOVER_APP_SECRET!}`,
+                    authorization: `Bearer ${process.env
+                        .NEXT_CLOVER_APP_SECRET!}`,
                     merchantid: merchantId,
                 },
             });
@@ -78,7 +79,8 @@ export const AppointmentService = () => {
                     body: JSON.stringify(appointment),
                     headers: {
                         ...POST_CONFIG.headers,
-                        authorization: `Bearer ${process.env.NEXT_CLOVER_APP_SECRET!}`,
+                        authorization: `Bearer ${process.env
+                            .NEXT_CLOVER_APP_SECRET!}`,
                         merchantid: merchantId,
                     },
                 }
@@ -126,8 +128,8 @@ export const AppointmentService = () => {
     const getByFilter = async (
         tenantId: string,
         {
-            offset = 0,
-            limit = 20,
+            offset = 1,
+            limit = 10,
             ...params
         }: Partial<IPaginable> &
             Partial<{

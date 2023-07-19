@@ -12,8 +12,7 @@ export const useAppoinmentsFilterStore = create<AppointmentsFilterStoreProps>(
     (set, get) => ({
         loading: false,
         appointments: null,
-        setAppointments: (appointments) =>
-            set({ appointments, loading: false }),
+        setAppointments: (appointments) => set({ appointments, loading: false }),
         setLoading: (loading) => set({ loading }),
         getByDay: async (day) => {
             const rows = get().appointments;

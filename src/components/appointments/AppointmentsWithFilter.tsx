@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useToasts } from "react-toast-notifications";
 import { useAuthStore } from "@/stores/authStore";
@@ -13,17 +13,23 @@ import { Loading } from "../generic/Loading";
 import { AppointmentsCalendar } from "./AppointmentsCalendar";
 import { useAppoinmentsFilterStore } from "@/stores/filterStore";
 
-export const AppointmentsWithFilter = () => {
+export const AppointmentsWithFilter = ({ page = 1 }: { page: number}) => {
     const { addToast } = useToasts();
-    const { data, isLoading, error } = useQuery({
+    const { loading, appointments, setLoading, setAppointments } = useAppoinmentsFilterStore((state) => state);
+    const { refetch, isLoading } = useQuery({
         queryKey: ["getAppointments"],
-        queryFn: async () => await AppointmentService().getByFilter(params?.merchant_id!, { offset: 0, limit: 50 }),
-        onSuccess: (data) => { if (data) setAppointments(data); },
+        queryFn: async () => await AppointmentService().getByFilter(params?.merchant_id!, { offset: page, limit: 15 }),
+        onSuccess: (data) => { if (data) {
+            useAppoinmentsFilterStore.setState((state) => ({
+                ...state,
+                appointments: data,
+                pagination: data.meta.pagination
+            }))
+        } },
         onError: (error) => addToast(`${error}`, { appearance: "error", autoDismiss: true }),
     });
 
     const { params } = useAuthStore((state) => state);
-    const { loading, appointments, setLoading, setAppointments } = useAppoinmentsFilterStore((state) => state);
 
     const handleSubtmit = useMemo(
         () => async (values: any, actions: any) => {
@@ -32,7 +38,7 @@ export const AppointmentsWithFilter = () => {
 
             const rows = await AppointmentService().getByFilter(
                 params?.merchant_id!,
-                { name, email, employee, rangeDate, offset: 0, limit: 50 }
+                { name, email, employee, rangeDate, offset: 4, limit: appointments?.meta.pagination.pageSize }
             );
 
             if (rows) setAppointments(rows);
@@ -42,9 +48,12 @@ export const AppointmentsWithFilter = () => {
         []
     );
 
+    useEffect(() => {
+        refetch();
+    }, [page]);
+
     return (
         <>
-            <AppointmentsCalendar appointments={appointments} />
             <div className="hidden md:flex flex-col gap-6">
                 <DynamicForm
                     formFields={[
@@ -92,6 +101,10 @@ export const AppointmentsWithFilter = () => {
                     />
                 )}
             </div>
+            
+            <hr />
+
+            <AppointmentsCalendar appointments={appointments} />
         </>
     );
 };

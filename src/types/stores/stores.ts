@@ -1,6 +1,7 @@
 import type { IAppointmentFiltered } from "../models/appointment";
 import type { IClient } from "../models/client";
 import type { IEmployee } from "../models/employee";
+import type { IPagination } from "../models/generic";
 import type { IMembershipFiltered } from "../models/membership";
 import type { IOrder } from "../models/order";
 import type { IService } from "../models/service";

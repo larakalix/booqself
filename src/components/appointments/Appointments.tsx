@@ -18,6 +18,8 @@ import { AiOutlineCheckCircle, AiOutlineFieldTime } from "react-icons/ai";
 import { format, isPast, parseISO } from "date-fns";
 import { GenericTableHead } from "../generic/GenericTableHead";
 import { useAuthStore } from "@/stores/authStore";
+import { Pagination } from "../generic";
+import { ROUTES } from "@/ constants/routes";
 import type { ITenantBoilerplateChunk } from "@/types/models/tenant";
 import type { IAppointment } from "@/types/models/appointment";
 
@@ -26,6 +28,7 @@ export const Appointments = ({
     meta,
 }: ITenantBoilerplateChunk<IAppointment>) => {
     const { params } = useAuthStore((state) => state);
+
     return (
         <Card className="relative w-full text-left ring-1 bg-white shadow border-blue-500 ring-gray-200 p-6 rounded-md">
             <Table className="mt-5">
@@ -137,6 +140,13 @@ export const Appointments = ({
                     )}
                 </TableBody>
             </Table>
+
+            <div className="w-full flex items-center justify-center mt-4">
+                <Pagination
+                    pagination={meta.pagination}
+                    rootRoute={ROUTES.APPOINTMENTS}
+                />
+            </div>
         </Card>
     );
 };

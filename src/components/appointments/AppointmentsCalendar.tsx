@@ -9,23 +9,21 @@ import {
     add,
     isPast,
 } from "date-fns";
+import clsx from "clsx";
 import { CiGrid41, CiGrid2H } from "react-icons/ci";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useCalendarStore } from "@/stores/bookingStore";
 import { Day } from "./day/Day";
 import { Card } from "@/kit/card/Card";
-import type { IAppointmentFiltered } from "@/types/models/appointment";
-import clsx from "clsx";
-import { Switch } from "@/kit/form/childs";
 import { CalendarStyle } from "@/types/forms/calendar";
+import type { IAppointmentFiltered } from "@/types/models/appointment";
 
 export const AppointmentsCalendar = ({
     appointments,
 }: {
     appointments: IAppointmentFiltered | null;
 }) => {
-    const { loading, style, currentMonth, setCurrentMonth, switchStyle } =
-        useCalendarStore((state) => state);
+    const { style, currentMonth, setCurrentMonth, switchStyle } = useCalendarStore((state) => state);
     const firstDayOfCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
     const days = eachDayOfInterval({
@@ -53,6 +51,9 @@ export const AppointmentsCalendar = ({
     return (
         <>
             <header className="w-full flex items-center justify-between p-6">
+                <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                    Calendar
+                </h2>
                 <button
                     className="font-bold text-3xl text-gray-900 transition-all hover:text-gray-600"
                     onClick={() => switchStyle()}

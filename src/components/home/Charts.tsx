@@ -61,7 +61,7 @@ export const Charts = () => {
         ["getAppointments"],
         async () =>
             await AppointmentService().getByFilter(params?.merchant_id!, {
-                offset: 0,
+                offset: 1,
                 limit: 50,
             }),
         {
